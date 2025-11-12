@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Mr. Market Deep-Dive] 파두(440110) | 기관 투자자 심층 분석 보고서</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-color: #0a2342;
+            --secondary-color: #2ca58d;
+            --accent-color: #f7b801;
+            --text-color: #333;
+            --light-text-color: #f0f0f0;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a4a8a);
+            color: var(--light-text-color);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: var(--border-radius);
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .report-header h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .report-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .report-meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        main section {
+            background-color: var(--card-bg-color);
+            margin-bottom: 2.5rem;
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary-color);
+        }
+        
+        main section:nth-of-type(2n) {
+            border-top-color: var(--secondary-color);
+        }
+
+        main h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        main h2 .emoji {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            transform: translateY(-2px);
+        }
+
+        main h3 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            color: #495057;
+            margin-bottom: 1.25rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        ul li::before {
+            content: '»';
+            position: absolute;
+            left: 0;
+            top: -2px;
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .key-thesis-list li::before { content: '✔️'; color: #28a745; font-size: 1.2rem; top: 2px; }
+        .key-risks-list li::before { content: '⚠️'; color: #dc3545; font-size: 1.2rem; top: 2px; }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background-color: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            border-left: 5px solid;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .info-card .title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6c757d;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .info-card .value.upside { color: #28a745; }
+        .info-card .value.downside { color: #dc3545; }
+        
+        .info-card .context {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        
+        .info-card.buy { border-left-color: #28a745; }
+        .info-card.neutral { border-left-color: var(--accent-color); }
+        .info-card.sell { border-left-color: #dc3545; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+            display: block;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            font-weight: 700;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: var(--bg-color);
+        }
+        
+        tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .highlight {
+            background-color: rgba(44, 165, 141, 0.2);
+            font-weight: 700;
+        }
+        
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .swot-card {
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+        }
+        
+        .swot-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .swot-card.strength { background-color: rgba(40, 167, 69, 0.1); border-left: 5px solid #28a745; }
+        .swot-card.weakness { background-color: rgba(220, 53, 69, 0.1); border-left: 5px solid #dc3545; }
+        .swot-card.opportunity { background-color: rgba(0, 123, 255, 0.1); border-left: 5px solid #007bff; }
+        .swot-card.threat { background-color: rgba(255, 193, 7, 0.1); border-left: 5px solid #ffc107; }
+
+        @media (max-width: 992px) {
+            .report-header h1 { font-size: 2.2rem; }
+            main h2 { font-size: 1.8rem; }
+            .swot-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 576px) {
+            body { font-size: 15px; }
+            .container { padding: 1.5rem 1rem; }
+            main section { padding: 2rem 1.5rem; }
+            .report-header { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="report-header">
+            <h1>파두 (440110) 심층 분석 보고서</h1>
+            <p class="subtitle">시장의 외면 속에서 피어나는 턴어라운드 타이탄: 퀀터멘털 관점</p>
+            <div class="report-meta">
+                <span><strong>애널리스트:</strong> Mr. Market, CFA</span> | <span><strong>보고서 작성일:</strong> 2025년 11월 12일</span>
+            </div>
+        </header>
+
+        <main>
+            <section id="summary">
+                <h2><span class="emoji">💎</span>투자 요약</h2>
+                <p>파두는 IPO 이후 극심한 실적 쇼크와 신뢰도 추락으로 시장의 외면을 받아왔습니다. 그러나 당사의 분석에 따르면, 시장은 최악의 시나리오를 과도하게 가격에 반영하고 있으며, PCIe Gen5 컨트롤러 기술력과 글로벌 데이터센터 시장의 구조적 회복이라는 거대한 조류를 간과하고 있습니다. 현재 주가는 심각한 정보 비대칭과 과거의 트라우마로 인한 '가격오류(Mispricing)' 상태에 있으며, 이는 용기 있는 투자자에게 알파(Alpha) 창출의 기회를 제공합니다. 당사는 파두를 '고위험-고수익'의 전형적인 턴어라운드 케이스로 판단, 투자의견 '투기적 매수(Speculative Buy)'를 제시합니다.</p>
+                <div class="card-grid">
+                    <div class="info-card buy">
+                        <div class="title">투자의견</div>
+                        <div class="value">투기적 매수</div>
+                        <div class="context">고위험, 고수익 턴어라운드</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="title">현재 주가 (2025-11-11 종가 기준)</div>
+                        <div class="value" id="currentPrice">26,250 원</div>
+                        <div class="context">시가총액 약 1.3조 원</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="title">12개월 목표 주가</div>
+                        <div class="value upside">40,000 원</div>
+                        <div class="context">상승여력 +52.4%</div>
+                    </div>
+                </div>
+                <h3>핵심 투자 포인트 (Key Thesis)</h3>
+                <ul class="key-thesis-list">
+                    <li><strong>PCIe Gen5 시장 개화의 직접적 수혜:</strong> AI 및 고성능 컴퓨팅(HPC) 수요 폭증으로 데이터센터의 SSD 규격이 PCIe Gen5로 빠르게 전환 중입니다. 파두의 Gen5 컨트롤러는 글로벌 최상위권의 기술력을 보유, 시장 선점 효과가 기대됩니다.</li>
+                    <li><strong>가시화되는 수주 행진 및 실적 정상화:</strong> 2025년 하반기부터 국내외 고객사들과 연이어 대규모 공급 계약을 체결하며, 2026년 본격적인 실적 턴어라운드가 예상됩니다. 특히 최근 4개월 연속 대형 수주 공시는 고객사 다변화가 현실화되고 있음을 증명합니다.</li>
+                    <li><strong>극단적 저평가(Deep Undervaluation):</strong> 현재 주가는 동사가 보유한 기술력, 지적재산권(IP), 그리고 연이은 수주 성과를 온전히 반영하지 못하고 있습니다. 실적 회복 시 강력한 주가 재평가(Re-rating)가 필연적입니다.</li>
+                </ul>
+                <h3>주요 리스크 (Key Risks)</h3>
+                <ul class="key-risks-list">
+                    <li><strong>신규 고객사 확보 및 양산 지연:</strong> 턴어라운드 시나리오의 핵심 전제인 고객사 다변화 및 양산 스케줄이 시장 기대보다 늦어질 경우, 주가 회복 동력이 상실될 수 있습니다.</li>
+                    <li><strong>치열한 시장 경쟁:</strong> Marvell, Silicon Motion 등 기존 강자들이 지배하는 시장에서 파두가 의미 있는 점유율을 확보하지 못할 가능성이 상존합니다.</li>
+                    <li><strong>IPO 트라우마와 신뢰도 문제:</strong> 한번 실추된 시장의 신뢰를 회복하는 데는 상당한 시간과 증명된 실적이 필요합니다. 작은 악재에도 주가가 민감하게 반응할 수 있습니다.</li>
+                </ul>
+            </section>
+
+            <section id="thesis">
+                <h2><span class="emoji">💡</span>상세 투자 논거</h2>
+                <p>당사의 투자 논거는, 시장이 과거의 실패에 대해 파두를 비이성적으로 벌하고 있는 반면, 강력한 기술적 역량과 최종 시장의 주기적 상승 전환이라는 강력한 조합을 무시하고 있다는 점에 기반합니다. 시장은 파두를 실패한 벤처로 가격 매기고 있지만, 우리는 그것을 강력한 반등을 앞둔 '압축된 스프링'으로 보고 있습니다.</p>
+                <h3>시장의 가격오류 (Mispricing)</h3>
+                <p>시장은 파두의 2023년 실적 쇼크를 '기술력의 부재' 혹은 '기만'으로 해석했지만, 본질은 '전방 산업의 급격한 악화'와 '단일 고객사 리스크'의 결합이었습니다. 블룸버그 데이터에 따르면, 당시 글로벌 데이터센터 투자는 급격히 위축되었고, 주요 고객사였던 SK하이닉스는 재고 조정을 위해 발주를 전면 중단했습니다. 시장은 이를 파두의 개별 문제로 치부했으나, 이는 산업 전체의 문제였습니다. 이제 사이클은 반전되었고, AI발 서버 투자 붐이 일고 있습니다. 그러나 주가는 여전히 과거의 그림자에 갇혀있습니다.</p>
+                <h3>주가 재평가를 위한 촉매제 (Catalysts)</h3>
+                <ul>
+                    <li><strong>단기 (3-6개월):</strong> 신규 글로벌 고객사향 컨트롤러 양산 공급 계약 공시. 2025년 4분기 및 연간 실적 발표에서 뚜렷한 매출 성장(QoQ, YoY) 확인.</li>
+                    <li><strong>중기 (6-12개월):</strong> 복수의 북미 하이퍼스케일러 고객사 확보 및 공급 개시. 2026년 연간 실적 가이던스 상향 조정.</li>
+                    <li><strong>장기 (1-3년):</strong> PCIe Gen6 등 차세대 기술 개발 로드맵 발표 및 데이터센터 SSD 컨트롤러 시장에서 의미 있는 시장 점유율(목표 20%) 달성.</li>
+                </ul>
+            </section>
+            
+            <section id="company-overview">
+                <h2><span class="emoji">🏭</span>기업 및 사업 분석</h2>
+                <p>파두는 기업용 및 데이터센터 애플리케이션을 위한 고성능 SSD(Solid-State Drive) 컨트롤러를 설계 및 개발하는 팹리스 반도체 기업입니다. 회사의 핵심 역량은 낸드 플래시 메모리의 데이터 흐름과 내구성을 관리하는 시스템온칩(SoC) 솔루션을 만드는 데 있습니다.</p>
+                <h3>비즈니스 모델 및 핵심 경쟁력 (경제적 해자)</h3>
+                <p>파두의 비즈니스 모델은 반도체 팹(Fab) 없이 설계와 개발에만 집중하는 '팹리스(Fabless)'입니다. 이는 막대한 설비 투자 부담을 피하고 R&D에 역량을 집중할 수 있게 합니다. 동사의 핵심 경쟁력(해자)은 다음과 같습니다.</p>
+                <ul>
+                    <li><strong>혁신적 아키텍처:</strong> 파두의 컨트롤러는 전력 소모 대비 성능(Performance-per-Watt)이 매우 뛰어나, 전력 효율성이 핵심인 데이터센터 시장의 요구에 완벽히 부합합니다.</li>
+                    <li><strong>독자적 IP 포트폴리오:</strong> 에러 보정 코드(ECC), 플래시 메모리 관리 등 SSD 컨트롤러의 핵심 기능을 자체 IP로 확보하여 기술 종속성을 낮추고, 고객 맞춤형 솔루션 제공이 용이합니다.</li>
+                    <li><strong>시장 출시 속도 우위(Time-to-Market):</strong> 특정 기술에 대한 깊은 전문성을 바탕으로, 차세대 규격(PCIe Gen5, Gen6) 제품을 경쟁사보다 빠르게 시장에 출시할 수 있는 역량을 보유하고 있습니다.</li>
+                </ul>
+                <h3>최신 실적 리뷰 및 경영진 발언 분석</h3>
+                <p>최신 공시된 2025년 상반기 매출은 429억 원으로, 이미 2024년 전체 매출(435억 원)의 99%에 육박하며 뚜렷한 회복세를 보였습니다. 또한, 8월부터 11월까지 4개월 연속으로 대규모 공급 계약을 공시했으며, 누적 수주액은 2024년 매출을 훨씬 상회하는 수준입니다. 이지효 대표는 "차별화한 기술력을 바탕으로 미국 및 아시아 시장을 폭넓게 공략해 글로벌 선도 팹리스로 성장할 것"이라고 밝히며 강한 자신감을 표명했습니다. 이는 턴어라운드의 구체적인 증거로 해석할 수 있습니다.</p>
+            </section>
+
+            <section id="industry-analysis">
+                <h2><span class="emoji">🌍</span>산업 및 경쟁 환경 분석</h2>
+                <p>기업용 SSD 시장은 AI, 클라우드 컴퓨팅, 빅데이터 분석에서 발생하는 폭발적인 데이터 증가에 힘입어 구조적인 성장 단계에 있습니다. 산업은 현재 대역폭을 두 배로 제공하는 PCIe Gen4에서 Gen5로의 주요 기술 전환 초입에 있습니다. 이러한 전환기는 파두와 같이 민첩한 기업이 기존 강자들에게 도전할 수 있는 기회의 창을 만듭니다.</p>
+                <h3>SWOT 분석</h3>
+                <div class="swot-grid">
+                    <div class="swot-card strength"><h4>💪 강점 (Strengths)</h4><ul><li>PCIe Gen5 기술 선도</li><li>높은 전력 효율성</li><li>자체 IP 기반 유연성</li></ul></div>
+                    <div class="swot-card weakness"><h4>😞 약점 (Weaknesses)</h4><ul><li>낮은 시장 인지도 및 신뢰도</li><li>제한적인 영업/마케팅 역량</li><li>과거의 고객사 집중 리스크</li></ul></div>
+                    <div class="swot-card opportunity"><h4>🚀 기회 (Opportunities)</h4><ul><li>AI 서버 시장의 폭발적 성장</li><li>PCIe Gen5로의 기술 전환기</li><li>미중 기술분쟁으로 인한 공급망 다변화 수요</li></ul></div>
+                    <div class="swot-card threat"><h4>🌪️ 위협 (Threats)</h4><ul><li>Marvell 등 기존 강자들의 견제</li><li>NAND 가격 변동성</li><li>예상보다 느린 Gen5 도입 속도</li></ul></div>
+                </div>
+                <h3>경쟁사 비교 분석 (Peer Comparison)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>지표</th>
+                            <th>파두 (440110)</th>
+                            <th>Marvell (MRVL)</th>
+                            <th>Silicon Motion (SIMO)</th>
+                            <th>분석 코멘트</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>시가총액</td>
+                            <td>~1.3조 원</td>
+                            <td>~80조 원</td>
+                            <td>~3.3조 원</td>
+                            <td>규모는 작지만, 이는 높은 위험과 성장 잠재력을 동시에 의미합니다.</td>
+                        </tr>
+                        <tr>
+                            <td>P/S Ratio (선행)</td>
+                            <td class="highlight">~4.5x (2026년 추정)</td>
+                            <td>~7.0x</td>
+                            <td>~3.5x</td>
+                            <td>턴어라운드 성공 시 밸류에이션 매력이 매우 높습니다.</td>
+                        </tr>
+                        <tr>
+                            <td>매출 총이익률</td>
+                            <td>~50-55% (목표)</td>
+                            <td>~62%</td>
+                            <td>~48%</td>
+                            <td>팹리스 모델의 특성상 높은 마진 확보가 가능합니다.</td>
+                        </tr>
+                        <tr>
+                            <td>주력 시장</td>
+                            <td>기업용 SSD</td>
+                            <td>기업, 클라우드, 자동차</td>
+                            <td>소비자용 SSD, 모바일</td>
+                            <td>하이엔드 기업용 시장에 특화된 순수 플레이어(Pure-play)입니다.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <section id="financials">
+                <h2><span class="emoji">📊</span>재무 분석 및 실적 추정</h2>
+                <p>파두의 과거 재무는 2023년의 매출 절벽으로 정의됩니다. 당사의 추정은 2025년 하반기부터 시작되는 점진적인 회복에 기반하며, 이는 Gen5 컨트롤러에 대한 신규 고객 확보에 의해 주도될 것입니다. 핵심 가정은 현재 진행 중인 기술검증(PoC)이 양산 계약으로 성공적으로 전환된다는 것입니다.</p>
+                <h3>실적 추정 (기본 시나리오)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>(단위: 억 원)</th>
+                            <th>2023년</th>
+                            <th>2024년</th>
+                            <th>2025년 (E)</th>
+                            <th>2026년 (E)</th>
+                            <th>2027년 (E)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>매출액</strong></td>
+                            <td>22</td>
+                            <td>435</td>
+                            <td>1,550</td>
+                            <td>3,300</td>
+                            <td>5,200</td>
+                        </tr>
+                        <tr>
+                            <td><strong>매출총이익</strong></td>
+                            <td>12</td>
+                            <td>152</td>
+                            <td>775</td>
+                            <td>1,782</td>
+                            <td>2,860</td>
+                        </tr>
+                        <tr>
+                            <td><strong>영업이익</strong></td>
+                            <td>-376</td>
+                            <td>-598</td>
+                            <td class="highlight">120</td>
+                            <td class="highlight">580</td>
+                            <td class="highlight">1,150</td>
+                        </tr>
+                        <tr>
+                            <td><strong>당기순이익</strong></td>
+                            <td>-383</td>
+                            <td>-887</td>
+                            <td class="highlight">105</td>
+                            <td class="highlight">510</td>
+                            <td class="highlight">1,012</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>출처: 회사 공시, Mr. Market 추정. (E) = 추정치.</em></p>
+                <h3>분석 가정</h3>
+                <ul>
+                    <li><strong>매출:</strong> 2025년 하반기부터 신규 고객사향 양산이 본격화되고, 2026년에는 최소 1곳 이상의 Tier-1 고객사 계약이 확보된다고 가정했습니다. 최근의 연속 수주 공시는 이러한 가정의 신뢰도를 높입니다.</li>
+                    <li><strong>매출 총이익률:</strong> 하이엔드 컨트롤러 벤더의 평균 수준인 50-55% 범위로 회복될 것으로 예상합니다.</li>
+                    <li><strong>영업비용:</strong> 의미 있는 매출 흐름이 확보될 때까지 R&D 및 판관비는 통제된 수준을 유지하다가, 2025년을 기점으로 흑자 전환(영업이익 기준)할 것으로 전망합니다.</li>
+                </ul>
+            </section>
+
+            <section id="valuation">
+                <h2><span class="emoji">💰</span>가치 평가</h2>
+                <p>높은 불확실성과 현재 수익성 부재로 인해 전통적인 DCF 모델의 신뢰도는 낮습니다. 따라서 동종업계와 비교한 선행 주가매출비율(P/S)을 핵심 가치평가 방법론으로 활용합니다. 이 접근법은 파두의 기술이 시장에 성공적으로 안착했을 때의 매출 창출 잠재력을 기준으로 가치를 평가합니다.</p>
+                <h3>상대 가치 평가 (P/S Multiple)</h3>
+                <ul>
+                    <li><strong>2026년 추정 매출액:</strong> 3,300억 원 (당사 기본 시나리오).</li>
+                    <li><strong>적정 P/S 배수:</strong> 고성장 전문 반도체 기업 그룹은 보통 선행 매출의 4배에서 8배 사이에서 거래됩니다. 당사는 파두의 성장 잠재력과 실행 리스크를 모두 반영하여 보수적으로 <strong>6.0배의 P/S 배수</strong>를 2026년 추정 매출에 적용합니다.</li>
+                    <li><strong>내재 목표 시가총액:</strong> 3,300억 원 * 6.0 = 1조 9,800억 원.</li>
+                    <li><strong>목표 주가:</strong> 1조 9,800억 원 / 약 4,950만 주 ≈ <strong>40,000 원</strong>.</li>
+                </ul>
+                <h3>민감도 분석</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">밸류에이션 시나리오</th>
+                            <th colspan="3">2026년 P/S 배수</th>
+                        </tr>
+                        <tr>
+                            <th>4.0x (비관적)</th>
+                            <th>6.0x (기본)</th>
+                            <th>8.0x (낙관적)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2,500억 매출 (회복 더딤)</strong></td>
+                            <td>20,200 원</td>
+                            <td>30,300 원</td>
+                            <td>40,400 원</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight"><strong>3,300억 매출 (기본 시나리오)</strong></td>
+                            <td>26,700 원</td>
+                            <td class="highlight"><strong>40,000 원</strong></td>
+                            <td>53,300 원</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4,500억 매출 (고성장)</strong></td>
+                            <td>36,400 원</td>
+                            <td>54,500 원</td>
+                            <td>72,700 원</td>
+                        </tr>
+                    </tbody>
+                </table>
+                 <p>당사의 목표주가 40,000원은 기본 시나리오에 근거합니다. 그러나 민감도 분석에서 보듯이, 예상을 뛰어넘는 성공적인 실행(낙관적 시나리오)은 상당한 추가 수익으로 이어질 수 있습니다.</p>
+            </section>
+            
+            <section id="risks-esg">
+                <h2><span class="emoji">⚠️</span>주요 리스크 및 ESG 분석</h2>
+                <h3>비관적 시나리오 (Bear Case Scenario)</h3>
+                <p>당사의 비관적 시나리오는 파두가 Tier-1 고객사 확보에 실패하고, 2026년 말까지 소수의 중소형 고객사만 확보하는 경우를 가정합니다. 이 시나리오에서는 2026년 매출이 1,500억 원에 그칠 것입니다. 여기에 부진한 상황을 반영한 P/S 배수 3.0배를 적용하면 시가총액은 4,500억 원, 주가는 약 <strong>9,100 원</strong> 수준이 됩니다. 이는 상당한 하방 리스크를 의미하며, 턴어라운드 논리가 실패할 경우의 잠재적 결과를 투자자들이 반드시 인지해야 함을 보여줍니다.</p>
+                <h3>ESG 고려사항</h3>
+                <p>ESG 관점에서 가장 큰 우려는 <strong>지배구조(G)</strong>입니다. IPO 과정과 이후 투자자와의 소통은 회사의 신뢰도를 심각하게 훼손했습니다. 파두가 지속 가능한 장기 투자처가 되기 위해서는, 경영진이 투명한 소통을 최우선으로 하고, 보수적이고 달성 가능한 가이던스를 제공하며, 시장과의 신뢰를 재구축해야 합니다. <strong>환경(E)</strong> 측면에서는, 저전력 컨트롤러에 대한 집중이 데이터센터의 에너지 효율에 기여하므로 긍정적입니다. 이는 산업의 핵심 과제이기도 합니다. <strong>사회(S)</strong> 측면은 우수 인재 확보 및 유지에 중점을 둔 일반적인 팹리스 기술 기업의 표준을 따릅니다.</p>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 네이버 증권 API 직접 호출은 브라우저 보안 정책(CORS)으로 인해 불가능합니다.
+            // 따라서 검색된 최신 종가를 여기에 정적으로 표시합니다.
+            // 만약 서버 사이드에서 실행된다면, API 호출로 이 값을 동적으로 채울 수 있습니다.
+            const currentPriceElement = document.getElementById('currentPrice');
+            const price = 26250; // 2025-11-11 종가 기준 검색 결과
+            currentPriceElement.textContent = price.toLocaleString('ko-KR') + ' 원';
+            console.log("Mr. Market의 파두(440110) 심층 분석 보고서가 성공적으로 생성되었습니다.");
+        });
+    </script>
+</body>
+</html>
