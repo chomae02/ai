@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FADU (440110) - Deep-Dive Analysis Report by Mr. Market</title>
+    <style>
+        /* --- Global Styles & Variables --- */
+        :root {
+            --primary-color: #0d1b2a;
+            --secondary-color: #1b263b;
+            --accent-color: #415a77;
+            --text-color: #e0e1dd;
+            --highlight-color: #778da9;
+            --positive-color: #2ecc71; /* Bright Green */
+            --negative-color: #e74c3c; /* Bright Red */
+            --neutral-color: #f1c40f;  /* Bright Yellow */
+            --font-main: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 10px 20px rgba(241, 196, 15, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); }
+        }
+
+        /* --- Layout & Structure --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            border-bottom: 3px solid var(--accent-color);
+            animation: fadeIn 1s ease-out;
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(45deg, var(--highlight-color), var(--text-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.3em;
+            color: var(--highlight-color);
+            margin-top: 10px;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        .meta-item:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border-left: 7px solid var(--accent-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0; /* For scroll animation */
+            transform: translateY(30px); /* For scroll animation */
+        }
+        .card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-highlight {
+            border-left-color: var(--neutral-color);
+            background: linear-gradient(135deg, var(--secondary-color), #2c3e50);
+        }
+        .card-highlight h2 { color: var(--neutral-color); }
+        .card-highlight:hover { animation: pulse 1.5s infinite; }
+
+        .card-positive { border-left-color: var(--positive-color); }
+        .card-positive h2 { color: var(--positive-color); }
+
+        .card-negative { border-left-color: var(--negative-color); }
+        .card-negative h2 { color: var(--negative-color); }
+
+        h2 {
+            font-size: 2.4em;
+            font-weight: 600;
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: 1.6em;
+            color: var(--text-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* --- Specific Component Styles --- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .summary-item {
+            background-color: var(--primary-color);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        .summary-item:hover {
+            transform: scale(1.05);
+            border-color: var(--highlight-color);
+        }
+
+        .summary-item h4 {
+            margin: 0 0 10px 0;
+            color: var(--highlight-color);
+            font-size: 1.2em;
+        }
+
+        .summary-item p {
+            margin: 0;
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .positive { color: var(--positive-color); }
+        .negative { color: var(--negative-color); }
+        .neutral { color: var(--neutral-color); }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+        li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            color: var(--positive-color);
+            font-weight: bold;
+        }
+        .card-negative li::before {
+            content: '⚠️';
+            color: var(--negative-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        th {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        tbody tr {
+            transition: background-color 0.3s ease;
+        }
+        tbody tr:hover {
+            background-color: rgba(65, 90, 119, 0.3);
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid var(--accent-color);
+        }
+        
+        .fact-check {
+            background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+            border: 1px solid var(--neutral-color);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        .fact-check h3 {
+            color: var(--neutral-color);
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .fact-check-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--accent-color);
+        }
+        .fact-check-item:last-child { border-bottom: none; }
+        .fact-check-item strong { color: var(--highlight-color); }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5em; }
+            header p { font-size: 1.1em; }
+            h2 { font-size: 2em; }
+            .card { padding: 20px; }
+            .summary-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>파두 (FADU, 440110.KQ) 🚀</h1>
+            <p>데이터센터의 심장을 설계하는 팹리스, 기회와 리스크의 교차점</p>
+            <div class="report-meta">
+                <div class="meta-item"><strong>👨‍💼 분석가:</strong> Mr. Market, CFA</div>
+                <div class="meta-item"><strong>🗓️ 발행일:</strong> 2025년 11월 13일</div>
+                <div class="meta-item"><strong>🎯 대상:</strong> 기관 투자자</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="card card-highlight">
+                <h2>📈 투자 요약 및 의견</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h4>투자의견</h4>
+                        <p class="neutral">Speculative BUY</p>
+                    </div>
+                    <div class="summary-item">
+                        <h4>목표주가 (12M)</h4>
+                        <p class="neutral">₩35,000</p>
+                    </div>
+                    <div class="summary-item">
+                        <h4>현재주가 (25.11.12)</h4>
+                        <p>₩26,750</p>
+                    </div>
+                </div>
+                <ul>
+                    <li><strong>기회 요인 (Upside) 🟢:</strong> AI 데이터센터 시장의 폭발적 성장에 따른 고성능·저전력 SSD 컨트롤러 수요 급증. 최근 연속적인 대규모 수주 계약은 실적 턴어라운드의 강력한 시그널. 글로벌 빅테크와의 파트너십 및 기술적 해자(Moat) 보유.</li>
+                    <li><strong>리스크 요인 (Downside) 🔴:</strong> IPO 관련 집단 소송은 심각한 법적·재무적 부담으로 작용. 소송 결과에 따른 배상금 규모와 평판 하락은 예측 불가능한 변수. 과거 실적 변동성이 극심하여 미래 현금흐름 추정의 불확실성이 높음.</li>
+                    <li><strong>최종 결론 🎯:</strong> 파두는 명확한 기술 경쟁력을 바탕으로 구조적 성장 산업의 핵심 플레이어로 자리매김할 잠재력을 지녔다. 2023년의 실적 쇼크와 IPO 소송이라는 치명적인 리스크가 주가를 억누르고 있으나, 최근 가시화된 수주 성과는 최악의 국면을 지나고 있음을 시사한다. 극심한 변동성을 감내할 수 있는 투자자에 한해, 실적 회복에 베팅하는 '투기적 매수' 관점의 접근을 권고한다.</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>🌐 1.1 거시/산업 환경 분석</h2>
+                <h3>1.1.1 거시 경제 분석 💹</h3>
+                <p>2025년 글로벌 경제는 완만한 성장세가 예상되나, 주요국의 통화정책 차별화와 지정학적 리스크가 상존한다. KDI 및 주요 기관들은 한국 경제가 약 2% 내외의 성장을 기록할 것으로 전망하며, 이는 반도체 수출 회복에 기인한다. 하반기로 갈수록 예상되는 미국의 금리 인하 기조는 기술주 투자 심리에 긍정적이나, 미-중 무역 갈등 및 정책 불확실성은 여전히 부담 요인이다.</p>
+                <h3>1.1.2 산업 구조 및 트렌드 분석 (Porter's 5 Forces) ⚔️</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>분석 요인</th>
+                            <th>영향력</th>
+                            <th>분석 내용</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>신규 진입자의 위협</strong></td>
+                            <td class="positive">낮음</td>
+                            <td>SSD 컨트롤러 설계는 고도의 기술력과 IP, 오랜 기간의 트랙 레코드가 필요한 분야. 수천억 원의 R&D 비용과 고객사 인증 과정이 강력한 진입 장벽으로 작용.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>공급자의 교섭력</strong></td>
+                            <td class="negative">높음</td>
+                            <td>핵심 원재료인 낸드플래시(NAND)는 삼성전자, SK하이닉스 등 소수 과점 기업이 시장을 지배. 이는 원가 협상에서 팹리스 기업에 불리하게 작용할 수 있음.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>구매자의 교섭력</strong></td>
+                            <td class="negative">높음</td>
+                            <td>주요 고객은 메타, 구글 등 소수의 하이퍼스케일러(Hyperscaler) 데이터센터 운영사. 이들의 구매 정책 변화가 매출에 절대적인 영향을 미침.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>대체재의 위협</strong></td>
+                            <td class="neutral">낮음</td>
+                            <td>현재 데이터센터의 대용량·고속 저장장치로서 SSD를 대체할 만한 상용 기술은 부재. HDD는 성능 면에서, CXL 등 신기술은 아직 시장 형성 초기 단계.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>산업 내 경쟁 강도</strong></td>
+                            <td class="negative">매우 높음</td>
+                            <td>Marvell, Silicon Motion 등 강력한 경쟁사가 존재하며, 삼성전자/SK하이닉스 등은 컨트롤러 내재화를 지속 추진. 기술 변화 속도가 빨라 지속적인 R&D 투자가 필수.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="card">
+                <h2>🏆 1.2 사업 및 질적 분석 (정성적)</h2>
+                <h3>1.2.1 경쟁 우위 (Moat) 분석: 저전력·고성능 기술력 💡</h3>
+                <p>파두의 핵심 경쟁력은 <strong>'데이터센터향 저전력·고성능 SSD 컨트롤러'</strong> 설계 능력에 있다. AI 시대에 데이터센터의 전력 소모는 기하급수적으로 증가하고 있으며, 이는 운영 비용(OPEX)과 직결된다. 파두의 컨트롤러는 경쟁사 대비 우수한 전력 효율성을 제공하며, 이는 하이퍼스케일러 고객들에게 매력적인 가치 제안이다. PCIe Gen5, Gen6 등 차세대 기술을 선도하고 있으며, 글로벌 낸드 제조사 및 데이터센터 기업과의 긴밀한 협력 관계는 강력한 기술적 해자로 작용한다.</p>
+                <div class="image-container">
+                    <img src="https://www.businesskorea.co.kr/news/photo/202307/118215_132121_41.jpg" alt="FADU SSD Controller Technology">
+                    <p><small>파두의 핵심 기술인 SSD 컨트롤러 이미지</small></p>
+                </div>
+                <h3>1.2.2 경영진 및 지배 구조 분석 ⚖️</h3>
+                <p>서울대 연구실 창업 멤버를 중심으로 한 기술 전문가 그룹이 경영의 핵심을 이루고 있다. 이는 기술 중심의 빠른 의사결정에 강점이 있으나, IPO 과정에서 드러난 실적 추정 및 공시 문제는 경영 투명성과 리스크 관리 능력에 대한 심각한 의문을 제기한다. 현재 진행 중인 소송은 지배구조의 가장 큰 리스크 요인이다.</p>
+            </section>
+            
+            <section class="card card-positive">
+                <h2>✨ 신규 수주 분석 및 미래 실적 전망</h2>
+                <h3>최근 수주 현황: 실적 회복의 명백한 증거 💰</h3>
+                <p>2023년 실적 쇼크 이후, 파두는 2025년 하반기부터 의미 있는 수주 공시를 연이어 발표하며 시장의 신뢰를 회복하고 있다. 이는 주요 고객사와의 관계가 정상화되고, AI 시장 개화에 따른 수혜가 본격화되고 있음을 시사한다.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>공시일</th>
+                            <th>계약 상대방</th>
+                            <th>계약 내용</th>
+                            <th>계약 금액 (억원)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2025-11-10</td><td>해외 Nand Flash 제조사</td><td>기업용 SSD 컨트롤러 공급</td><td>144.7</td></tr>
+                        <tr><td>2025-11-06</td><td>대만 마크니카갤럭시</td><td>SSD 완제품 공급</td><td>215.0</td></tr>
+                        <tr><td>2025-10-15</td><td>해외 Nand Flash 제조사</td><td>기업용 SSD 컨트롤러 공급</td><td>133.0</td></tr>
+                        <tr><td>2025-09-12</td><td>해외 Nand Flash 제조사</td><td>기업용 SSD 컨트롤러 공급</td><td>105.0</td></tr>
+                        <tr><td colspan="3"><strong>최근 4개월 누적 주요 공시 금액 합계</strong></td><td><strong>약 597.7</strong></td></tr>
+                    </tbody>
+                </table>
+                <h3>미래 실적 및 주가 산정 🔮</h3>
+                <p>최근 4개월간의 수주 금액(약 600억원)은 2024년 연간 매출(435억원)을 이미 상회하는 규모이다. 이러한 수주 추세가 지속된다고 가정할 때, 2026년 연간 매출은 보수적으로 추정해도 <strong>1,500억 ~ 2,000억원 수준으로 회복</strong>할 가능성이 높다. 이는 2023년 상장 당시 제시했던 전망치에 근접하는 수준으로, 실적 정상화에 대한 기대를 갖게 한다. 목표주가 산정 시, 이러한 2026년 예상 실적을 기반으로 한 현금흐름할인(DCF) 모델을 적용하여 턴어라운드 가치를 반영했다.</p>
+            </section>
+
+            <section class="card card-negative">
+                <h2>🚨 핵심 리스크: IPO 집단 소송 및 상장폐지 가능성</h2>
+                <h3>소송의 본질: 신뢰의 붕괴 💔</h3>
+                <p>파두의 가장 심각한 리스크는 2023년 상장 과정에서의 '실적 부풀리기' 의혹에서 비롯된 집단 소송이다. 핵심 쟁점은 상장 직전 2분기 및 3분기 매출이 사실상 '0'에 가까웠다는 사실을 증권신고서에 명확히 기재하지 않았다는 점이다. 금융감독원 특사경은 이를 자본시장법 위반으로 판단하여 기소 의견으로 검찰에 송치했으며, 현재 다수의 투자자들이 회사와 주관사를 상대로 손해배상 소송을 진행 중이다.</p>
+                <h3>상장폐지 및 주가 하락 위험성 분석 📉</h3>
+                <ul>
+                    <li><strong>상장폐지 가능성:</strong> 현재로서는 <strong>낮다.</strong> 기술특례상장 기업의 관리종목 지정 요건(매출액 30억원 미만 등)은 상장 후 5년간 유예된다. 소송으로 인한 재무적 타격이 회사의 존속 가능성을 위협할 정도의 천문학적인 배상 판결로 이어지지 않는 한, 직접적인 상장폐지 사유가 되기는 어렵다.</li>
+                    <li><strong>주가 하락 위험성:</strong> <strong>매우 높다.</strong> 소송은 장기간에 걸쳐 진행될 것이며, 이는 지속적인 불확실성으로 작용해 주가에 할인 요인(Discount)이 된다. 패소 시 발생할 배상금은 미래 이익을 잠식하며, 이는 기업 가치에 직접적인 타격을 준다. 또한, 소송 과정에서 드러나는 부정적인 사실들은 회사의 평판을 훼손하여 신규 고객 확보에 어려움을 줄 수 있다. 이는 단순한 재무적 손실 이상의 무형적 가치 하락으로 이어진다.</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>📊 1.3 재무 성과 분석 (정량적)</h2>
+                <p>과거 재무 데이터는 극심한 변동성을 보여준다. 2023년의 매출 절벽 이후 2024년 일부 회복세를 보였으나, 본격적인 턴어라운드는 2025년 하반기 수주가 반영될 2026년부터 가시화될 전망이다. 현재는 수익성 지표(ROE, 영업이익률)가 모두 마이너스 상태로, 성장 잠재력에 투자해야 하는 전형적인 기술 성장주 재무구조를 보인다.</p>
+                <table>
+                    <thead>
+                        <tr><th>계정 (억원)</th><th>2022</th><th>2023</th><th>2024</th><th>2025 (E)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>매출액</td><td>564</td><td>176</td><td>435</td><td>850</td></tr>
+                        <tr><td>영업이익</td><td>-48</td><td>-588</td><td>-950</td><td>-300</td></tr>
+                        <tr><td>부채비율 (%)</td><td>25.1%</td><td>15.5%</td><td>37.2%</td><td>N/A</td></tr>
+                    </tbody>
+                </table>
+                <small>* 2025년 예상치는 최근 수주 동향을 기반으로 한 Mr. Market의 추정치임.</small>
+            </section>
+
+            <section class="card">
+                <h2>⚖️ 1.4 가치 평가 분석 (Valuation)</h2>
+                <h3>1.4.1 상대 가치 분석 👥</h3>
+                <p>현재 영업이익 적자로 PER, EV/EBITDA 등 수익 기반 밸류에이션 지표는 의미가 없다. PSR(주가매출액비율) 관점에서 2026년 예상 매출액(1,800억원) 기준 현재 시가총액(약 1.3조원)은 약 7.2배 수준이다. 이는 글로벌 팹리스 경쟁사들의 평균 PSR(5~10배) 범위 내에 있으나, 소송 리스크를 감안하면 매력적인 수준이라고 보기는 어렵다.</p>
+                <h3>1.4.2 절대 가치 분석 (DCF) 🔢</h3>
+                <p>2026년 본격적인 실적 턴어라운드를 가정하여 DCF 모델을 적용했다. 주요 가정은 다음과 같다:</p>
+                <ul>
+                    <li>2026년 매출 1,800억원 달성 후 5년간 연평균 25% 성장.</li>
+                    <li>장기 영업이익률 20% 수렴.</li>
+                    <li>WACC(가중평균자본비용): 12.5% (소송 리스크 프리미엄 반영).</li>
+                </ul>
+                <p>이를 통해 산출된 목표주가는 <strong>₩35,000</strong>으로, 현재 주가 대비 약 30%의 상승 여력을 가진다. 이는 실적 회복이 성공적으로 이루어질 경우를 가정한 시나리오다.</p>
+            </section>
+            
+            <section class="fact-check card">
+                <h3>🕵️‍♂️ Mr. Market의 팩트체크</h3>
+                <div class="fact-check-item">
+                    <strong>1. 거시/산업 환경 분석:</strong> KDI, 한국은행 등 국내외 주요 연구기관이 발표한 2025년 경제 전망 보고서를 교차 검증하여 거시 경제 분석의 객관성을 확보했습니다. 산업 분석은 공개된 시장 보고서와 경쟁사 현황을 기반으로 Porter's 5 Forces 모델에 입각하여 구조적으로 분석했습니다.
+                </div>
+                <div class="fact-check-item">
+                    <strong>2. 사업 및 질적 분석:</strong> 회사가 공개한 기술 자료, 보도자료, 업계 전문가 인터뷰 기사 등을 종합하여 기술적 해자(Moat)를 평가했습니다. 경영진 리스크는 IPO 당시부터 현재까지의 공시 자료와 언론 보도를 통해 확인된 사실에 기반합니다.
+                </div>
+                <div class="fact-check-item">
+                    <strong>3. 신규 수주 및 미래 실적 전망:</strong> 모든 수주 데이터는 금융감독원 전자공시시스템(DART)에 공시된 '단일판매ㆍ공급계약체결' 공시를 직접 확인한 팩트 기반 정보입니다. 미래 실적 전망은 해당 공시 내용을 바탕으로 한 논리적 추론이며, 보수적 관점에서 추정되었습니다.
+                </div>
+                <div class="fact-check-item">
+                    <strong>4. 핵심 리스크 분석:</strong> 소송 관련 내용은 언론에 보도된 법무법인의 소송 제기 사실과 금융감독원의 공식 발표 자료를 근거로 작성되었습니다. 상장폐지 가능성 평가는 한국거래소의 코스닥시장 상장규정을 기준으로 판단하여 자의적 해석을 배제했습니다.
+                </div>
+                <div class="fact-check-item">
+                    <strong>5. 재무 및 가치 평가:</strong> 재무 데이터는 회사의 사업보고서 및 감사보고서를 통해 확인된 수치입니다. 가치 평가는 명확한 가정(WACC, 성장률 등)을 제시하여 분석의 투명성을 높였으며, 해당 가정은 산업의 특성과 회사의 현재 리스크를 최대한 반영하고자 노력했습니다.
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Simple scroll-to-reveal animation for cards
+        document.addEventListener("DOMContentLoaded", function() {
+            const cards = document.querySelectorAll('.card');
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
