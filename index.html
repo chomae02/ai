@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 고급 프롬프트 엔지니어링 심화 과정</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #ecf0f1;
+            --card-background: #ffffff;
+            --text-color: #34495e;
+            --header-color: #ffffff;
+            --code-bg: #2d2d2d;
+            --code-color: #f1f1f1;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--primary-color);
+            color: var(--header-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: var(--card-background);
+            margin: 1.5rem 0;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            border-left: 5px solid var(--secondary-color);
+            padding-left: 15px;
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'D2Coding', 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+        
+        .code-block .prompt-title {
+            color: #e0e0e0;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .code-block .comment {
+            color: #8e8e8e;
+            font-style: italic;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+        }
+
+        ul li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--secondary-color);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .card h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1>🎓 고급 프롬프트 엔지니어링</h1>
+            <p>복잡하고 거대한 질문을 정복하기 위한 심화 가이드</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h2>🧠 서론: 거인의 어깨 위에서 생각하기</h2>
+            <p>안녕하십니까, 프롬프트 엔지니어링 심화 과정에 오신 것을 환영합니다. 저는 여러분의 가이드가 될 OOO 교수입니다. 이 과정에서는 단순한 질문을 넘어, 복잡하고 다층적인 문제 해결을 위한 프롬프트 설계 방법을 탐구합니다. AI를 단순한 답변자가 아닌, 문제 해결 파트너로 만드는 고도의 전략들을 배우게 될 것입니다.</p>
+        </div>
+
+        <div class="card">
+            <h2>⚙️ 전략 1: 문제 분해 (Decomposition)</h2>
+            <p>아무리 거대한 문제라도 작게 나누면 해결할 수 있습니다. 복잡한 요청을 AI가 순차적으로 처리할 수 있는 여러 개의 하위 작업(Sub-task)으로 분해하는 것이 핵심입니다.</p>
+            <p><strong>목표:</strong> "2025년 한국 시장에 진출할 전기차 SUV의 종합 마케팅 전략 보고서 작성"</p>
+            <div class="code-block">
+                <span class="prompt-title"># 프롬프트 예시 (단계별 접근)</span>
+                <span class="comment"># 1단계: 시장 분석</span>
+                "너는 시장 분석 전문가야. 2025년 한국 전기차 SUV 시장의 (1)주요 경쟁사, (2)타겟 고객층, (3)예상 시장 규모에 대해 분석해줘."
+
+                <span class="comment"># 2단계: 전략 수립 (1단계 결과 기반)</span>
+                "위 분석 결과를 바탕으로, 'Quantum SUV'라는 신규 전기차의 STP 전략을 수립해줘. 특히 30대 고소득층을 타겟으로 한 포지셔닝 전략을 구체적으로 제시해줘."
+
+                <span class="comment"># 3단계: 실행 계획</span>
+                "수립된 STP 전략에 따라, 출시 첫 6개월간의 구체적인 디지털 마케팅 실행 계획을 타임라인 형태로 작성해줘. 인스타그램과 유튜브 캠페인을 중심으로."
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🤔 전략 2: 사고의 사슬 (Chain-of-Thought, CoT)</h2>
+            <p>AI에게 정답만 요구하는 대신, 문제 해결 과정을 단계별로 생각하고 설명하도록 유도하는 기법입니다. 이는 복잡한 추론 문제에서 정확도를 극적으로 향상시킵니다.</p>
+            <div class="code-block">
+                <span class="prompt-title"># 프롬프트 예시</span>
+                "질문: '회의실에 30명이 있고, 각자 한 번씩 다른 모든 사람과 악수를 한다면 총 악수 횟수는 몇 번일까?' 이 문제를 해결하기 위한 과정을 단계별로 설명하고 최종 답을 계산해줘.
+
+                1. 문제의 핵심 원리를 파악한다.
+                2. 적용할 수 있는 수학 공식을 생각한다.
+                3. 공식에 값을 대입하여 계산 과정을 보여준다.
+                4. 최종 답을 도출한다."
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🌳 전략 3: 생각의 나무 (Tree of Thoughts, ToT)</h2>
+            <p>CoT가 단일 경로로 사고를 진행한다면, ToT는 여러 가능한 해결 경로를 '나무'처럼 탐색하고, 각 경로의 유효성을 평가하며 최적의 해답을 찾아가는 고급 기법입니다. AI가 스스로 비판하고 대안을 모색하게 만듭니다.</p>
+            <div class="code-block">
+                <span class="prompt-title"># 프롬프트 예시 (개념적 접근)</span>
+                "주제: '저출산 문제 해결을 위한 혁신적인 정책 아이디어 3가지'
+
+                너는 정책 연구원이다. 이 문제를 해결하기 위해 다음과 같은 '생각의 나무' 방식으로 접근해줘.
+
+                1.  **아이디어 생성 (가지 뻗기):** 경제적 지원, 사회 문화 개선, 기술 활용 등 다양한 관점에서 최소 5개의 초기 아이디어를 생성해줘.
+                2.  **각 아이디어 평가 (가지치기):** 각 아이디어의 (1)실현 가능성, (2)예상 효과, (3)잠재적 부작용을 비판적으로 평가해줘.
+                3.  **최종 아이디어 선정 및 발전:** 가장 유망하다고 판단되는 아이디어 3개를 선정하고, 평가 과정에서 나온 비판점을 보완하여 구체적인 정책으로 발전시켜줘."
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>✨ 전략 4: 메타 프롬프팅 (Meta-Prompting)</h2>
+            <p>AI에게 직접 문제를 푸는 대신, '최고의 프롬프트'를 만들도록 지시하는 한 차원 높은 접근법입니다. AI가 스스로 최적의 질문을 설계하게 하여 문제 해결의 질을 높입니다.</p>
+            <div class="code-block">
+                <span class="prompt-title"># 프롬프트 예시</span>
+                "나는 신입 개발자들을 위한 파이썬 코딩 교육 자료를 만들고 싶어.
+
+                이 목표를 달성하기 위해 내가 너에게 어떤 프롬프트를 입력해야 가장 효과적인 교육 자료(커리큘럼, 예제 코드, 연습 문제 포함)를 얻을 수 있을까? 최고의 프롬프트를 3가지 버전으로 제안해줘. 각 버전은 서로 다른 관점(예: 완전 초보자용, 프로젝트 기반 학습용, 게임 개발 중심용)을 반영해야 해."
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🚀 결론: 실험하고, 반복하고, 창조하라</h2>
+            <p>고급 프롬프트 엔지니어링의 세계에는 정해진 답이 없습니다. 오늘 배운 전략들은 여러분의 사고를 확장하기 위한 도구일 뿐입니다.</p>
+            <ul>
+                <li><strong>가설 설정:</strong> 문제에 가장 적합한 전략이 무엇일지 가설을 세우십시오.</li>
+                <li><strong>실행 및 분석:</strong> 프롬프트를 실행하고 AI의 응답을 비판적으로 분석하십시오.</li>
+                <li><strong>개선 및 반복:</strong> 분석 결과를 바탕으로 프롬프트를 수정하고 더 나은 결과를 위해 반복하십시오.</li>
+            </ul>
+            <p>AI의 잠재력을 최대한으로 이끌어내는 창의적인 프롬프트 엔지니어가 되시길 바랍니다.</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Advanced Prompt Engineering Course. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
