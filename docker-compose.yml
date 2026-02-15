@@ -1,0 +1,44 @@
+services:
+  mariadb:
+    image: mariadb:11.5
+    container_name: ai_mariadb
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u${MARIADB_USER}", "-p${MARIADB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_fastapi
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DB_URL: ${DB_URL}
+      DB_ECHO: ${DB_ECHO:-false}
+      APP_AUTH_TOKEN: ${APP_AUTH_TOKEN}
+      BASIC_AUTH_USERNAME: ${BASIC_AUTH_USERNAME}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+volumes:
+  mariadb_data:
