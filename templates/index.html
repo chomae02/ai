@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Items Search</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      form { display: grid; gap: 10px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 16px; }
+      label { display: flex; flex-direction: column; font-size: 14px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+      th, td { border: 1px solid #ddd; padding: 8px; }
+      th { background: #f4f4f4; }
+      .pager { margin-top: 12px; display: flex; gap: 8px; align-items: center; }
+      a.button { border: 1px solid #aaa; padding: 6px 10px; text-decoration: none; border-radius: 4px; }
+      .muted { color: #666; }
+    </style>
+  </head>
+  <body>
+    <h1>검색</h1>
+    <form method="get" action="/">
+      <label>status
+        <input type="text" name="status" value="{{ query.status }}" />
+      </label>
+      <label>keyword
+        <input type="text" name="keyword" value="{{ query.keyword }}" />
+      </label>
+      <label>start
+        <input type="datetime-local" name="start" value="{{ query.start }}" />
+      </label>
+      <label>end
+        <input type="datetime-local" name="end" value="{{ query.end }}" />
+      </label>
+      <label>sort_by
+        <select name="sort_by">
+          {% for c in ["id","title","status","created_at"] %}
+          <option value="{{ c }}" {% if query.sort_by == c %}selected{% endif %}>{{ c }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>order
+        <select name="order">
+          <option value="asc" {% if query.order == "asc" %}selected{% endif %}>asc</option>
+          <option value="desc" {% if query.order == "desc" %}selected{% endif %}>desc</option>
+        </select>
+      </label>
+      <label>size
+        <input type="number" name="size" value="{{ size }}" min="1" max="200" />
+      </label>
+      <label style="justify-content: flex-end;">
+        <button type="submit">검색</button>
+      </label>
+    </form>
+
+    <div class="muted">total: {{ total }}</div>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Title</th><th>Status</th><th>Created At</th></tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.created_at }}</td>
+          </tr>
+        {% else %}
+          <tr><td colspan="4">No results</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="pager">
+      {% if page > 1 %}
+      <a class="button" href="?status={{ query.status }}&keyword={{ query.keyword }}&start={{ query.start }}&end={{ query.end }}&sort_by={{ query.sort_by }}&order={{ query.order }}&size={{ size }}&page={{ page-1 }}">이전</a>
+      {% endif %}
+      <span>{{ page }} / {{ total_pages }}</span>
+      {% if page < total_pages %}
+      <a class="button" href="?status={{ query.status }}&keyword={{ query.keyword }}&start={{ query.start }}&end={{ query.end }}&sort_by={{ query.sort_by }}&order={{ query.order }}&size={{ size }}&page={{ page+1 }}">다음</a>
+      {% endif %}
+      <a class="button" href="/export?status={{ query.status }}&keyword={{ query.keyword }}&start={{ query.start }}&end={{ query.end }}&sort_by={{ query.sort_by }}&order={{ query.order }}">CSV 다운로드</a>
+    </div>
+  </body>
+</html>
