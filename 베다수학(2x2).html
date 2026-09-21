@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#174d47">
+<title>톡톡 베다 곱셈 놀이터 · 어린이 단계별 학습</title>
+<style>
+:root{--bg:#f5f3ec;--paper:#fffefa;--ink:#203d37;--muted:#657770;--line:#dce2d9;--green:#174d47;--lime:#e8f0cf;--orange:#b2542e;--orangebg:#fff0e6;--red:#ad4242;--redbg:#fff0ed;--shadow:0 9px 30px #24473808}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:1.65;word-break:keep-all}button,input,select{font:inherit}button,select,summary{cursor:pointer}button{touch-action:manipulation}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #b56c2e;outline-offset:3px}button:disabled{cursor:default}button{color:inherit}a{color:var(--green)}[hidden]{display:none!important}h1,h2,h3,p{margin:0}svg{max-width:100%}.wrap{max-width:1112px;margin:auto;padding:28px 24px 32px}.masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:25px}.brand{display:flex;gap:10px;align-items:center;font-weight:800;letter-spacing:-.5px}.brand-icon{background:var(--green);color:#fff;border-radius:11px;width:36px;height:36px;display:grid;place-items:center;font-size:25px;line-height:1}.micro{font-size:11px;letter-spacing:1.9px;font-weight:750;color:var(--muted)}.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:30px;padding:4px 11px;font-size:12px;background:var(--paper);white-space:nowrap}.tag:before{content:"";width:6px;height:6px;border-radius:50%;background:#6a8350}.intro{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:28px}.intro h1{font-size:34px;line-height:1.4;letter-spacing:-1.5px;font-weight:800}.intro h1 em{font-style:normal;color:#a5592f}.intro p{color:var(--muted);margin-top:9px}.intro-mark{font-size:49px;letter-spacing:-3px;line-height:1.2;font-family:Georgia,serif;color:#819479;white-space:nowrap;padding-right:9px}.intro-mark small{display:block;font:10px sans-serif;letter-spacing:2px;text-align:right;margin-top:10px}.tabs{display:flex;gap:5px;border-bottom:1px solid var(--line);margin-bottom:22px}.tab{border:0;background:transparent;padding:12px 18px 14px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent}.tab[aria-selected="true"]{color:var(--green);border-bottom-color:var(--green)}.tab .count{font-size:11px;background:#e6e9df;padding:2px 6px;border-radius:6px;margin-left:4px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 272px;gap:20px;align-items:start}.panel{background:var(--paper);border:1px solid var(--line);border-radius:19px;box-shadow:var(--shadow);overflow:hidden}.toolbar{display:flex;align-items:flex-end;gap:16px;padding:19px 23px;border-bottom:1px solid var(--line)}.field{flex:1;min-width:0}.field label{display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:var(--muted)}select{width:100%;padding:10px 34px 10px 12px;border:1px solid #ced8cc;border-radius:9px;background:var(--paper);color:var(--ink);max-width:100%;font-size:14px}.hint-toggle{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;padding-bottom:11px}.hint-toggle input{accent-color:var(--green);width:16px;height:16px}.question{padding:22px 25px 24px}.q-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.q-index{font-size:12px;font-weight:750;letter-spacing:1px;color:var(--muted)}.small-button{border:0;background:transparent;text-decoration:underline;text-underline-offset:4px;font-size:12px;color:var(--muted);padding:6px 0}.vertical-wrap{padding:19px 0 18px;display:flex;justify-content:center}.vertical{display:grid;grid-template-columns:38px repeat(4,36px);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;grid-template-rows:49px 49px 2px 43px;align-items:center;text-align:center;font-size:43px;line-height:1;max-width:100%}.vertical .op{grid-column:1;grid-row:2;font-size:27px;color:#738478}.vertical .a10{grid-column:4;grid-row:1}.vertical .a1{grid-column:5;grid-row:1}.vertical .b10{grid-column:4;grid-row:2}.vertical .b1{grid-column:5;grid-row:2}.vertical .bar{grid-column:1/6;grid-row:3;background:var(--ink);height:2px;margin-top:6px}.vertical .unknown{grid-column:2/6;grid-row:4;letter-spacing:7px;font-size:25px;color:#a1aa98;padding-top:16px}.vertical .answer{grid-column:2/6;grid-row:4;text-align:right;font-size:31px;letter-spacing:3px;padding-top:13px;color:var(--green)}.hint{font-size:13px;background:var(--lime);border-radius:10px;padding:11px 14px;margin:0 0 17px;line-height:1.65}.hint strong{color:var(--green)}.choose-label{font-size:13px;color:var(--muted);margin:2px 0 10px}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.choice{position:relative;display:flex;align-items:center;gap:12px;padding:12px 15px;border:1px solid #d5ddd2;border-radius:10px;background:#fff;min-height:56px;text-align:left;transition:border-color .15s,background .15s}.choice:last-child{grid-column:1/3}.choice:not(:disabled):hover{border-color:var(--green);background:#f0f5e8}.choice-key{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;background:#f0f2eb;font-size:11px;font-weight:700;flex-shrink:0}.choice-value{font:600 24px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1px}.choice-state{margin-left:auto;font-size:11px;font-weight:700}.choice.correct{border:2px solid var(--green);padding:11px 14px;background:#edf4e2;color:var(--green)}.choice.correct .choice-key{background:var(--green);color:white}.choice.wrong{border:2px solid var(--red);padding:11px 14px;background:var(--redbg);color:var(--red)}.choice.wrong .choice-key{background:var(--red);color:white}.choice.dim{opacity:.65}.feedback{margin-top:15px;padding:15px 17px;border-radius:11px;border:1px solid #c4d6b8;background:#eef4e4;font-size:13px}.feedback strong{display:block;font-size:17px;margin-bottom:4px}.feedback.missed{background:var(--orangebg);border-color:#ebceb9}.explanation{padding:23px 25px 25px;border-top:1px solid var(--line);background:#fcfdf8;scroll-margin-top:16px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}.lesson-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.lesson-heading h2{font-size:19px;letter-spacing:-.6px;line-height:1.5}.method-note{color:var(--muted);font-size:12px;margin-top:5px}.step-progress{display:flex;gap:6px;margin:20px 0 15px}.step-dot{height:6px;border-radius:8px;border:0;flex:1;background:#e0e6db;padding:0}.step-dot.done{background:#91aa70}.step-dot.active{background:var(--green)}.step-card{border:1px solid #dce4d3;background:white;padding:19px;border-radius:13px;margin-bottom:12px}.step-title{display:flex;align-items:center;gap:10px;font-weight:750;font-size:15px;margin-bottom:12px}.step-number{width:26px;height:26px;display:grid;place-items:center;flex-shrink:0;background:var(--green);color:white;border-radius:8px;font-size:12px}.step-card p{font-size:14px;color:#435c51;line-height:1.85}.equation{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:21px;font-weight:650;line-height:1.8;letter-spacing:-.5px;background:#f3f6ed;border-radius:8px;padding:11px 14px;margin-top:13px;overflow-wrap:anywhere;word-break:normal}.equation small{font-family:inherit;font-size:14px;font-weight:500}.nav-steps{display:flex;gap:9px;align-items:center}.button{padding:10px 17px;border:1px solid #cbd7c6;background:white;border-radius:9px;font-size:14px;font-weight:700;min-height:44px}.button.primary{background:var(--green);border-color:var(--green);color:white}.button:disabled{opacity:.45}.nav-steps .primary{margin-left:auto}.all-steps{margin-top:13px;display:flex;justify-content:space-between;font-size:12px}.text-button{border:0;background:transparent;color:var(--green);font-size:12px;text-decoration:underline;text-underline-offset:3px;padding:5px 0}.why{border-top:1px solid var(--line);margin-top:20px;padding-top:16px}.why summary{font-weight:750;font-size:13px}.why p{color:var(--muted);font-size:13px;margin-top:10px}.why .equation{font-size:16px}.caution{border-left:3px solid #cb874b;background:#faf1e6;margin-top:15px;padding:11px 13px;font-size:13px}.alternative{margin-top:14px}.alternative summary{font-size:13px;font-weight:700}.alt-body{padding-top:12px}.custom{border-top:1px solid var(--line);padding:16px 24px;color:var(--muted);font-size:13px}.custom summary{font-weight:650}.custom-row{display:flex;align-items:center;gap:9px;margin-top:13px;flex-wrap:wrap}.custom input{width:72px;border:1px solid #cbd7c6;background:white;padding:9px;border-radius:8px;text-align:center;color:var(--ink)}.custom .error{color:var(--red);font-size:12px;margin-top:8px}.side{display:grid;gap:16px}.side-card{border:1px solid var(--line);border-radius:17px;background:var(--paper);padding:21px}.side-card h2{font-size:15px;margin-bottom:13px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}.stat span{display:block;font-size:11px;color:var(--muted)}.stat b{display:block;font:600 29px ui-monospace,Consolas,monospace;letter-spacing:-1px;padding-top:4px}.stat b small{font-size:13px}.accuracy{height:6px;background:#e7ecdf;border-radius:10px;overflow:hidden}.accuracy span{display:block;height:100%;width:0;background:#63845b;transition:width .2s}.stat-caption{font-size:11px;color:var(--muted);margin-top:9px}.small-steps{list-style:none;counter-reset:flow;padding:0;margin:0;display:grid;gap:16px}.small-steps li{counter-increment:flow;position:relative;padding-left:31px;font-size:12px;color:var(--muted)}.small-steps li:before{content:counter(flow);position:absolute;left:0;top:0;display:grid;place-items:center;border:1px solid #c6d0bb;border-radius:50%;width:22px;height:22px;font-size:11px;color:var(--green)}.small-steps strong{display:block;font-size:13px;color:var(--ink);margin-bottom:3px}.tip-card{background:#e9eddc;border:0}.tip-card p{font-size:13px;line-height:1.9}.side-foot{font-size:11px;color:var(--muted);text-align:center;padding:0 10px}.section-head{margin:4px 0 21px}.section-head h2{font-size:24px;letter-spacing:-.8px}.section-head p{font-size:14px;color:var(--muted);margin-top:6px}.rule-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.rule-card{padding:23px;display:flex;flex-direction:column}.rule-top{display:flex;gap:12px;align-items:flex-start}.rule-code{font:500 18px Georgia,serif;color:#8b794e;background:#f3eedf;padding:5px 9px;border-radius:7px}.rule-top h3{font-size:17px;line-height:1.5}.rule-card .condition{font-size:13px;color:var(--muted);margin-top:9px;min-height:43px}.rule-example{font:600 26px ui-monospace,Consolas,monospace;color:var(--green);margin:15px 0 9px;letter-spacing:-1px}.rule-card .recipe{font-size:13px;line-height:1.85;margin-bottom:12px}.rule-card .rule-warning{font-size:12px;color:#92532f;margin-bottom:14px}.rule-card .button{margin-top:auto;align-self:flex-start}.source-box{font-size:12px;color:var(--muted);margin:23px 0 5px;border-top:1px solid var(--line);padding-top:17px}.source-box p{margin:8px 0}.source-box a{margin-right:13px}.empty{padding:54px 24px;text-align:center}.empty-mark{font-size:34px;margin-bottom:10px}.empty h3{font-size:20px;margin-bottom:8px}.empty p{font-size:14px;color:var(--muted)}.review-list{display:grid;gap:12px}.review-item{padding:18px 21px;display:flex;align-items:center;justify-content:space-between;gap:15px}.review-item h3{font:600 25px ui-monospace,Consolas,monospace;margin-bottom:4px}.review-item p{font-size:12px;color:var(--muted)}.review-actions{display:flex;gap:12px;align-items:center}.review-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);padding-top:17px;margin-top:28px}.blocks{display:flex;align-items:center;justify-content:center;gap:8px;margin:17px 0 3px;flex-wrap:wrap}.block{text-align:center;background:#edf3e4;border:1px solid #dce7d0;border-radius:9px;min-width:90px;padding:10px 12px}.block.orange{background:var(--orangebg);border-color:#f0dbc7}.block b{display:block;font:650 29px ui-monospace,Consolas,monospace}.block span{display:block;font-size:10px;color:var(--muted);margin-top:4px}.join{font-size:22px;color:#7a8d76}.visual-note{font-size:11px!important;text-align:center;margin-top:8px;color:var(--muted)!important}.cross-visual{display:flex;align-items:center;gap:15px;justify-content:center;margin-top:13px;flex-wrap:wrap}.cross-visual svg{width:170px;height:177px;flex-shrink:0}.carry-box{font-size:12px;color:var(--muted);max-width:190px;padding:11px 13px;background:#f5f3eb;border-radius:9px}.partial-answer{display:flex;justify-content:center;gap:6px;margin-top:8px}.digit-box{width:36px;min-height:43px;display:grid;place-items:center;border-radius:7px;border:1px solid #ccd8c2;background:#f0f5e8;font:600 25px ui-monospace,monospace}.digit-box.blank{color:#aab29f;background:#f9faf5}.base-table{margin:15px auto 0;border-collapse:collapse;min-width:210px;text-align:center;font-family:ui-monospace,Consolas,monospace}.base-table th{font:500 11px sans-serif;color:var(--muted);padding:4px 12px}.base-table td{padding:5px 13px;font-size:24px}.base-table td:last-child{color:var(--orange);border-left:1px solid var(--line)}.base-table tr:last-child{border-bottom:2px solid var(--ink)}.mono{font-family:ui-monospace,Consolas,monospace}.announcement{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:850px){.layout{grid-template-columns:minmax(0,1fr) 235px}.toolbar{padding:16px 18px;gap:9px}.question,.explanation{padding:20px}.intro h1{font-size:29px}.intro-mark{font-size:39px}.side-card{padding:17px}}
+@media(max-width:680px){.wrap{padding:17px 14px 24px}.masthead{margin-bottom:20px}.intro{margin-bottom:18px}.intro h1{font-size:27px;line-height:1.4;letter-spacing:-1.1px}.intro p{font-size:12px;margin-top:7px}.intro-mark{display:none}.brand{font-size:14px}.brand-icon{width:32px;height:32px;font-size:23px}.tag{font-size:10px;padding:3px 8px}.tabs{margin-bottom:16px;gap:0}.tab{padding:9px 14px 12px;font-size:14px}.layout{display:flex;flex-direction:column;gap:15px}.main-panel{width:100%}.side{width:100%;grid-template-columns:1fr 1fr;gap:12px}.side-card{padding:16px}.side-card.howto{display:none}.side-foot{grid-column:1/3}.toolbar{padding:14px;gap:8px}.hint-toggle{font-size:11px;gap:3px}.hint-toggle input{width:15px;height:15px}.field label{font-size:11px}select{font-size:12px;padding-left:9px}.question{padding:16px}.q-index{font-size:11px}.vertical-wrap{padding:8px 0 13px}.vertical{grid-template-rows:43px 43px 2px 40px;font-size:39px;grid-template-columns:32px repeat(4,31px)}.vertical .unknown{font-size:23px}.vertical .answer{font-size:28px}.hint{font-size:12px;margin-bottom:13px;padding:9px 11px}.choose-label{font-size:12px}.choices{gap:8px}.choice{padding:11px 12px;min-height:53px;gap:9px}.choice.correct,.choice.wrong{padding:10px 11px}.choice-value{font-size:23px}.choice-state{font-size:10px}.explanation{padding:18px 16px}.lesson-heading h2{font-size:17px}.step-card{padding:15px}.step-card p{font-size:13px}.step-title{font-size:14px}.equation{font-size:19px;padding:10px}.custom{padding:14px 16px}.rule-grid{grid-template-columns:1fr}.rule-card{padding:20px}.rule-card .condition{min-height:0}.section-head h2{font-size:22px}.section-head p{font-size:13px}.stat b{font-size:26px}.stats{gap:6px}.side-card h2{font-size:14px}.tip-card p{font-size:12px}.footer{font-size:10px;gap:12px}.review-item{padding:16px;gap:9px}.review-item h3{font-size:22px}.review-actions{gap:10px}.review-actions .button{font-size:12px;padding:8px 11px}.cross-visual{gap:5px}.carry-box{max-width:145px;font-size:11px}.cross-visual svg{width:145px}.block{min-width:76px;padding:8px 10px}.block b{font-size:25px}.block span{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+@media print{body{background:white}.wrap{max-width:100%;padding:0}.masthead,.intro,.tabs,.toolbar,.side,.custom,.choices,.nav-steps,.all-steps,.footer,.q-top button,.source-box,.review-actions{display:none!important}.layout{display:block}.panel{border:0;box-shadow:none}.step-card{break-inside:avoid}.question{padding:10px}.explanation{padding:15px}.vertical-wrap{padding:0}.rule-grid{display:block}.rule-card{break-inside:avoid}.button{display:none}}
+
+/* 초등 저학년용: 큰 글씨, 넓은 터치 영역, 한 번에 한 가지에 집중하는 흐름 */
+:root{--kid-yellow:#fff4b8;--kid-blue:#dff1ff;--kid-pink:#ffe7e2;--kid-green:#dff1cf;--kid-deep:#123f3a}
+body{font-size:16px;background:linear-gradient(180deg,#eef6e8 0,#f7f4e9 360px,var(--bg) 100%)}
+.wrap{max-width:1080px}.brand{font-size:18px}.brand-icon{border-radius:50%;background:#f1a83b;color:#173f39;font-weight:900}.intro h1{font-size:38px}.intro p{font-size:16px;color:#536b61}.intro-mark{color:#6f8c65}.tab{min-height:52px;font-size:15px}.toolbar{align-items:center}.field label{font-size:14px;color:var(--ink)}select{min-height:48px;font-size:15px;background-color:#fff}.question{padding:24px 28px 28px}.q-index{padding:5px 10px;border-radius:999px;background:var(--kid-blue);color:#27617a;letter-spacing:.5px}.choose-label{font-size:15px;color:var(--ink);font-weight:700}.choice{min-height:66px;border-width:2px;border-color:#d7e2d4}.choice-key{width:30px;height:30px;font-size:13px}.choice-value{font-size:27px}.hint{font-size:15px;border:2px solid #d2e3b5;background:#f2f8df}.helper-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;padding:15px 17px;border-radius:14px;background:var(--kid-yellow);border:2px solid #f1df82}.helper-row p{font-size:14px;line-height:1.6}.helper-row strong{display:block;font-size:16px}.help-button{border:0;border-radius:12px;background:#ef8e3d;color:#fff;font-weight:800;min-height:52px;padding:10px 18px;white-space:nowrap;box-shadow:0 4px 0 #bf6829}.help-button:active{transform:translateY(2px);box-shadow:0 2px 0 #bf6829}.explanation{padding:26px 28px 29px;background:#fffdf5}.lesson-heading h2{font-size:23px}.method-note{font-size:14px;color:#51685f;margin-top:8px}.step-progress{gap:9px;margin:21px 0 17px}.step-dot{height:12px;border-radius:12px}.step-dot:disabled{cursor:default;opacity:.58}.step-dot.done{opacity:1}.step-card{border:2px solid #cfe0c6;border-radius:18px;padding:22px;background:#fff;box-shadow:0 5px 0 #e8eee2;animation:step-in .22s ease-out}.step-kicker{font-size:11px!important;letter-spacing:1.5px;color:#7c8d84!important;font-weight:800;margin-bottom:8px!important}.step-title{font-size:19px;margin-bottom:14px}.step-number{width:34px;height:34px;border-radius:50%;font-size:15px;background:#ef8e3d}.step-card p{font-size:16px;line-height:1.9;color:#324f45}.equation{font-size:24px;line-height:1.7;background:#edf7e4;border:2px solid #d8e9c9;text-align:center;margin-top:16px}.look-tip{display:flex;gap:10px;align-items:flex-start;margin-top:16px;padding:12px 14px;border-radius:12px;background:var(--kid-blue);color:#315f72;font-size:13px;line-height:1.65}.look-tip b{white-space:nowrap;color:#20536b}.nav-steps{margin-top:17px}.nav-steps .button{min-height:54px}.nav-steps .primary{font-size:16px;padding-inline:22px;box-shadow:0 4px 0 #0c332f}.nav-steps .primary:active:not(:disabled){transform:translateY(2px);box-shadow:0 2px 0 #0c332f}.celebration{display:none;margin-top:15px;padding:15px 16px;border-radius:14px;background:var(--kid-yellow);font-weight:800;text-align:center}.celebration.show{display:block}.why summary,.alternative summary{min-height:44px;display:flex;align-items:center;font-size:14px}.caution{border-left-width:5px;border-radius:0 10px 10px 0}.side-card h2{font-size:17px}.small-steps li{font-size:13px}.small-steps strong{font-size:15px}.tip-card{background:var(--kid-blue)}.beginner-note{margin-top:8px;font-size:12px;color:var(--muted)}
+@keyframes step-in{from{opacity:.2;transform:translateY(7px)}to{opacity:1;transform:none}}
+@media(max-width:680px){body{font-size:15px}.intro h1{font-size:30px}.intro p{font-size:14px}.tab{font-size:13px;padding-inline:11px}.question{padding:17px}.choices{grid-template-columns:1fr}.choice:last-child{grid-column:auto}.choice{min-height:60px}.helper-row{align-items:stretch;flex-direction:column}.help-button{width:100%}.explanation{padding:21px 17px 23px}.lesson-heading h2{font-size:20px}.step-card{padding:18px 16px}.step-card p{font-size:15px}.equation{font-size:22px}.nav-steps{display:grid;grid-template-columns:auto 1fr}.nav-steps .primary{width:100%}.all-steps{gap:12px}.side{grid-template-columns:1fr}.side-foot{grid-column:auto}}
+@media print{.helper-row,.celebration,.look-tip{display:none!important}}
+
+/* 움직이는 세로 계산판 */
+.step-card{overflow:hidden;background:linear-gradient(145deg,#fff 0,#fffdf4 100%)}
+.vertical-stage{position:relative;margin:0 -4px 20px;padding:17px 14px 15px;border-radius:20px;background:radial-gradient(circle at 15% 10%,#335b80 0,#18334f 38%,#10263d 100%);box-shadow:0 10px 24px #10263d28,inset 0 0 0 2px #ffffff18;color:#fff;overflow:hidden}
+.vertical-stage:before,.vertical-stage:after{content:"";position:absolute;border-radius:50%;background:#fff;opacity:.22;animation:twinkle 1.8s ease-in-out infinite}
+.vertical-stage:before{width:8px;height:8px;top:17px;left:19px}.vertical-stage:after{width:5px;height:5px;right:23px;top:49px;animation-delay:.55s}
+.board-caption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;font-size:12px;color:#cce7ff;font-weight:750}.board-caption span:last-child{color:#ffe98c}
+.calc-board{position:relative;width:max-content;min-width:282px;margin:auto;padding:5px 18px 12px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.calc-grid{display:grid;grid-template-columns:32px repeat(4,48px);align-items:center;text-align:center}
+.place-row{font:700 10px/1 sans-serif;color:#82a6c6;margin-bottom:5px}.place-row span:first-child{grid-column:1}.place-row .place-h{grid-column:3}.place-row .place-t{grid-column:4}.place-row .place-o{grid-column:5}
+.carry-lane{height:42px;position:relative}.carry-label{grid-column:1;font:800 10px/1 sans-serif;color:#ffc868;align-self:center}.carry-chip{width:31px;height:31px;display:grid;place-items:center;justify-self:center;border-radius:50%;background:#ffca4b;color:#402d00;font:900 18px/1 sans-serif;box-shadow:0 0 0 4px #ffca4b33,0 0 17px #ffd86a;z-index:3}.carry-chip.fly-up{animation:carry-rise .72s cubic-bezier(.2,.85,.28,1.35) both}.carry-chip.old{opacity:.45;transform:scale(.82)}.carry-one{grid-column:4}.carry-two{grid-column:3}.number-row{min-height:52px;font-size:42px;line-height:1;font-weight:850}.number-row .operator{grid-column:1;color:#ff9d73;font-size:31px}.calc-digit{display:grid;place-items:center;width:42px;height:47px;justify-self:center;border-radius:10px;color:#f7fbff;text-shadow:0 2px 8px #0006;transition:.2s}.digit-thousands{grid-column:2}.digit-hundreds{grid-column:3}.digit-tens{grid-column:4}.digit-ones{grid-column:5}.calc-digit.active{background:#ffffff17;box-shadow:inset 0 0 0 2px #7ee7ff,0 0 18px #36c9ff99;animation:digit-glow .9s ease-in-out infinite alternate}.calc-digit.cross-a{box-shadow:inset 0 0 0 2px #ff9d73,0 0 16px #ff7d50aa}.calc-digit.cross-b{box-shadow:inset 0 0 0 2px #8bf0b1,0 0 16px #53db89aa}.calc-line{height:4px;margin:7px 0 8px 32px;border-radius:5px;background:linear-gradient(90deg,#ff8d68,#ffd568,#7ae3ff,#8eefb3);box-shadow:0 0 14px #80eaff77;animation:line-flash .65s ease-out both}.answer-row{min-height:55px;font-size:41px;font-weight:900}.answer-row .answer-mark{grid-column:1;color:#75dff3;font-size:23px}.answer-digit{display:grid;place-items:center;width:42px;height:48px;justify-self:center;border-radius:10px;color:#fff}.answer-digit.blank{color:#7794ab;border:2px dashed #57738b;font-size:21px}.answer-digit.drop{background:#30c48d;box-shadow:0 0 0 3px #30c48d33,0 0 20px #2ff2a4aa;animation:digit-drop .58s cubic-bezier(.2,.85,.25,1.35) both}.answer-digit.drop:nth-of-type(2){animation-delay:.08s}.answer-digit.drop:nth-of-type(3){animation-delay:.16s}.answer-digit.drop:nth-of-type(4){animation-delay:.24s}.board-action{position:relative;margin:12px auto 0;max-width:390px;min-height:58px;display:flex;align-items:center;justify-content:center;gap:9px;padding:11px 14px;border-radius:14px;background:#fff;color:#16384d;text-align:center;font-size:14px;font-weight:800;box-shadow:0 5px 0 #8ebbd0}.board-action .action-pop{font-size:24px;animation:pop-bounce .65s ease-out both}.board-action strong{color:#d9562a}.confetti{pointer-events:none;position:absolute;inset:0}.confetti i{position:absolute;top:-12px;width:8px;height:17px;border-radius:4px;animation:confetti-fall 1.15s ease-out both}.confetti i:nth-child(1){left:8%;background:#ffcc45}.confetti i:nth-child(2){left:24%;background:#ff6e78;animation-delay:.12s}.confetti i:nth-child(3){left:43%;background:#6ee7a8;animation-delay:.04s}.confetti i:nth-child(4){left:63%;background:#70d6ff;animation-delay:.18s}.confetti i:nth-child(5){left:80%;background:#c58cff;animation-delay:.09s}.confetti i:nth-child(6){left:93%;background:#ff9b54;animation-delay:.22s}.spoken-equation{margin-top:14px;padding:10px 13px;border-radius:11px;background:#f3f7ee;color:#476057;font-size:14px;text-align:center}.spoken-equation b{display:block;color:#26483d;font-size:11px;letter-spacing:1px;margin-bottom:4px}.spoken-equation .equation{border:0;background:transparent;margin:0;padding:0;font-size:18px;color:#26483d}.step-card>.step-kicker,.step-card>.step-title,.step-card>.step-copy,.step-card>.look-tip{max-width:650px;margin-left:auto;margin-right:auto}.step-card>.step-copy{text-align:center}.nav-steps .primary{background:linear-gradient(135deg,#12a874,#08765d);border:0;box-shadow:0 5px 0 #075342,0 9px 21px #0e8d6840}.nav-steps .primary:not(:disabled){animation:button-pulse 1.65s ease-in-out infinite}
+@keyframes carry-rise{0%{opacity:0;transform:translateY(112px) scale(.4) rotate(-18deg)}65%{opacity:1;transform:translateY(-7px) scale(1.13) rotate(7deg)}100%{opacity:1;transform:none}}
+@keyframes digit-drop{0%{opacity:0;transform:translateY(-58px) scale(.45) rotate(8deg)}70%{opacity:1;transform:translateY(7px) scale(1.1) rotate(-3deg)}100%{opacity:1;transform:none}}
+@keyframes digit-glow{from{filter:brightness(.92);transform:scale(.98)}to{filter:brightness(1.25);transform:scale(1.04)}}
+@keyframes line-flash{0%{transform:scaleX(0);transform-origin:left;filter:brightness(2)}100%{transform:scaleX(1);filter:brightness(1)}}
+@keyframes pop-bounce{0%{transform:scale(.2) rotate(-20deg)}70%{transform:scale(1.25) rotate(8deg)}100%{transform:none}}
+@keyframes twinkle{50%{opacity:.8;transform:scale(1.7)}}
+@keyframes button-pulse{50%{filter:brightness(1.12);box-shadow:0 5px 0 #075342,0 9px 28px #20bb8660}}
+@keyframes confetti-fall{0%{opacity:0;transform:translateY(-10px) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(285px) rotate(390deg)}}
+@media(max-width:680px){.vertical-stage{padding-inline:7px;margin-inline:-5px}.calc-board{min-width:270px;padding-inline:11px}.calc-grid{grid-template-columns:29px repeat(4,45px)}.number-row{font-size:39px}.calc-digit,.answer-digit{width:39px}.board-action{font-size:13px}.spoken-equation .equation{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.carry-chip.fly-up,.answer-digit.drop,.calc-digit.active,.calc-line,.board-action .action-pop,.confetti i,.nav-steps .primary,.vertical-stage:before,.vertical-stage:after{animation:none!important}}
+@media print{.vertical-stage{background:#fff;color:#111;box-shadow:none;border:2px solid #111}.board-caption,.place-row,.carry-label{color:#333}.calc-digit,.answer-digit{color:#111;text-shadow:none}.confetti{display:none}.spoken-equation{border:1px solid #bbb}}
+
+/* 다른 풀이와 넓이 풀이 */
+.explore-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}.explore-button{min-height:46px;border:2px solid #8cc9e5;border-radius:13px;background:#eaf7ff;color:#174f68;font-weight:800}.explore-button.area{border-color:#e8bb69;background:#fff5d5;color:#765118}.explore-button:disabled{opacity:.45}.learning-modal{position:fixed;inset:0;z-index:1000;padding:18px;background:#10263dd9;backdrop-filter:blur(8px);display:grid;place-items:center}.modal-shell{width:min(720px,100%);height:min(760px,calc(100dvh - 36px));display:flex;flex-direction:column;min-height:0;padding:22px;border-radius:24px;background:#fffdf5;box-shadow:0 28px 80px #07131f88;overflow:hidden}.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;flex:0 0 auto}.modal-head h2{font-size:23px}.modal-close{width:44px;height:44px;border:0;border-radius:50%;background:#173f39;color:white;font-size:28px;line-height:1}.method-chips{display:flex;gap:7px;overflow-x:auto;padding:12px 1px 7px;scrollbar-width:thin;flex:0 0 auto}.method-chip{border:1px solid #c8d8ce;border-radius:999px;background:#fff;padding:8px 12px;font-size:12px;font-weight:750;white-space:nowrap}.method-chip.active{background:#174d47;color:#fff;border-color:#174d47}.modal-progress{display:flex;gap:6px;margin:9px 0;flex:0 0 auto}.modal-progress span{height:7px;border-radius:10px;background:#dce4d8;flex:1}.modal-progress span.done{background:#ef9a45}.modal-progress span.active{background:#174d47}.modal-content{flex:1;min-height:0;display:grid;place-items:stretch;overflow:hidden}.modal-step{height:100%;min-height:0;border:2px solid #dce7d5;border-radius:18px;background:white;padding:18px;display:flex;flex-direction:column;justify-content:center;text-align:center;overflow:hidden}.modal-step h3{font-size:20px;margin-bottom:11px}.modal-step p{font-size:15px;line-height:1.75;color:#40594f}.modal-step .equation{margin:13px auto 0;width:min(440px,100%)}.modal-nav{display:grid;grid-template-columns:auto 1fr;gap:9px;padding-top:12px;flex:0 0 auto}.modal-nav .primary{margin:0}.area-step{justify-content:flex-start}.area-model{width:min(480px,100%);height:min(300px,42vh);margin:10px auto;display:grid;gap:5px;padding:27px 5px 5px 34px;position:relative}.area-cell{border-radius:13px;display:grid;place-items:center;padding:5px;font-weight:850;color:#28483d;box-shadow:inset 0 0 0 2px #ffffff99;transition:.25s}.area-cell.c1{background:#a9dfc2}.area-cell.c2{background:#a9d8f2}.area-cell.c3{background:#ffe08c}.area-cell.c4{background:#ffb4aa}.area-cell.wait{filter:grayscale(.85);opacity:.28}.area-cell.reveal{animation:area-pop .6s cubic-bezier(.2,.85,.25,1.3) both}.area-cell b{display:block;font-size:18px}.area-cell small{font-size:11px}.area-top,.area-left{position:absolute;font-size:11px;font-weight:800;color:#5e7068}.area-top{top:3px}.area-left{left:2px;writing-mode:vertical-rl;transform:rotate(180deg)}.area-sum{padding:9px 12px;border-radius:11px;background:#fff3c8;font-weight:850;color:#6f4a08;animation:area-pop .55s ease-out both}.modal-empty{display:grid;place-items:center;text-align:center;color:var(--muted)}
+@keyframes area-pop{0%{opacity:.15;transform:scale(.72)}70%{transform:scale(1.06)}100%{opacity:1;transform:none}}
+
+.carry-chip.fly-down{background:#ff8c72;color:#4b170d;box-shadow:0 0 0 4px #ff8c7233,0 0 17px #ff9b84;animation:carry-drop .72s cubic-bezier(.2,.85,.28,1.35) both}
+@keyframes carry-drop{0%{opacity:0;transform:translateY(-75px) scale(.4) rotate(18deg)}65%{opacity:1;transform:translateY(7px) scale(1.13) rotate(-7deg)}100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.carry-chip.fly-down{animation:none!important}}
+/* 화면 높이를 고정하지 않고, 내용 길이에 따라 자연스럽게 스크롤해요. */
+body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body.modal-open{overflow:hidden}
+main,.layout>*,.lesson-heading h2,.modal-head>div{min-width:0}
+.brand-icon,.lesson-heading>.tag,.modal-close{flex-shrink:0}
+.calc-board{--operator-width:32px;width:100%;max-width:282px;min-width:0}
+.calc-grid{grid-template-columns:var(--operator-width) repeat(4,minmax(0,1fr))}
+.calc-digit,.answer-digit{max-width:100%}
+.calc-line{margin-left:var(--operator-width)}
+.board-action>span:last-child{min-width:0;overflow-wrap:anywhere}
+.modal-shell{height:min(760px,calc(100vh - 36px));height:min(760px,calc(100dvh - 36px));min-width:0}
+.modal-content{display:block;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.modal-step{height:auto;min-height:100%;overflow:visible;justify-content:flex-start}
+.modal-step>*{flex-shrink:0}
+.modal-step h3 .step-number{display:inline-grid;vertical-align:middle}
+.area-model{flex-shrink:0;min-height:220px}
+
+@media screen and (max-width:680px){
+  .wrap{padding:17px max(14px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+  .masthead{flex-wrap:wrap;gap:8px}
+  .brand{font-size:15px;min-width:0}
+  .intro h1{font-size:28px}
+  .intro p{font-size:14px;overflow-wrap:anywhere}
+  .tabs .tab{flex:1;min-width:0;padding-inline:7px;font-size:13px}
+  .layout{display:flex;flex-direction:column}
+  .toolbar{flex-wrap:wrap;gap:8px 12px}
+  .field{flex:1 1 210px}
+  .field label{font-size:13px}
+  select,.custom input{font-size:16px}
+  .hint-toggle{padding-bottom:0;min-height:36px;font-size:13px}
+  .hint-toggle input{width:18px;height:18px}
+  .beginner-note{font-size:12px}
+  .q-index{font-size:12px}
+  .small-button{min-height:44px;padding:8px 0;font-size:13px}
+  .hint{font-size:14px;line-height:1.75}
+  .choose-label{font-size:14px}
+  .choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .choice,.choice.correct,.choice.wrong{display:grid;grid-template-columns:24px minmax(0,1fr);gap:3px 8px;min-width:0;min-height:60px;padding:10px}
+  .choice:last-child{grid-column:1 / -1}
+  .choice-key{width:24px;height:24px;font-size:12px}
+  .choice-value{font-size:24px}
+  .choice-state{grid-column:2;margin:0;font-size:11px;line-height:1.3}
+  .choice-state:empty{display:none}
+  .feedback{font-size:14px;line-height:1.75;scroll-margin-top:16px}
+  .feedback strong{font-size:17px}
+  .helper-row{padding:14px;gap:12px}
+  .helper-row p{font-size:14px}
+  .help-button{font-size:16px;white-space:normal}
+  .explanation{padding:21px 16px 23px}
+  .lesson-heading{align-items:flex-start}
+  .lesson-heading h2{font-size:20px;overflow-wrap:anywhere}
+  .method-note{font-size:14px;line-height:1.75}
+  .step-progress{scroll-margin-top:16px}
+  .step-card{padding:16px 12px}
+  .step-title{font-size:17px;line-height:1.6}
+  .step-card p{font-size:15px;line-height:1.85}
+  .vertical-stage{margin:0 0 18px;padding:14px 8px 16px;border-radius:16px}
+  .board-caption{align-items:flex-start;font-size:12px;line-height:1.5}
+  .board-caption span:last-child{flex-shrink:0;white-space:nowrap}
+  .calc-board{--operator-width:24px;padding:5px 0 10px}
+  .number-row{font-size:36px}
+  .answer-row{font-size:35px}
+  .calc-digit,.answer-digit{width:36px}
+  .board-action{margin-top:10px;padding:12px 9px;font-size:14px;line-height:1.7;gap:6px}
+  .board-action .action-pop{font-size:22px;flex-shrink:0}
+  .spoken-equation{padding:12px 10px}
+  .spoken-equation .equation{font-size:18px;line-height:1.75}
+  .look-tip{flex-direction:column;gap:4px;font-size:13px}
+  .explore-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .explore-button{min-height:48px;padding:8px;font-size:14px}
+  .nav-steps{grid-template-columns:auto minmax(0,1fr);align-items:stretch}
+  .nav-steps .button{min-width:0;min-height:54px;padding:10px 12px;font-size:14px;line-height:1.6}
+  .nav-steps .primary{font-size:15px}
+  .all-steps{flex-wrap:wrap;gap:4px 12px}
+  .all-steps .text-button{min-height:44px;font-size:13px}
+  .custom-row{gap:8px}
+  .custom input{min-height:44px}
+  .footer{flex-wrap:wrap;gap:8px}
+  .learning-modal{padding:10px max(10px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
+  .modal-shell{height:100%;max-height:760px;padding:14px;border-radius:18px}
+  .modal-head{gap:10px}
+  .modal-head h2{font-size:19px;line-height:1.5;overflow-wrap:anywhere}
+  .modal-close{width:44px;height:44px;font-size:26px}
+  .method-chip{min-height:44px;font-size:13px}
+  .modal-step{padding:16px 12px;border-radius:14px}
+  .modal-step h3{font-size:18px;line-height:1.5}
+  .modal-step p{font-size:15px;line-height:1.8}
+  .modal-step .equation{font-size:18px;padding:10px;line-height:1.65}
+  .modal-nav{grid-template-columns:auto minmax(0,1fr);gap:8px}
+  .modal-nav .button{min-width:0;min-height:48px;padding:10px;font-size:14px}
+  .area-model{height:240px;margin:12px auto;padding:27px 4px 4px 28px;gap:4px}
+  .area-cell{min-width:0;border-radius:9px;padding:4px}
+  .area-cell b{font-size:16px}
+  .area-cell small{font-size:11px}
+  .area-sum{font-size:14px}
+}
+
+@media screen and (max-width:350px){
+  .masthead .tag{font-size:9px}
+  .brand{font-size:14px}
+  .tabs .tab{font-size:12px;padding-inline:5px}
+  .lesson-heading{flex-wrap:wrap}
+  .choice-value{font-size:22px}
+  .modal-shell{padding:10px}
+  .modal-step{padding:14px 8px}
+  .area-cell b{font-size:14px}
+}
+
+@media screen and (max-height:500px){
+  .learning-modal{padding:8px}
+  .modal-shell{height:100%;max-height:100%;padding:12px}
+  .modal-head h2{font-size:18px}
+  .method-chips{padding-block:5px}
+  .modal-nav{padding-top:8px}
+}
+/* 요청한 계산법에서만 사용하는 누적 계산판: 기존 화면 스타일은 그대로 유지해요. */
+.cumulative-diagram{display:block;width:100%;max-width:360px;height:auto;margin:4px auto 0}
+.cumulative-diagram text{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums}
+.cumulative-stage .board-caption span:last-child{flex-shrink:0}
+@media print{.cumulative-stage{background:#18334f!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead"><div class="brand"><span class="brand-icon" aria-hidden="true">✦</span>톡톡 베다 곱셈 놀이터</div><span class="tag">어린이 첫걸음</span></header>
+  <div class="intro"><div><h1>한 번 톡 누르면,<br>곱셈이 <em>한 걸음씩!</em></h1><p>답을 몰라도 괜찮아요. 선생님과 같이 천천히 풀어 봐요.</p></div><div class="intro-mark" aria-hidden="true">12 × 11<small>하나씩 보고 · 말하고 · 계산해요</small></div></div>
+  <nav class="tabs" role="tablist" aria-label="학습 메뉴"><button class="tab" id="tab-quiz" role="tab" aria-selected="true" aria-controls="page-quiz" data-tab="quiz">같이 풀기</button><button class="tab" id="tab-theory" role="tab" aria-selected="false" aria-controls="page-theory" tabindex="-1" data-tab="theory">계산법 놀이터</button><button class="tab" id="tab-review" role="tab" aria-selected="false" aria-controls="page-review" tabindex="-1" data-tab="review">한 번 더 <span class="count" id="review-count">0</span></button></nav>
+  <main>
+  <section id="page-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+    <div class="layout">
+      <div class="panel main-panel">
+        <div class="toolbar"><div class="field"><label for="method-select">어떤 문제를 풀까요?</label><select id="method-select"><option value="starter">🌱 첫걸음 · 쉬운 수부터</option><option value="mixed">🎨 여러 계산법 골고루</option></select><p class="beginner-note" id="level-note">작은 수로 계산 순서를 익혀요.</p></div><label class="hint-toggle"><input type="checkbox" id="hint-toggle" checked>도움말 보기</label></div>
+        <div class="question">
+          <div class="q-top"><span class="q-index" id="q-index">연습 01</span><button id="skip" class="small-button">다른 문제</button></div>
+          <div class="vertical-wrap"><div class="vertical" id="problem" role="img" aria-label="곱셈 문제"></div></div>
+          <div class="hint" id="hint"></div>
+          <p class="choose-label" id="choose-label">할 수 있다면 답을 골라 보세요.</p>
+          <div class="choices" id="choices" role="group" aria-labelledby="choose-label"></div>
+          <div class="feedback" id="feedback" role="status" hidden></div>
+          <div class="helper-row" id="helper-row"><p><strong>아직 답을 모르겠나요?</strong>괜찮아요. 답은 마지막 걸음에서 만나요.</p><button class="help-button" id="help-solve" type="button">☝ 같이 풀기 시작</button></div>
+        </div>
+        <section class="explanation" id="explanation" aria-labelledby="lesson-title" hidden>
+          <p class="eyebrow">한 번 탭하면 한 걸음</p><div class="lesson-heading"><h2 id="lesson-title"></h2><span class="tag" id="step-counter">1 / 4</span></div>
+          <p class="method-note" id="method-note"></p><div class="step-progress" id="step-progress" aria-label="풀이 단계"></div><div id="step-content"></div>
+          <div class="celebration" id="celebration">참 잘했어요! 답까지 차근차근 도착했어요. 🎉</div>
+          <div class="explore-actions"><button class="explore-button" id="open-other" type="button">↗ 다른 계산법</button><button class="explore-button area" id="open-area" type="button">▦ 넓이로 풀기</button></div>
+          <div class="nav-steps"><button class="button" id="step-prev">← 앞 걸음</button><button class="button primary" id="step-next">톡! 다음 걸음 →</button></div>
+          <div class="all-steps"><button class="text-button" id="show-all">풀이를 한눈에 보기</button><button class="text-button" id="next-question">새 문제 만나기 →</button></div>
+          <details class="why" id="why-details"><summary>더 알고 싶어요 · 어른과 함께 보는 원리</summary><div id="why-content"></div></details>
+          <div class="caution" id="caution"></div>
+          <details class="alternative" id="alternative"><summary>같은 문제의 다른 풀이 모아 보기</summary><div class="alt-body" id="alternative-content"></div></details>
+        </section>
+        <details class="custom"><summary>내가 입력한 숫자로 연습하기</summary><form id="custom-form" novalidate><div class="custom-row"><input id="custom-a" type="text" inputmode="numeric" pattern="[0-9]{2}" maxlength="2" placeholder="23" aria-label="첫 번째 두 자리 수"><span>×</span><input id="custom-b" type="text" inputmode="numeric" pattern="[0-9]{2}" maxlength="2" placeholder="47" aria-label="두 번째 두 자리 수"><button class="button" type="submit">문제 만들기</button></div><p style="margin-top:8px;font-size:12px">10~99를 입력하면 조건에 맞는 계산법을 자동으로 골라요.</p><p class="error" id="custom-error" role="alert"></p></form></details>
+      </div>
+      <aside class="side" aria-label="학습 현황과 도움말">
+        <div class="side-card"><h2>오늘의 도전</h2><div class="stats"><div class="stat"><span>풀어 본 문제</span><b id="solved-stat">0</b></div><div class="stat"><span>맞힌 문제</span><b id="correct-stat">0</b></div></div><div class="accuracy"><span id="accuracy-bar"></span></div><p class="stat-caption" id="stats-caption">첫 문제부터 시작해 볼까요?</p></div>
+        <div class="side-card howto"><h2>이렇게 하면 쉬워요</h2><ol class="small-steps"><li><strong>숫자를 천천히 봐요</strong>같은 숫자나 10에 가까운 수를 찾아요.</li><li><strong>모르면 ‘같이 풀기’</strong>설명을 하나씩 읽고 다음 걸음을 눌러요.</li><li><strong>입으로 말해 봐요</strong>계산을 소리 내면 더 오래 기억나요.</li></ol></div>
+        <div class="side-card tip-card"><p class="eyebrow">꼭 기억해요</p><p>빨리 푸는 것보다 <strong>왜 그렇게 되는지</strong>아는 게 더 멋져요. 틀려도 다시 해 보면 돼요.</p></div>
+        <p class="side-foot" id="save-note">학습 기록은 이 브라우저에 자동 저장돼요.</p>
+      </aside>
+    </div>
+  </section>
+  <section id="page-theory" role="tabpanel" aria-labelledby="tab-theory" hidden><div class="section-head"><h2>숫자 모양에 맞는 8가지 방법</h2><p>예시를 먼저 보고, 마음에 드는 계산법부터 천천히 연습해요.</p></div><div class="rule-grid" id="rule-grid"></div><details class="source-box"><summary>보호자·선생님께: 학습 범위와 참고 자료</summary><p>이 학습기는 베다 수학으로 알려진 암산법 가운데 두 자리 곱셈에 유용한 8가지 방법을 다룹니다. 모든 베다 수학 공식을 망라하지는 않습니다. 각 방법의 원리는 분배법칙과 십진법의 자릿값으로 설명합니다. 50·100 근처의 출제 범위는 계산 연습을 위한 범위이며, 해당 항등식 자체의 성립 범위가 아닙니다.</p><p>설명과 문제는 이 학습기에 맞추어 새로 작성했습니다. 원리 참고: Vedic Maths Academy, The Natural Calculator.</p><a href="https://vedicmaths.org/nc-tutorials/nc-chapter-3" target="_blank" rel="noopener noreferrer">특수한 곱셈</a><a href="https://vedicmaths.org/nc-tutorials/nc-chapter-4" target="_blank" rel="noopener noreferrer">앞·뒤 자리의 조건</a><a href="https://www.vedicmaths.org/nc-tutorials/nc-chapter-5" target="_blank" rel="noopener noreferrer">기준수 계산</a><a href="https://vedicmaths.org/nc-tutorials/nc-chapter-6-part-1" target="_blank" rel="noopener noreferrer">세로·교차 곱셈</a></details></section>
+  <section id="page-review" role="tabpanel" aria-labelledby="tab-review" hidden><div class="section-head review-head"><div><h2>한 번 더, 내 것으로.</h2><p>틀린 문제를 다시 맞히면 이 목록에서 사라져요.</p></div></div><div id="review-list" class="review-list"></div></section>
+  </main>
+  <footer class="footer"><span>톡톡 베다 곱셈 놀이터 · 한 걸음씩 이해하는 암산</span><span>서두르지 않아도 괜찮아요.</span></footer>
+</div>
+<div class="learning-modal" id="learning-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <div class="modal-shell">
+    <header class="modal-head"><div><p class="eyebrow" id="modal-eyebrow">다른 길로도 가 봐요</p><h2 id="modal-title">다른 계산법</h2></div><button class="modal-close" id="modal-close" type="button" aria-label="닫기">×</button></header>
+    <div class="method-chips" id="method-chips" aria-label="풀이 방법 선택"></div>
+    <div class="modal-progress" id="modal-progress"></div>
+    <div class="modal-content" id="modal-content"></div>
+    <div class="modal-nav"><button class="button" id="modal-prev" type="button">← 앞 단계</button><button class="button primary" id="modal-next" type="button">다음 단계 →</button></div>
+  </div>
+</div>
+<div class="announcement" id="announcement" role="status" aria-live="polite"></div>
+<noscript><p style="padding:20px;background:#fff0ed">이 학습기는 JavaScript가 켜진 브라우저에서 실행됩니다. 파일을 내려받아 Chrome, Edge 또는 Safari에서 열어 주세요.</p></noscript>
+<script>
+'use strict';
+// All lessons, problem generation, and records work offline; no network requests.
+const $ = id => document.getElementById(id);
+const tens = n => Math.floor(n / 10), units = n => n % 10;
+const pad2 = n => String(n).padStart(2, '0');
+const signed = n => n < 0 ? '−' + Math.abs(n) : '+' + n;
+const factor = n => n < 0 ? '(−' + Math.abs(n) + ')' : String(n);
+const plus = (a,b) => b < 0 ? `${a} − ${Math.abs(b)}` : `${a} + ${b}`;
+const randomInt = (lo,hi) => Math.floor(Math.random()*(hi-lo+1))+lo;
+function shuffled(xs){const a=[...xs];for(let i=a.length-1;i>0;i--){const j=randomInt(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;}
+const methods = [
+ {id:'square5',name:'끝이 5인 수의 제곱',short:'끝자리 5 · 같은 수',condition:'두 수가 같고, 일의 자리가 5일 때',example:[35,35],recipe:'십의 자리 × (십의 자리 + 1)을 앞에 쓰고, 뒤에 25를 붙여요.',warning:'35 × 45에는 이 제곱 공식을 그대로 쓸 수 없어요.',test:(a,b)=>a===b&&units(a)===5,generate:()=>{const n=randomInt(1,9)*10+5;return[n,n];}},
+ {id:'sameTens',name:'앞은 같고, 뒤의 합은 10',short:'십의 자리 같음 · 일의 합 10',condition:'십의 자리가 같고, 일의 자리끼리 더하면 10일 때',example:[43,47],recipe:'앞: 십의 자리 × (십의 자리 + 1). 뒤: 일의 자리끼리 곱한 값을 두 자리로 써요.',warning:'뒤가 9라면 09로 써야 해요. 41 × 49 = 2009.',test:(a,b)=>tens(a)===tens(b)&&units(a)+units(b)===10,generate:()=>{const t=randomInt(1,9),u=randomInt(1,9);return[t*10+u,t*10+10-u];}},
+ {id:'sameUnits',name:'뒤는 같고, 앞의 합은 10',short:'일의 자리 같음 · 십의 합 10',condition:'일의 자리가 같고, 십의 자리끼리 더하면 10일 때',example:[27,87],recipe:'앞: 십의 자리끼리 곱한 값 + 공통 일의 자리. 뒤: 공통 일의 자리의 제곱을 두 자리로 써요.',warning:'앞부분에 공통 일의 자리를 더하는 것을 잊지 마세요.',test:(a,b)=>units(a)===units(b)&&tens(a)+tens(b)===10,generate:()=>{const t=randomInt(1,9),u=randomInt(0,9);return[t*10+u,(10-t)*10+u];}},
+ {id:'base100',name:'100에 가까운 두 수',short:'100에서 부족한 만큼',condition:'두 수가 모두 100보다 작고 가까울 때 편리해요. 연습 범위: 80~99.',example:[98,97],recipe:'100에서 부족한 수를 구해요. 엇갈려 빼서 앞부분을, 부족한 수끼리 곱해서 뒷부분을 구해요.',warning:'뒷부분은 두 자리예요. 곱이 100 이상이면 앞부분으로 올려요.',test:(a,b)=>a>=80&&b>=80,generate:()=>[randomInt(80,99),randomInt(80,99)]},
+ {id:'base50',name:'50에 가까운 두 수',short:'기준수 50 · 차이 이용',condition:'두 수가 50 근처일 때 편리해요. 연습 범위: 40~60.',example:[48,53],recipe:'50과의 차이를 구해요. (한 수 + 다른 수의 차이) × 50에, 두 차이의 곱을 더해요.',warning:'차이의 곱이 음수이면 빼요. 기준수가 50이므로 그대로 이어 붙이면 안 돼요.',test:(a,b)=>a>=40&&a<=60&&b>=40&&b<=60,generate:()=>[randomInt(40,60),randomInt(40,60)]},
+ {id:'times11',name:'11을 곱하는 방법',short:'가운데에 두 자리의 합',condition:'두 수 중 하나가 11일 때',example:[76,11],recipe:'다른 수의 두 숫자 사이에 그 합을 넣어요. 합이 10 이상이면 왼쪽으로 1을 올려요.',warning:'76 × 11은 7 | 13 | 6을 그대로 붙이는 것이 아니라 836이에요.',test:(a,b)=>a===11||b===11,generate:()=>[randomInt(10,99),11]},
+ {id:'teens',name:'10대 수끼리 곱하기',short:'기준수 10 · 넘친 만큼',condition:'두 수가 모두 10~19일 때',example:[17,18],recipe:'한 수에 다른 수의 일의 자리를 더한 뒤 10을 곱하고, 일의 자리끼리 곱한 값을 더해요.',warning:'기준수가 10이므로 뒷부분은 한 자리예요. 일의 곱이 10 이상이면 올려요.',test:(a,b)=>a<=19&&b<=19,generate:()=>[randomInt(10,19),randomInt(10,19)]},
+ {id:'cross',name:'세로·교차 곱셈',short:'모든 두 자리 수에 적용',condition:'특별한 조건 없이 모든 두 자리 수에 쓸 수 있어요.',example:[76,48],recipe:'오른쪽 세로 → 가운데 교차 → 왼쪽 세로 순서로 곱해요. 각 단계의 올림을 다음 단계에 더해요.',warning:'교차 곱 두 개를 모두 더하고, 이전 단계의 올림도 더해야 해요.',test:()=>true,generate:()=>[randomInt(10,99),randomInt(10,99)]}
+];
+const methodMap = Object.fromEntries(methods.map(m=>[m.id,m]));
+const starterProblems = [
+ {a:12,b:11,id:'times11'},{a:21,b:11,id:'times11'},
+ {a:15,b:15,id:'square5'},{a:25,b:25,id:'square5'},
+ {a:12,b:13,id:'teens'},{a:13,b:14,id:'teens'},
+ {a:21,b:29,id:'sameTens'},{a:32,b:38,id:'sameTens'}
+];
+function pickMethod(a,b){return methods.find(m=>m.test(a,b)).id;}
+function applicableMethods(a,b){return methods.filter(method=>method.test(a,b)).map(method=>method.id);}
+function blocks(left,right,width=2){return `<div class="blocks"><div class="block"><b>${left}</b><span>앞부분 × ${10**width}</span></div><span class="join">+</span><div class="block orange"><b>${String(right).padStart(width,'0')}</b><span>뒷부분 · ${width===2?'두':'한'} 자리</span></div><span class="join">=</span><div class="block"><b>${left*10**width+right}</b><span>완성된 답</span></div></div>`;}
+function baseTable(a,b,da,db,base){return `<table class="base-table"><thead><tr><th>문제의 수</th><th>${base}과의 차이</th></tr></thead><tbody><tr><td>${a}</td><td>${signed(da)}</td></tr><tr><td>× ${b}</td><td>${signed(db)}</td></tr></tbody></table>`;}
+function crossVisual(a,b,part,partial,carryText){
+ const ta=tens(a),ua=units(a),tb=tens(b),ub=units(b);
+ const line=(x1,x2,c)=>`<path d="M${x1} 58 L${x2} 102" stroke="${c}" stroke-width="2.3" fill="none"/><circle cx="${x2}" cy="102" r="3" fill="${c}"/>`;
+ const paths=part==='right'?line(126,126,'#b2542e'):part==='cross'?line(65,126,'#174d47')+line(126,65,'#b2542e'):line(65,65,'#174d47');
+ return `<div class="cross-visual"><svg viewBox="0 0 175 177" role="img" aria-label="${a} 곱하기 ${b}, ${part==='right'?'일의 자리끼리 곱하기':part==='cross'?'십의 자리와 일의 자리를 엇갈려 곱해 더하기':'십의 자리끼리 곱하기'}"><text x="65" y="14" text-anchor="middle" font-size="10" fill="#657770">십의 자리</text><text x="126" y="14" text-anchor="middle" font-size="10" fill="#657770">일의 자리</text>${paths}<g font-family="monospace" font-size="31" text-anchor="middle"><text x="65" y="46" fill="#174d47">${ta}</text><text x="126" y="46" fill="#b2542e">${ua}</text><text x="65" y="134" fill="#174d47">${tb}</text><text x="126" y="134" fill="#b2542e">${ub}</text><text x="23" y="133" fill="#657770" font-size="24">×</text></g><path d="M28 148 H149" stroke="#203d37" stroke-width="2"/><text x="88" y="170" font-size="11" text-anchor="middle" fill="#657770">${part==='right'?'오른쪽 세로':part==='cross'?'가운데 교차':'왼쪽 세로'}</text></svg><div><div class="carry-box">${carryText}</div><div class="partial-answer">${[...partial].map(x=>`<span class="digit-box ${x==='?'?'blank':''}">${x}</span>`).join('')}</div></div></div>`;
+}
+const step = (title,text,formula,visual='')=>({title,text,formula,visual});
+function buildLesson(a,b,id){
+ const t=tens(a),u=units(a),s=tens(b),v=units(b),method=methodMap[id];
+ let steps=[],why='',proof='',result=0;
+ if(id==='square5'){
+   const left=t*(t+1);result=left*100+25;
+   steps=[step('조건부터 확인해요',`${a}와 ${b}는 같은 수이고, 끝자리가 모두 5예요. 같은 수끼리 곱하는 것을 ‘제곱’이라고 해요.`,`${a} × ${a} = ${a}²`),step('앞부분을 만들어요',`십의 자리 ${t}에, 1 큰 수인 ${t+1}을 곱해요. 이 결과는 답에서 100의 묶음이 돼요.`,`${t} × (${t} + 1) = ${left}`),step('뒷부분은 항상 25예요','일의 자리 5끼리 곱해요. 뒤에 들어갈 두 자리는 25예요.','5 × 5 = 25'),step('앞과 뒤를 합쳐요',`앞부분 ${left}는 ${left*100}을 뜻해요. 여기에 25를 더하면 완성이에요.`,`${left} × 100 + 25 = ${result}`,blocks(left,25))];
+   why=`${a}를 ${t*10} + 5로 나누어 생각해요. 가운데 두 곱의 합이 100 × ${t}가 되어, ${t}² + ${t} = ${t} × ${t+1}로 묶을 수 있어요.`;
+   proof='(10t + 5)² = 100t² + 100t + 25<br>= 100t(t + 1) + 25';
+ }else if(id==='sameTens'){
+   const left=t*(t+1),right=u*v;result=left*100+right;
+   steps=[step('두 가지 조건을 확인해요',`십의 자리는 ${t}로 같아요. 일의 자리의 합도 ${u} + ${v} = 10이에요. 두 조건이 모두 맞아야 해요.`,`${t} = ${s} &nbsp; / &nbsp; ${u} + ${v} = 10`),step('앞부분을 구해요',`공통 십의 자리 ${t}에, 1 큰 수 ${t+1}을 곱해요.`,`${t} × (${t} + 1) = ${left}`),step('뒷부분을 구해요',`일의 자리끼리 곱해요. ${right<10?`${right}는 한 자리지만, 뒷부분은 두 자리여야 하므로 ${pad2(right)}로 적어요.`:'이 값이 답의 마지막 두 자리가 돼요.'}`,`${u} × ${v} = ${right}${right<10?` → ${pad2(right)}`:''}`),step('100의 묶음과 나머지를 합쳐요',`앞부분 ${left} 뒤에 ${pad2(right)}를 붙여요. 이는 ${left} × 100 + ${right}와 같아요.`,`${left} × 100 + ${right} = ${result}`,blocks(left,right))];
+   why=`일의 자리의 합이 10이어서 가운데 교차 곱이 ${t} × 100이 돼요. 그래서 앞부분을 ${t} × (${t} + 1)로 묶을 수 있어요.`;
+   proof='(10t + u)(10t + v)<br>= 100t² + 10t(u + v) + uv<br>= 100t(t + 1) + uv <small>(u + v = 10)</small>';
+ }else if(id==='sameUnits'){
+   const left=t*s+u,main=left*100,right=u*u;result=main+right;
+   steps=[step('끝은 같고, 앞의 합은 10인가요?',`일의 자리는 ${u}로 같아요. 십의 자리의 합은 ${t} + ${s} = 10이에요.`,`${u} = ${v} &nbsp; / &nbsp; ${t} + ${s} = 10`),step('앞부분: 곱하고, 공통 끝자리 더하기',`십의 자리 ${t}와 ${s}를 곱하고, 공통 일의 자리 ${u}를 한 번 더해요. ${left}는 100의 묶음이므로 ${main}으로 적고 남겨 두어요.`,`${t} × ${s} + ${u} = ${left}<br>${left} × 100 = ${main}`),step('일의 자리의 곱을 그 아래에 적어요',`일의 자리 ${u}끼리 곱한 ${right}를 ${main} 아래에 + ${right}로 적어요. 앞의 계산값은 지우지 않아요.`,`${u} × ${u} = ${right}`),step('누적한 두 계산값을 더해요',`${main}에 ${right}를 더하면 ${result}예요. 계산한 두 값을 그대로 두고, 맨 아래에 답을 적어요.`,`${main} + ${right} = ${result}`,blocks(left,right))];
+   why=`일의 자리가 같으므로 가운데 교차 곱은 10 × ${u} × (${t} + ${s})예요. 십의 자리의 합이 10이라서 이 값은 100 × ${u}가 돼요. 그래서 앞부분에 ${u}를 더해요.`;
+   proof='(10t + u)(10s + u)<br>= 100ts + 10u(t + s) + u²<br>= 100(ts + u) + u² <small>(t + s = 10)</small>';
+ }else if(id==='base100'){
+   const da=100-a,db=100-b,left=a-db,main=left*100,right=da*db;result=main+right;
+   steps=[step('100에서 부족한 수를 구해요',`${a}는 100보다 ${da} 작고, ${b}는 100보다 ${db} 작아요. 색이 같은 화살표를 따라 각 부족분을 확인해요.`,`100 − ${a} = ${da}<br>100 − ${b} = ${db}`,baseTable(a,b,-da,-db,100)),step('엇갈려 빼서 앞부분을 구해요',`${a}에서 다른 수의 부족분 ${db}를 빼면 ${left}예요. 구해 둔 두 부족분은 계산판 위쪽에 그대로 남겨 두어요.`,`${a} − ${db} = ${left}<br><small>또는 ${b} − ${da} = ${left}</small>`),step('기준수 100을 곱해 놓아 두어요',`${left}에 100을 곱한 ${main}을 적어요. 아직 부족분끼리의 곱은 더하지 않은 중간값이에요.`,`${left} × 100 = ${main}`),step('부족분의 곱을 아래에 적어요',`${da}와 ${db}를 곱하면 ${right}예요. ${right>=100?'100이 넘어도 미리 앞부분에 올리지 않고, ':''}${main} 아래에 + ${right}로 적어요.`,`${da} × ${db} = ${right}`),step('누적한 두 계산값을 더해요',`${main}에 ${right}를 더하면 ${result}예요. ${right>=100?'이 덧셈에서 올림까지 함께 정리해요.':'앞의 계산을 모두 남겨 두고 맨 아래에 답을 적어요.'}`,`${main} + ${right} = ${result}`)];
+   why=`100에서 각각 ${da}, ${db}를 빼서 두 수를 만들었어요. 전개하면 ‘엇갈려 뺀 값 × 100’과 ‘부족분의 곱’으로 묶여요.`;
+   proof='(100 − d)(100 − e)<br>= 100(100 − d − e) + de';
+ }else if(id==='base50'){
+   const da=a-50,db=b-50,cross=a+db,main=cross*50,right=da*db;result=main+right;
+   steps=[step('50과 얼마나 다른지 확인해요',`${a}는 50${da<0?'보다 '+Math.abs(da)+' 작아요':da>0?'보다 '+da+' 커요':'과 같아요'}. ${b}는 50${db<0?'보다 '+Math.abs(db)+' 작아요':db>0?'보다 '+db+' 커요':'과 같아요'}. 작은 쪽은 음수로 표시해요.`,`${a} − 50 = ${factor(da)}<br>${b} − 50 = ${factor(db)}`,baseTable(a,b,da,db,50)),step('엇갈려 차이를 더해요',`첫 번째 수 ${a}에 두 번째 수의 차이 ${factor(db)}를 더해요. 차이가 음수이면 그만큼 빼는 거예요.`,`${plus(a,db)} = ${cross}`),step('기준수 50을 곱해요',`앞에서 얻은 ${cross}에 50을 곱해요. 50은 100의 절반이므로, 100을 곱한 뒤 2로 나누면 쉬워요.`,`${cross} × 50<br>= ${cross} × 100 ÷ 2 = ${main}`),step('두 차이의 곱을 구해요',right<0?'하나는 음수, 다른 하나는 양수라서 곱이 음수예요. 마지막에 이 크기만큼 빼야 해요.':da<0&&db<0?'음수끼리 곱하면 양수가 돼요. 마지막에 이 값을 더해요.':'두 차이를 곱해 마지막에 더할 값을 구해요.',`${factor(da)} × ${factor(db)} = ${factor(right)}`),step('차이의 곱까지 반영해요',`기준수로 계산한 ${main}에 ${right<0?Math.abs(right)+'를 빼요':right+'를 더해요'}. 앞·뒤 숫자를 바로 붙이는 방식과 구별해 주세요.`,`${plus(main,right)} = ${result}`)];
+   why='두 수를 ‘50 + 차이’로 나누어 전개하면 같은 50끼리 묶을 수 있어요. 차이를 음수까지 포함해서 계산하면 50보다 작은 수와 큰 수를 함께 곱할 때도 성립해요.';
+   proof='(50 + d)(50 + e)<br>= 50(50 + d + e) + de';
+ }else if(id==='times11'){
+   const n=a===11?b:a,nt=tens(n),nu=units(n),middle=nt+nu,main=nt*100+nu,extra=middle*10;result=main+extra;
+   steps=[step('11을 곱하는 문제인지 확인해요',`${n}에 11을 곱해요. ${n}의 십의 자리 ${nt}와 일의 자리 ${nu}를 살펴봐요.`,`${n} × 11`),step('양 끝을 곱하고, 가운데는 0으로 두어요',`주황색은 ${nt} × 1 = ${nt}, 초록색은 ${nu} × 1 = ${nu}예요. 각각 백의 자리와 일의 자리에 놓고 가운데를 0으로 두면 ${main}이에요. 아직 중간값이에요.`,`${nt} × 1 = ${nt}<br>${nu} × 1 = ${nu}<br>${nt} × 100 + ${nu} = ${main}`),step('두 숫자의 합을 십의 자리 값으로 바꿔요',`${nt}와 ${nu}를 더하면 ${middle}예요. 이 합은 십의 자리 값이므로 10을 곱해 ${extra}을 만들어요. 앞에서 만든 ${main} 아래에 더할 수로 적어요.`,`${nt} + ${nu} = ${middle}<br>${middle} × 10 = ${extra}`),step('쌓아 둔 두 계산값을 더해요',`앞에서 만든 ${main}과 ${extra}을 더하면 ${result}예요. 두 중간값을 그대로 남겨 두고 맨 아래에서 답을 확인해요.`,`${main} + ${extra} = ${result}`)];
+   why=`11은 10 + 1이에요. ${n} × 10과 ${n}을 더하면, 가운데 십의 자리에서 원래 두 숫자 ${nt}와 ${nu}가 만나 더해져요.`;
+   proof='(10t + u) × 11<br>= 100t + 10(t + u) + u';
+ }else if(id==='teens'){
+   const left=a+v,main=left*10,right=u*v;result=main+right;
+   steps=[step('10을 기준으로 두 수를 봐요',`${a}는 10보다 ${u} 크고, ${b}는 10보다 ${v} 커요. 두 수 모두 10~19예요.`,`${a} = 10 + ${u}<br>${b} = 10 + ${v}`),step('더한 값에 10을 곱해 놓아 두어요',`${a}에 다른 수의 일의 자리 ${v}를 더하면 ${left}예요. 10의 묶음이므로 ${main}으로 적고, 이 값은 지우지 않아요. 이번 계산에 쓰는 위쪽 두 숫자와 아래쪽 일의 자리만 상자로 표시해요.`,`${a} + ${v} = ${left}<br>${left} × 10 = ${main}`),step('일의 자리의 곱을 그 아래에 적어요',`이번에는 ${u}와 ${v}만 곱해 ${right}를 구해요. ${main}은 그대로 두고, 그 아래에 + ${right}를 적어요.`,`${u} × ${v} = ${right}<br><small>${main} 아래에 + ${right}를 적어요.</small>`),step('누적한 두 계산값을 더해요',`${main}과 ${right}를 더하면 ${result}예요. 앞의 계산을 모두 남겨 두고, 맨 아래에 답을 적어요.`,`${main} + ${right} = ${result}`)];
+   why='두 수를 ‘10 + 일의 자리’로 나누면, 10이 들어간 항끼리 묶을 수 있어요. 100 근처 계산과 같은 원리지만 기준수가 10이라서 뒤에 한 자리만 남겨요.';
+   proof='(10 + u)(10 + v)<br>= 10(10 + u + v) + uv';
+ }else{
+   const right=u*v,c1=Math.floor(right/10),d1=right%10,middle=t*v+u*s+c1,c2=Math.floor(middle/10),d2=middle%10,left=t*s+c2;result=left*100+d2*10+d1;
+   steps=[step('어떤 두 자리 수에도 쓸 수 있어요',`${a}를 ${t}와 ${u}, ${b}를 ${s}와 ${v}로 나누어 봐요. 오른쪽 세로 → 가운데 교차 → 왼쪽 세로 순서로 계산해요.`,`${a} = ${t} × 10 + ${u}<br>${b} = ${s} × 10 + ${v}`),step('오른쪽 세로: 일의 자리끼리 곱해요',`${u} × ${v} = ${right}예요. ${c1?`${d1}을 답의 일의 자리에 적고, ${c1}을 다음 단계로 올려요.`:`올림 없이 ${d1}을 답의 일의 자리에 적어요.`}`,`${u} × ${v} = ${right}`,crossVisual(a,b,'right','??'+d1,c1?`일의 자리에는 <strong>${d1}</strong><br>십의 자리로 <strong>${c1} 올림</strong>`:`일의 자리에는 <strong>${d1}</strong><br>올림 없음`)),step('가운데 교차: 두 곱과 올림을 더해요',`엇갈린 두 곱 ${t} × ${v}, ${u} × ${s}를 더해요. 이전 단계의 올림 ${c1}도 더해 ${middle}이 돼요. ${d2}를 적고 ${c2}를 왼쪽으로 올려요.`,`(${t} × ${v}) + (${u} × ${s}) + ${c1}<br>= ${t*v} + ${u*s} + ${c1} = ${middle}`,crossVisual(a,b,'cross','?'+d2+d1,`이전 올림 <strong>${c1}</strong> 더하기<br>십의 자리에는 <strong>${d2}</strong><br>백의 자리로 <strong>${c2} 올림</strong>`)),step('왼쪽 세로: 십의 자리끼리 곱해요',`십의 자리끼리 곱한 ${t*s}에 이전 올림 ${c2}를 더해요. ${left}는 100의 묶음이므로, 두 자리여도 전부 왼쪽에 써요.`,`${t} × ${s} + ${c2} = ${left}`,crossVisual(a,b,'left',String(left)+d2+d1,`이전 올림 <strong>${c2}</strong> 더하기<br>앞부분 <strong>${left}</strong> 완성`)),step('각 자리의 값을 확인해요',`${left}백, ${d2}십, ${d1}을 합쳐요. 세로와 교차 곱으로 모든 부분을 빠짐없이 계산했어요.`,`${left} × 100 + ${d2} × 10 + ${d1} = ${result}`)];
+   why='두 수를 각각 십의 자리와 일의 자리로 나누면 네 번의 곱이 생겨요. 같은 자릿값을 가진 두 교차 곱을 가운데에서 더하는 것이 핵심이에요.';
+   proof='(10t + u)(10s + v)<br>= 100ts + 10(tv + us) + uv';
+ }
+ return {id,a,b,result,steps,why,proof,caution:method.warning};
+}
+function buildVerticalLesson(a,b){
+ const t=tens(a),u=units(a),s=tens(b),v=units(b);
+ const right=u*v,carry1=Math.floor(right/10),one=right%10;
+ const middle=t*v+u*s+carry1,carry2=Math.floor(middle/10),ten=middle%10;
+ const left=t*s+carry2,result=a*b;
+ const steps=[
+  step('같은 자리에 맞춰 세워요',`${a} 아래에 ${b}를 써요. 십의 자리는 십의 자리끼리, 일의 자리는 일의 자리끼리 꼭 맞춰요. 계산은 언제나 오른쪽에서 출발해요.`,`&nbsp;&nbsp;${a}<br>× ${b}<br>────`),
+  step('오른쪽 일의 자리부터 곱해요',`${u}와 ${v}를 곱하면 ${right}예요. ${carry1?`${one}은 선 아래 일의 자리에 쓰고, ${carry1}은 다음 자리 위로 올려요.`:`올림이 없으므로 ${one}을 선 아래 일의 자리에 바로 써요.`}`,`${u} × ${v} = ${right}${carry1?`<br>${one}은 아래로 · ${carry1}은 위로`:''}`),
+  step('가운데를 엇갈려 곱하고 더해요',`${t}와 ${v}, ${u}와 ${s}를 엇갈려 곱해요. 두 값${carry1?'과 위에 올라온 '+carry1:''}을 모두 더하면 ${middle}이에요. ${carry2?`${ten}은 십의 자리에 쓰고 ${carry2}는 다시 위로 올려요.`:`${ten}을 십의 자리에 써요.`}`,`${t} × ${v} + ${u} × ${s}${carry1?' + '+carry1:''} = ${middle}`),
+  step('왼쪽을 계산해 답을 완성해요',`십의 자리 ${t}와 ${s}를 곱한 ${t*s}에 위로 올라온 ${carry2}를 더해 ${left}을 만들어요. 아래에 모인 숫자를 왼쪽부터 읽으면 ${result}이에요.`,`${t} × ${s} + ${carry2} = ${left}<br>${a} × ${b} = ${result}`)
+ ];
+ return {id:'vertical',a,b,result,steps,why:'두 자리 수를 십의 자리와 일의 자리로 나누면 네 번의 작은 곱셈이 생겨요. 같은 자리에 들어가는 두 교차 곱을 가운데에서 더하고, 넘치는 수는 왼쪽 자리로 올려 보내는 방법이에요.',proof:'(십×십) + (십×일 + 일×십) + (일×일)',caution:'오른쪽부터 시작하고, 노란 올림 숫자를 다음 계산에 더하는 것을 잊지 마세요.'};
+}
+function buildAreaLesson(a,b){
+ const a10=tens(a)*10,a1=units(a),b10=tens(b)*10,b1=units(b);
+ const values=[a10*b10,a1*b10,a10*b1,a1*b1],sum=values.reduce((total,value)=>total+value,0);
+ const visual=reveal=>{
+   const cells=[
+    {cls:'c1',label:`${a10} × ${b10}`,value:values[0]},
+    {cls:'c2',label:`${a1} × ${b10}`,value:values[1]},
+    {cls:'c3',label:`${a10} × ${b1}`,value:values[2]},
+    {cls:'c4',label:`${a1} × ${b1}`,value:values[3]}
+   ];
+   return `<div class="area-model" style="grid-template-columns:${Math.max(a10,10)}fr ${Math.max(a1,3)}fr;grid-template-rows:${Math.max(b10,10)}fr ${Math.max(b1,3)}fr"><span class="area-top" style="left:28%">${a10}</span><span class="area-top" style="right:9%">${a1}</span><span class="area-left" style="top:28%">${b10}</span><span class="area-left" style="bottom:9%">${b1}</span>${cells.map((cell,index)=>`<div class="area-cell ${cell.cls} ${index<reveal?'reveal':'wait'}"><span><small>${cell.label}</small><b>${index<reveal?cell.value:'?'}</b></span></div>`).join('')}</div>${reveal===4?`<div class="area-sum">${values.join(' + ')} = ${sum}</div>`:''}`;
+ };
+ return {id:'area',a,b,result:sum,steps:[
+  {title:'두 수를 십의 묶음과 낱개로 나눠요',text:`${a}는 ${a10}과 ${a1}, ${b}는 ${b10}과 ${b1}로 나눌 수 있어요. 가로와 세로를 나누면 사각형이 네 칸이 돼요.`,formula:`${a} = ${a10} + ${a1}<br>${b} = ${b10} + ${b1}`,visual:visual(0)},
+  {title:'가장 큰 사각형의 넓이를 구해요',text:`먼저 ${a10}만큼의 가로와 ${b10}만큼의 세로가 만나는 큰 칸을 계산해요.`,formula:`${a10} × ${b10} = ${values[0]}`,visual:visual(1)},
+  {title:'길쭉한 두 사각형도 계산해요',text:`낱개 때문에 생긴 위쪽과 옆쪽의 길쭉한 두 칸을 계산해요. 서로 다른 색이라 빠뜨리지 않아요.`,formula:`${a1} × ${b10} = ${values[1]}<br>${a10} × ${b1} = ${values[2]}`,visual:visual(3)},
+  {title:'마지막 작은 칸까지 모두 더해요',text:`마지막 작은 사각형은 ${a1} × ${b1}이에요. 네 칸의 넓이를 모두 더하면 큰 사각형 전체의 넓이, 곧 곱셈의 답이 돼요.`,formula:`${values.join(' + ')} = ${sum}`,visual:visual(4)}
+ ]};
+}
+function makeChoices(a,b,id){
+ const answer=a*b,t=tens(a),u=units(a),s=tens(b),v=units(b),size=String(answer).length;
+ const pool=new Map();
+ function add(value,reason){if(Number.isInteger(value)&&value>=100&&value<=9801&&value!==answer&&String(value).length===size&&!pool.has(value))pool.set(value,{value,reason});}
+ if(id==='square5'){add(t*t*100+25,'이 보기는 앞부분에서 1 큰 수를 곱하지 않고, 십의 자리끼리만 곱한 값이에요.');add((t+1)*(t+1)*100+25,'이 보기는 앞부분의 두 수를 모두 1씩 크게 해서 계산한 값이에요.');}
+ if(id==='sameTens'){add(t*t*100+u*v,'이 보기는 앞부분을 구할 때, 십의 자리보다 1 큰 수를 곱하는 과정을 빠뜨린 값이에요.');add(t*(t+1)*100+u+v,'이 보기는 뒤의 두 숫자를 곱하는 대신 더한 값이에요.');}
+ if(id==='sameUnits'){add(t*s*100+u*u,'이 보기는 앞부분에 공통 일의 자리를 더하는 과정을 빠뜨린 값이에요.');add((t*s+u)*100+u+u,'이 보기는 뒷부분을 제곱하는 대신 두 번 더한 값이에요.');}
+ if(id==='base100'){const d=100-a,e=100-b,l=a-e,r=d*e;add(l*100+r%100,'이 보기는 뒷부분에서 생긴 100의 올림을 앞부분에 더하지 않은 값이에요.');add(l*100+d+e,'이 보기는 두 부족분을 곱하는 대신 더한 값이에요.');add((a-d)*100+r,'이 보기는 다른 수의 부족분 대신 자기 자신의 부족분을 뺀 값이에요.');}
+ if(id==='base50'){const d=a-50,e=b-50,m=(a+e)*50;add(m,'이 보기는 기준수 50의 계산까지만 하고, 두 차이의 곱을 반영하지 않은 값이에요.');add(m-d*e,'이 보기는 두 차이의 곱의 부호를 반대로 반영한 값이에요.');}
+ if(id==='times11'){const n=a===11?b:a,nt=tens(n),nu=units(n);add(nt*100+(nt+nu)%10*10+nu,'이 보기는 가운데 합에서 생긴 올림을 왼쪽에 더하지 않은 값이에요.');add(n*10,'이 보기는 11 대신 10만 곱한 값이에요.');}
+ if(id==='teens'){add((a+v)*10+(u*v)%10,'이 보기는 일의 자리 곱의 올림을 앞부분에 더하지 않은 값이에요.');add((a+v)*10+u+v,'이 보기는 일의 자리끼리 곱하는 대신 더한 값이에요.');}
+ if(id==='cross'){const c1=Math.floor(u*v/10),c2=Math.floor((t*v+u*s+c1)/10);add(answer-c1*10,'이 보기는 일의 자리에서 생긴 올림을 교차 곱에 더하지 않은 값이에요.');add(answer-c2*100,'이 보기는 가운데에서 생긴 올림을 왼쪽 곱에 더하지 않은 값이에요.');add(t*s*100+t*v*10+u*v,'이 보기는 가운데의 두 교차 곱 중 하나를 빠뜨린 값이에요.');add(t*s*100+u*s*10+u*v,'이 보기는 가운데의 두 교차 곱 중 하나를 빠뜨린 값이에요.');}
+ const likely=shuffled([...pool.values()]).slice(0,2);
+ for(const delta of [10,-10,100,-100,20,-20,200,-200,110,-110,30,-30,300,-300,50,-50])add(answer+delta,`선택한 보기는 정답보다 ${Math.abs(delta)} ${delta>0?'큰':'작은'} 값이에요. 올림과 자릿값을 단계별로 확인해 보세요.`);
+ const selected=[...likely];for(const item of shuffled([...pool.values()])){if(selected.length===4)break;if(!selected.some(x=>x.value===item.value))selected.push(item);}
+ // A deterministic finite fallback guarantees four distinct distractors even at boundaries.
+ for(let d=1;selected.length<4;d++){for(const value of [answer+d,answer-d]){if(selected.length===4)break;if(value>=100&&value<=9801&&String(value).length===size&&value!==answer&&!selected.some(x=>x.value===value))selected.push({value,reason:'비슷해 보이는 수예요. 각 자리의 곱과 올림을 확인해 보세요.'});}}
+ return shuffled([{value:answer,reason:''},...selected]);
+}
+const STORAGE_KEY='veda-math-learning-v1';
+let saved={solved:0,correct:0,streak:0,wrong:[]};
+let storageOK=true;
+try{const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(data&&typeof data==='object'){
+ const validCount=x=>Number.isSafeInteger(x)&&x>=0;
+ if(validCount(data.solved)&&validCount(data.correct)&&data.correct<=data.solved){saved.solved=data.solved;saved.correct=data.correct;saved.streak=validCount(data.streak)&&data.streak<=data.correct?data.streak:0;}
+ if(Array.isArray(data.wrong))saved.wrong=data.wrong.filter(x=>x&&Number.isInteger(x.a)&&Number.isInteger(x.b)&&x.a>=10&&x.a<=99&&x.b>=10&&x.b<=99&&methodMap[x.id]&&methodMap[x.id].test(x.a,x.b)).slice(0,200).map(x=>({a:x.a,b:x.b,id:x.id}));
+}}catch(_){storageOK=false;}
+let current=null,answered=false,guided=false,lesson=null,stepIndex=0,allSteps=false,questionCount=0,methodBag=[],starterBag=[],activeTab='quiz';
+let exploreMode='other',exploreLesson=null,exploreStep=0,exploreMethod=null,lastFocus=null;
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(saved));}catch(_){storageOK=false;}renderStats();}
+function renderStats(){$('solved-stat').textContent=saved.solved;$('correct-stat').textContent=saved.correct;const percent=saved.solved?Math.round(saved.correct/saved.solved*100):0;$('accuracy-bar').style.width=percent+'%';$('stats-caption').textContent=saved.solved?`정답률 ${percent}% · 연속 ${saved.streak}문제 정답`:'첫 문제부터 시작해 볼까요?';$('review-count').textContent=saved.wrong.length;$('save-note').textContent=storageOK?'학습 기록은 이 브라우저에 자동 저장돼요.':'이 브라우저에서는 자동 저장이 제한돼요. 현재 창에서는 계속 연습할 수 있어요.';}
+function keyOf(p){return `${Math.min(p.a,p.b)}-${Math.max(p.a,p.b)}-${p.id}`;}
+function newQuestion(spec=null){
+ let a,b,id;
+ if(spec){({a,b,id}=spec);}else{
+   id=$('method-select').value;
+   if(id==='starter'){
+     if(!starterBag.length)starterBag=shuffled(starterProblems);
+     const picked=starterBag.pop();({a,b,id}=picked);
+   }else{
+     if(id==='mixed'){if(!methodBag.length)methodBag=shuffled(methods.map(m=>m.id));id=methodBag.pop();}
+     for(let i=0;i<20;i++){[a,b]=methodMap[id].generate();if(!current||a!==current.a||b!==current.b||id!==current.id)break;}
+   }
+ }
+ current={a,b,id,choices:makeChoices(a,b,id)};answered=false;guided=false;lesson=buildLesson(a,b,id);stepIndex=0;allSteps=false;questionCount++;
+ $('q-index').textContent=(spec&&spec.review?'다시 도전 · ':'연습 ')+String(questionCount).padStart(2,'0');
+ renderProblem(false);$('hint').innerHTML=`<strong>${methodMap[id].short}</strong><br>${conditionFor(a,b,id)}`;$('hint').hidden=!$('hint-toggle').checked;
+ $('choices').innerHTML=current.choices.map((x,i)=>`<button class="choice" data-choice="${i}" aria-label="${i+1}번, ${x.value}"><span class="choice-key">${i+1}</span><span class="choice-value">${x.value}</span><span class="choice-state"></span></button>`).join('');
+ $('choices').hidden=false;$('helper-row').hidden=false;$('feedback').hidden=true;$('explanation').hidden=true;$('why-details').open=false;$('alternative').open=false;$('custom-error').textContent='';$('celebration').classList.remove('show');document.querySelector('.main-panel').classList.remove('lesson-open');
+ $('skip').textContent='다른 문제';$('announcement').textContent=`새 문제. ${a} 곱하기 ${b}. 답을 고르거나 같이 풀기를 누르세요.`;
+}
+function conditionFor(a,b,id){const t=tens(a),u=units(a),s=tens(b),v=units(b);switch(id){case'square5':return'같은 수끼리 곱하고, 끝이 5인지 확인해요.';case'sameTens':return`십의 자리가 ${t}로 같고, ${u} + ${v} = 10이에요.`;case'sameUnits':return`끝자리가 ${u}로 같고, ${t} + ${s} = 10이에요.`;case'base100':return'100에서 각각 얼마나 부족한지 먼저 구해 보세요.';case'base50':return'50을 기준으로 작은 쪽은 −, 큰 쪽은 +로 생각해요.';case'times11':return'11을 곱할 두 자리 수의 십의 자리와 일의 자리를 더해 보세요.';case'teens':return'두 수를 각각 10 + 일의 자리로 나누어 생각해요.';default:return'오른쪽 세로 → 가운데 교차 → 왼쪽 세로. 올림도 챙겨요.';}}
+function renderProblem(reveal){const {a,b}=current;$('problem').setAttribute('aria-label',`${a} 곱하기 ${b}${reveal?' = '+a*b:''}`);$('problem').innerHTML=`<span class="a10">${tens(a)}</span><span class="a1">${units(a)}</span><span class="op">×</span><span class="b10">${tens(b)}</span><span class="b1">${units(b)}</span><span class="bar"></span>${reveal?`<span class="answer">${a*b}</span>`:'<span class="unknown">? ? ?</span>'}`;}
+function answerQuestion(index){
+ if(answered||guided||!current.choices[index])return;answered=true;
+ const selected=current.choices[index],correct=selected.value===current.a*current.b;saved.solved++;if(correct){saved.correct++;saved.streak++;saved.wrong=saved.wrong.filter(p=>keyOf(p)!==keyOf(current));}else{saved.streak=0;if(!saved.wrong.some(p=>keyOf(p)===keyOf(current)))saved.wrong.unshift({a:current.a,b:current.b,id:current.id});saved.wrong=saved.wrong.slice(0,200);}persist();
+ document.querySelectorAll('.choice').forEach((button,i)=>{button.disabled=true;const value=current.choices[i].value;if(value===current.a*current.b){button.classList.add('correct');button.querySelector('.choice-state').textContent='✓ 정답';}else if(i===index){button.classList.add('wrong');button.querySelector('.choice-state').textContent='내 선택';}else button.classList.add('dim');});
+ renderProblem(true);$('feedback').className='feedback'+(correct?'':' missed');$('feedback').innerHTML=correct?'<strong>맞았어요! 정말 잘했어요.</strong>이제 아래에서 계산 길을 한 걸음씩 확인해 봐요.':`<strong>괜찮아요. 정답은 ${current.a*current.b}이에요.</strong>${selected.reason}<br>아래에서 천천히 다시 만나 봐요.`;$('feedback').hidden=false;
+ openLesson(false);
+ if(matchMedia('(max-width:680px)').matches)setTimeout(()=>$('feedback').scrollIntoView({behavior:motion(),block:'start'}),100);
+}
+function openLesson(asGuide){
+ guided=asGuide;
+ $('helper-row').hidden=true;
+ if(asGuide){
+   $('choices').hidden=false;$('feedback').className='feedback';$('feedback').innerHTML='<strong>좋아요, 같이 출발해요!</strong>보기는 그대로 두고, 계산법에 맞는 풀이를 한 단계씩 움직여 볼게요.';$('feedback').hidden=false;
+ }
+ $('lesson-title').textContent=methodMap[current.id].name;$('method-note').textContent=`지금은 ‘${methodMap[current.id].short}’ 방법으로 세로 계산판을 움직여요.`;$('why-content').innerHTML=`<p>${lesson.why}</p><div class="equation">${lesson.proof}</div><p>이 식은 보호자나 선생님과 함께 살펴보세요. 지금은 움직이는 숫자의 순서만 알아도 충분해요.</p>`;$('caution').textContent='잠깐! · '+lesson.caution;
+ const others=applicableMethods(current.a,current.b).filter(id=>id!==current.id);$('open-other').disabled=!others.length;$('alternative').hidden=!others.length;$('alternative-content').innerHTML=others.length?`<p>${others.map(id=>methodMap[id].name).join(' · ')} 방법도 이 숫자에 사용할 수 있어요. 위의 ‘다른 계산법’ 버튼으로 한 단계씩 볼 수 있어요.</p>`:'';$('explanation').hidden=false;document.querySelector('.main-panel').classList.add('lesson-open');renderStep();$('skip').textContent='다음 문제';
+ if(asGuide)setTimeout(()=>$('explanation').scrollIntoView({behavior:motion(),block:'start'}),80);
+}
+function motion(){return matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth';}
+// 요청한 계산법만 별도로 그려요. 이전 단계의 식과 값을 지우지 않고 아래로 쌓아요.
+function cumulativeBoardHTML(sStep,i,total){
+ const {a,b,id}=current,t=tens(a),u=units(a),v=units(b),finished=i===total-1;
+ const color={orange:'#ffad87',green:'#91efb8',blue:'#8ae7ff',gold:'#ffdc79',muted:'#a6bed0',white:'#f6fbff'};
+ const markerId=`trace-${id}-${a}-${b}-${i}`;
+ const x=[100,160,220,280],active={},history=[];
+ const nRow=a===11?'b':'a',elevenRow=nRow==='a'?'b':'a',n=a===11?b:a,nt=tens(n),nu=units(n);
+ if(id==='teens'){
+   if(i===1){active['a-ten']=color.blue;active['a-one']=color.blue;active['b-one']=color.blue;}
+   if(i===2){active['a-one']=color.green;active['b-one']=color.green;}
+ }else if(id==='times11'){
+   if(i===1){active[nRow+'-ten']=active[elevenRow+'-ten']=color.orange;active[nRow+'-one']=active[elevenRow+'-one']=color.green;}
+   if(i===2){active[nRow+'-ten']=active[nRow+'-one']=color.gold;}
+ }else if(id==='sameUnits'){
+   if(i===1){active['a-ten']=color.orange;active['b-ten']=color.green;active['a-one']=color.gold;}
+   if(i===2){active['a-one']=color.orange;active['b-one']=color.green;}
+ }else if(id==='base100'||id==='base50'){
+   if(i===0){active['a-ten']=active['a-one']=color.orange;active['b-ten']=active['b-one']=color.green;}
+   if(i===1){active['a-ten']=active['a-one']=color.orange;}
+ }else{
+   if(i===1){active['a-ten']=color.orange;active['b-ten']=color.green;}
+   if(i===2){active['a-one']=color.orange;active['b-one']=color.green;}
+ }
+ const text=(cx,cy,value,size=22,fill=color.white)=>`<text x="${cx}" y="${cy}" text-anchor="middle" font-size="${size}" font-weight="700" fill="${fill}">${value}</text>`;
+ const arrow=(path,tone,opacity=1)=>`<path d="${path}" fill="none" stroke="${color[tone]}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}" marker-end="url(#${markerId}-${tone})"/>`;
+ const capsule=(left,top,width,height,tone)=>`<rect x="${left}" y="${top}" width="${width}" height="${height}" rx="9" fill="${color[tone]}" fill-opacity=".08" stroke="${color[tone]}" stroke-opacity=".55"/>`;
+ const source=(value,row,cy)=>['ten','one'].map((place,index)=>{
+   const key=row+'-'+place,cx=index===0?220:280,tone=active[key],digit=index===0?tens(value):units(value);
+   return `<g data-source="${key}" data-active="${Boolean(tone)}">${tone?`<rect x="${cx-22}" y="${cy-35}" width="44" height="47" rx="9" fill="${tone}" fill-opacity=".12" stroke="${tone}" stroke-width="2.5"/>`:''}${text(cx,cy,digit,43)}</g>`;
+ }).join('');
+ const ledger=(value,cy,operator,kind)=>{
+   const digits=String(Math.abs(value)).padStart(4,' '),tone=kind==='addend'?(value<0?color.orange:color.gold):kind==='total'?color.green:color.blue;
+   return `<g class="trace-ledger-row" data-kind="${kind}" data-value="${value}">${text(46,cy-2,operator,28,tone)}${[...digits].map((digit,index)=>{
+     if(digit===' ')return '';
+     const digitColor=id==='times11'&&kind==='main'?(index===1?color.orange:index===3?color.green:color.muted):color.white;
+     return `<rect x="${x[index]-23}" y="${cy-36}" width="46" height="49" rx="9" fill="${kind==='total'?'#238668':'#224960'}" stroke="${tone}" stroke-opacity=".6"/>${text(x[index],cy,digit,38,digitColor)}`;
+   }).join('')}</g>`;
+ };
+ const line=cy=>`<path d="M70 ${cy} H310" stroke="${color.blue}" stroke-width="2.5" stroke-linecap="round"/>`;
+ let drawing=`<defs>${['orange','green','blue','gold'].map(tone=>`<marker id="${markerId}-${tone}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L9 5 L1 9 Z" fill="${color[tone]}"/></marker>`).join('')}</defs>`;
+ drawing+=['천','백','십','일'].map((label,index)=>text(x[index],14,label,12,color.muted)).join('');
+ drawing+=source(a,'a',58)+text(46,108,'×',28,color.orange)+source(b,'b',110)+line(136);
+ let height=218;
+ if(id==='base100'||id==='base50'){
+   const below100=id==='base100',base=below100?100:50,da=below100?100-a:a-50,db=below100?100-b:b-50;
+   const cross=below100?a-db:a+db,main=cross*base,extra=da*db;
+   const showDiff=value=>below100?value:value===0?'0':signed(value);
+   const difference=(key,cx,value,formula,tone,selected)=>`<g data-difference="${key}" data-active="${selected}">${capsule(cx-78,159,156,73,tone)}${selected?`<rect x="${cx-78}" y="159" width="156" height="73" rx="9" fill="none" stroke="${color[tone]}" stroke-width="2.5"/>`:''}${text(cx,185,formula,20,color[tone])}${text(cx,218,`= ${showDiff(value)}`,26,color[tone])}</g>`;
+   drawing+=arrow('M198 43 H145 V140 Q145 150 130 150 H90 V157','orange',i===0?1:.45);
+   drawing+=arrow('M280 124 C280 142 270 140 270 157','green',i===0?1:.45);
+   drawing+=difference('a',90,da,below100?`100 − ${a}`:`${a} − 50`,'orange',i===0||i===3);
+   drawing+=difference('b',270,db,below100?`100 − ${b}`:`${b} − 50`,'green',i===0||i===1||i===3);
+   history.push(below100?`100 − ${a} = ${da}, 100 − ${b} = ${db}`:`${a} − 50 = ${factor(da)}, ${b} − 50 = ${factor(db)}`);
+   height=255;
+   if(i>=1){
+     drawing+=arrow('M198 43 H6 V263 Q6 271 16 271 H115 V276','orange',i===1?1:.45);
+     drawing+=arrow('M270 235 C270 252 193 254 193 276','green',i===1?1:.45);
+     drawing+=capsule(30,280,300,42,'blue')+text(180,309,`${below100?a+' − '+db:plus(a,db)} = ${cross}`,24,color.blue);
+     history.push(`${below100?a+' − '+db:plus(a,db)} = ${cross}`);height=346;
+   }
+   if(i>=2){
+     drawing+=arrow('M180 326 V344','blue')+text(180,373,`${cross} × ${base}`,24,color.blue)+arrow('M180 382 V399','blue');
+     drawing+=ledger(main,446,'→','main');height=477;
+     history.push(`${cross} × ${base} = ${main}`);
+   }
+   if(i>=3){
+     drawing+=arrow('M90 235 C90 247 20 242 20 262 V493 Q20 505 34 505 H120 V511','orange',i===3?1:.45);
+     drawing+=arrow('M270 235 C270 247 340 242 340 262 V493 Q340 505 326 505 H240 V511','green',i===3?1:.45);
+     drawing+=capsule(42,514,276,43,'gold')+text(180,543,`${factor(da)} × ${factor(db)} = ${factor(extra)}`,21,color.gold);
+     drawing+=arrow('M180 561 V577','gold')+ledger(extra,628,extra<0?'−':'+','addend');height=659;
+     history.push(`${factor(da)} × ${factor(db)} = ${factor(extra)}`);
+   }
+   if(finished){drawing+=line(663)+ledger(a*b,715,'=','total');height=746;history.push(`${plus(main,extra)} = ${a*b}`);}
+ }else if(i===0){
+   drawing+=text(46,188,'→',26,color.muted)+[...String(a*b).padStart(4,' ')].map((digit,index)=>digit===' '?'':`<rect x="${x[index]-23}" y="153" width="46" height="49" rx="9" fill="none" stroke="${color.muted}" stroke-dasharray="4 5"/>${text(x[index],188,'·',32,color.muted)}`).join('');
+ }else if(id==='times11'){
+   const main=nt*100+nu,sum=nt+nu,extra=sum*10,oldArrows=i===1?1:.45;
+   // 두 세로 곱의 출발점과 도착점을 같은 색의 화살표로 연결해요.
+   drawing+=arrow('M220 124 C220 144 90 136 90 153','orange',oldArrows);
+   drawing+=arrow('M280 124 C280 142 270 141 270 153','green',oldArrows);
+   drawing+=capsule(12,155,156,38,'orange')+capsule(192,155,156,38,'green');
+   drawing+=text(90,180,`${nt} × 1 = ${nt}`,20,color.orange)+text(270,180,`${nu} × 1 = ${nu}`,20,color.green);
+   drawing+=arrow('M90 196 C90 214 160 203 160 220','orange',oldArrows);
+   drawing+=arrow('M270 196 C270 213 280 205 280 220','green',oldArrows);
+   drawing+=ledger(main,260,'→','main');height=291;
+   history.push(`${nt} × 1 = ${nt}, ${nu} × 1 = ${nu}, 가운데를 0으로 둔 중간값 ${main}`);
+   if(i>=2){
+     drawing+=text(130,313,nt,26,color.gold)+text(180,313,'+',23,color.gold)+text(230,313,nu,26,color.gold);
+     drawing+=arrow('M130 322 C130 337 161 333 175 344','gold')+arrow('M230 322 C230 337 199 333 185 344','gold');
+     drawing+=capsule(148,347,64,39,'gold')+text(180,375,sum,27,color.gold);
+     drawing+=arrow('M180 390 V406','gold')+text(180,435,`${sum} × 10 = ${extra}`,22,color.gold);
+     drawing+=ledger(extra,491,'+','addend');height=522;
+     history.push(`${nt} + ${nu} = ${sum}, ${sum} × 10 = ${extra}`);
+   }
+   if(finished){drawing+=line(526)+ledger(a*b,578,'=','total');height=609;history.push(`${main} + ${extra} = ${a*b}`);}
+ }else{
+   const isTeens=id==='teens',isSameUnits=id==='sameUnits',left=isTeens?a+v:isSameUnits?t*tens(b)+u:t*(t+1),main=left*(isTeens?10:100),extra=u*v;
+   if(isTeens){
+     drawing+=capsule(30,156,300,39,'blue')+text(180,183,`${a} + ${v} = ${left}`,24,color.blue);
+     drawing+=text(180,222,`${left} × 10`,22,color.blue)+arrow('M180 229 V241','blue');
+     history.push(`${a} + ${v} = ${left}, ${left} × 10 = ${main}`);
+   }else if(isSameUnits){
+     drawing+=arrow('M198 43 H143 V140 Q143 150 130 150 H73 V156','orange',i===1?1:.45);
+     drawing+=arrow('M220 124 C220 140 132 139 132 156','green',i===1?1:.45);
+     drawing+=arrow('M304 43 H348 V140 Q348 152 335 152 H193 V156','gold',i===1?1:.45);
+     drawing+=capsule(18,159,324,42,'green');
+     drawing+=text(74,187,t,24,color.orange)+text(103,187,'×',22)+text(132,187,tens(b),24,color.green)+text(163,187,'+',22)+text(193,187,u,24,color.gold)+text(225,187,'=',22)+text(283,187,left,24,color.blue);
+     drawing+=text(180,229,`${left} × 100`,22,color.blue)+arrow('M180 236 V248','blue');
+     history.push(`${t} × ${tens(b)} + ${u} = ${left}, ${left} × 100 = ${main}`);
+   }else{
+     // 24 × 26의 2 × (2 + 1)을 실제 숫자와 이어지는 계산판 안에 표시해요.
+     drawing+=arrow('M198 43 H145 V140 Q145 150 132 150 H86 V156','orange',i===1?1:.45);
+     drawing+=arrow('M220 124 C220 140 185 138 185 156','green',i===1?1:.45);
+     drawing+=capsule(30,159,300,42,'green');
+     drawing+=text(84,187,t,25,color.orange)+text(111,187,'×',23)+text(185,187,`(${t}+1)`,25,color.green)+text(252,187,'=',23)+text(292,187,left,25,color.gold);
+     drawing+=text(180,229,`${left} × 100`,22,color.blue)+arrow('M180 236 V248','blue');
+     history.push(`${t} × (${t} + 1) = ${left}, ${left} × 100 = ${main}`);
+   }
+   drawing+=ledger(main,289,'→','main');height=320;
+   if(i>=2){
+     drawing+=capsule(42,329,276,39,'gold')+text(180,356,`${u} × ${v} = ${extra}`,24,color.gold);
+     drawing+=ledger(extra,420,'+','addend');height=451;
+     history.push(`${u} × ${v} = ${extra}`);
+   }
+   if(finished){drawing+=line(455)+ledger(a*b,507,'=','total');height=538;history.push(`${main} + ${extra} = ${a*b}`);}
+ }
+ const plain=String(sStep.formula).replace(/<br\s*\/?>/gi,' · ').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ');
+ const confetti=finished?'<span class="confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>':'';
+ return `<div class="vertical-stage cumulative-stage" role="img" aria-label="${a} 곱하기 ${b}, ${methodMap[id].name} ${i+1}단계. ${history.join('. ')}"><div class="board-caption"><span>${methodMap[id].name}</span><span>${i+1} / ${total}</span></div><svg class="cumulative-diagram" viewBox="0 0 360 ${height}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">${drawing}</svg><div class="board-action"><span class="action-pop" aria-hidden="true">${finished?'🎉':i===0?'👀':'✨'}</span><span><strong>${sStep.title}</strong><br>${plain}</span></div>${confetti}</div>`;
+}
+function verticalBoardHTML(sStep,i,total){
+ if(['teens','times11','sameTens','square5','sameUnits','base100','base50'].includes(current.id))return cumulativeBoardHTML(sStep,i,total);
+ const {a,b,id}=current,t=tens(a),u=units(a),s=tens(b),v=units(b),answerValue=a*b;
+ const right=u*v,carry1=Math.floor(right/10),middle=t*v+u*s+carry1,carry2=Math.floor(middle/10);
+ const focusMode=id==='cross'?(i===1?'one':i===2?'cross':i>2?'ten':'none'):['square5','sameTens','sameUnits','base100','base50'].includes(id)?(i===0?'none':i===1?'ten':'one'):i===0?'none':'both';
+ const focus=pos=>focusMode==='both'?' active':focusMode===pos?' active':focusMode==='cross'?' '+(pos==='ten'?'cross-a':'cross-b'):'';
+ const row=(n,operator='')=>`<div class="calc-grid number-row"><span class="operator">${operator}</span><span class="calc-digit digit-tens${focus('ten')}">${tens(n)}</span><span class="calc-digit digit-ones${focus('one')}">${units(n)}</span></div>`;
+ // 중간 단계는 그때 계산한 값만 표시하고, 나중의 올림을 미리 반영하지 않아요.
+ const intermediate=id==='teens'&&i>0&&i<total-1?(i===1?a+v:i===2?(a+v)*10:u*v):null;
+ const beforeBase100Carry=id==='base100'&&i>=1&&i<3;
+ const boardValue=intermediate!==null?intermediate:beforeBase100Carry?(a-(100-b))*100:answerValue;
+ const answer=String(boardValue).padStart(4,' '),positions=['digit-thousands','digit-hundreds','digit-tens','digit-ones'];
+ const isIntermediate=intermediate!==null||beforeBase100Carry;
+ const actual=[...answer].map((digit,index)=>digit===' '?-1:index).filter(index=>index>=0),shown=new Set();
+ const showPrefix=count=>actual.slice(0,count).forEach(index=>shown.add(index)),showSuffix=count=>actual.slice(-count).forEach(index=>shown.add(index));
+ if(i===total-1||intermediate!==null)actual.forEach(index=>shown.add(index));
+ else if(['square5','sameTens','sameUnits'].includes(id)){if(i>=1)showPrefix(Math.max(1,actual.length-2));if(i>=2)showSuffix(2);}
+ else if(id==='base100'){if(i>=1)showPrefix(Math.max(1,actual.length-2));if(i>=3)showSuffix(2);}
+ else if(id==='cross'){if(i>=1)showSuffix(1);if(i>=2)showSuffix(2);if(i>=3)actual.forEach(index=>shown.add(index));}
+ else if(id==='times11'){if(i>=2)showSuffix(Math.min(2,actual.length));}
+ const answerCells=[...answer].map((digit,index)=>digit===' '?`<span class="answer-digit ${positions[index]}"></span>`:`<span class="answer-digit ${positions[index]} ${shown.has(index)?'drop':'blank'}">${shown.has(index)?digit:'·'}</span>`).join('');
+ let carry=null;
+ if(id==='cross'&&i===1&&carry1)carry={value:carry1,cls:'carry-one fly-up'};
+ if(id==='cross'&&i===2&&carry2)carry={value:carry2,cls:'carry-two fly-up'};
+ if(id==='times11'&&i===2&&t+u>=10)carry={value:1,cls:'carry-two fly-up'};
+ if(id==='teens'&&i===total-1&&Math.floor(u*v/10))carry={value:Math.floor(u*v/10),cls:'carry-one fly-up'};
+ if(id==='base100'&&i===3&&Math.floor((100-a)*(100-b)/100))carry={value:Math.floor((100-a)*(100-b)/100),cls:'carry-two fly-up'};
+ if(id==='base50'&&i===3&&(a-50)*(b-50)<0)carry={value:'−'+Math.abs((a-50)*(b-50)),cls:'carry-one fly-down'};
+ const carries=carry?`<span class="carry-chip ${carry.cls}">${carry.value}</span>`:'';
+ const plain=String(sStep.formula).replace(/<br\s*\/?>/gi,' · ').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ');
+ const finished=i===total-1,icon=finished?'🎉':carry?(String(carry.cls).includes('down')?'🛝':'🚀'):(i===0?'👀':'✨');
+ const confetti=finished?'<span class="confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>':'';
+ return `<div class="vertical-stage" role="img" aria-label="${a} 곱하기 ${b}, ${methodMap[id].name} ${i+1}단계${isIntermediate?', 중간 계산값':''}"><div class="board-caption"><span>${methodMap[id].name}</span><span>${isIntermediate?'중간값 · ':''}${i+1} / ${total}</span></div><div class="calc-board"><div class="calc-grid place-row"><span></span><span class="place-h">백</span><span class="place-t">십</span><span class="place-o">일</span></div><div class="calc-grid carry-lane"><span class="carry-label">이동</span>${carries}</div>${row(a)}${row(b,'×')}<div class="calc-line"></div><div class="calc-grid answer-row"><span class="answer-mark">${isIntermediate?'→':'='}</span>${answerCells}</div></div><div class="board-action"><span class="action-pop" aria-hidden="true">${icon}</span><span><strong>${sStep.title}</strong><br>${plain}</span></div>${confetti}</div>`;
+}
+function stepHTML(s,i,steps,showBoard=true){
+ const board=showBoard?verticalBoardHTML(s,i,steps.length):'';
+ const cumulative=['teens','times11','sameTens','square5','sameUnits','base100','base50'].includes(current.id);
+ return `<article class="step-card">${board}<p class="step-kicker">이번에는 이것 하나만!</p><h3 class="step-title"><span class="step-number">${i+1}</span>${s.title}</h3><p class="step-copy">${s.text}</p><div class="spoken-equation"><b>입으로 천천히 읽어 봐요</b><div class="equation">${s.formula}</div></div><div class="look-tip"><b>${cumulative?'☝ 계산을 쌓아요':'☝ 올림 약속'}</b><span>${cumulative?'상자로 표시한 숫자만 이번 계산에 써요. 앞에서 구한 값은 그대로 두고 아래로 이어서 계산해요.':'노란 숫자가 위로 올라가면, 바로 다음 계산에 꼭 더해 주세요.'}</span></div></article>`;
+}
+function renderStep(){
+ $('step-counter').textContent=allSteps?`전체 ${lesson.steps.length}단계`:`${stepIndex+1} / ${lesson.steps.length}`;
+ $('step-progress').innerHTML=lesson.steps.map((s,i)=>`<button class="step-dot ${allSteps||i<stepIndex?'done':''} ${!allSteps&&i===stepIndex?'active':''}" aria-label="${i+1}단계: ${s.title}" ${!allSteps&&i===stepIndex?'aria-current="step"':''} ${!allSteps&&i>stepIndex?'disabled':''} data-step="${i}"></button>`).join('');
+ $('step-content').innerHTML=allSteps?lesson.steps.map((s,i,steps)=>stepHTML(s,i,steps,false)).join(''):stepHTML(lesson.steps[stepIndex],stepIndex,lesson.steps,true);
+ const finished=allSteps||stepIndex===lesson.steps.length-1;
+ $('step-prev').disabled=allSteps||stepIndex===0;$('step-next').textContent=finished?'참 잘했어요! 다음 문제 →':'톡! 숫자 움직이기 ✨';$('show-all').textContent=allSteps?'한 걸음씩 다시 보기':'풀이를 한눈에 보기';
+ $('show-all').hidden=guided&&!finished;$('celebration').classList.toggle('show',finished);if(guided)renderProblem(finished);
+}
+function renderExplore(){
+ const steps=exploreLesson.steps,step=steps[exploreStep],last=exploreStep===steps.length-1;
+ $('modal-progress').innerHTML=steps.map((_,index)=>`<span class="${index<exploreStep?'done':index===exploreStep?'active':''}"></span>`).join('');
+ if(exploreMode==='area'){
+   $('modal-content').innerHTML=`<article class="modal-step area-step"><h3>${step.title}</h3><p>${step.text}</p>${step.visual}<div class="equation">${step.formula}</div></article>`;
+ }else{
+   $('modal-content').innerHTML=`<article class="modal-step"><h3><span class="step-number">${exploreStep+1}</span> ${step.title}</h3><p>${step.text}</p><div class="equation">${step.formula}</div></article>`;
+ }
+ $('modal-content').scrollTop=0;
+ $('modal-prev').disabled=exploreStep===0;$('modal-next').textContent=last?'이 풀이 이해했어요 ✓':'다음 단계 →';
+}
+function selectExploreMethod(id){
+ exploreMethod=id;exploreStep=0;exploreLesson=buildLesson(current.a,current.b,id);
+ $('method-chips').innerHTML=applicableMethods(current.a,current.b).filter(methodId=>methodId!==current.id).map(methodId=>`<button class="method-chip ${methodId===id?'active':''}" data-modal-method="${methodId}" type="button">${methodMap[methodId].name}</button>`).join('');
+ $('modal-title').textContent=methodMap[id].name;renderExplore();
+}
+function openExplore(mode){
+ lastFocus=document.activeElement;exploreMode=mode;exploreStep=0;$('learning-modal').hidden=false;document.body.classList.add('modal-open');
+ if(mode==='area'){
+   $('modal-eyebrow').textContent='곱셈은 사각형의 넓이예요';$('modal-title').textContent=`${current.a} × ${current.b} 넓이 풀이`;$('method-chips').hidden=true;exploreLesson=buildAreaLesson(current.a,current.b);renderExplore();
+ }else{
+   const others=applicableMethods(current.a,current.b).filter(id=>id!==current.id);if(!others.length){closeExplore();return;}
+   $('modal-eyebrow').textContent='같은 답으로 가는 다른 길';$('method-chips').hidden=false;selectExploreMethod(others[0]);
+ }
+ setTimeout(()=>$('modal-close').focus(),20);
+}
+function closeExplore(){$('learning-modal').hidden=true;document.body.classList.remove('modal-open');if(lastFocus)lastFocus.focus();}
+function switchTab(name){activeTab=name;document.querySelectorAll('[data-tab]').forEach(button=>{const active=button.dataset.tab===name;button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;});['quiz','theory','review'].forEach(x=>$('page-'+x).hidden=x!==name);if(name==='review')renderReview();}
+function scrollToQuiz(){if(matchMedia('(max-width:680px)').matches)$('page-quiz').scrollIntoView({behavior:motion(),block:'start'});}
+function scrollToStep(){if(matchMedia('(max-width:680px)').matches)$('step-progress').scrollIntoView({behavior:motion(),block:'start'});}
+function advanceQuestion(){newQuestion();scrollToQuiz();}
+function renderTheory(){
+ $('rule-grid').innerHTML=methods.map((m,i)=>`<article class="panel rule-card"><div class="rule-top"><span class="rule-code">${String(i+1).padStart(2,'0')}</span><h3>${m.name}</h3></div><p class="condition">${m.condition}</p><div class="rule-example">${m.example[0]} × ${m.example[1]} = ${m.example[0]*m.example[1]}</div><p class="recipe">${m.recipe}</p><p class="rule-warning">${m.warning}</p><button class="button" data-practice="${m.id}">이 유형 연습하기 →</button></article>`).join('');
+}
+function renderReview(){
+ $('review-list').innerHTML=saved.wrong.length?saved.wrong.map((p,i)=>`<article class="panel review-item"><div><h3>${p.a} × ${p.b}</h3><p>${methodMap[p.id].name}</p></div><div class="review-actions"><button class="button" data-review="${i}">다시 풀기 →</button></div></article>`).join(''):'<div class="panel empty"><div class="empty-mark" aria-hidden="true">✦</div><h3>다시 풀 문제가 없어요.</h3><p>틀린 문제는 여기에 모아 둘게요.<br>답을 외우기보다 원리를 떠올려 보세요.</p></div>';
+}
+for(const m of methods){const option=document.createElement('option');option.value=m.id;option.textContent=m.name;$('method-select').appendChild(option);}
+document.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener('click',()=>switchTab(button.dataset.tab)));
+document.querySelector('.tabs').addEventListener('keydown',e=>{const tabs=[...document.querySelectorAll('[data-tab]')],i=tabs.indexOf(document.activeElement);if(i<0)return;let next;if(e.key==='ArrowRight')next=(i+1)%tabs.length;else if(e.key==='ArrowLeft')next=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=tabs.length-1;else return;e.preventDefault();switchTab(tabs[next].dataset.tab);tabs[next].focus();});
+$('method-select').addEventListener('change',()=>{methodBag=[];starterBag=[];$('level-note').textContent=$('method-select').value==='starter'?'작은 수로 계산 순서를 익혀요.':'고른 계산법으로 새 문제를 만나요.';newQuestion();});$('hint-toggle').addEventListener('change',()=>$('hint').hidden=!$('hint-toggle').checked);
+$('choices').addEventListener('click',e=>{const button=e.target.closest('[data-choice]');if(button)answerQuestion(Number(button.dataset.choice));});
+$('help-solve').addEventListener('click',()=>openLesson(true));
+$('skip').addEventListener('click',advanceQuestion);$('next-question').addEventListener('click',advanceQuestion);
+$('step-prev').addEventListener('click',()=>{if(stepIndex>0){stepIndex--;renderStep();scrollToStep();$('announcement').textContent=`${stepIndex+1}번째 걸음입니다. ${lesson.steps[stepIndex].title}`;}});
+$('step-next').addEventListener('click',()=>{if(allSteps||stepIndex===lesson.steps.length-1){advanceQuestion();}else{stepIndex++;renderStep();scrollToStep();$('announcement').textContent=`${stepIndex+1}번째 걸음입니다. ${lesson.steps[stepIndex].title}`;}});
+$('step-progress').addEventListener('click',e=>{const button=e.target.closest('[data-step]');if(button){stepIndex=Number(button.dataset.step);allSteps=false;renderStep();scrollToStep();}});
+$('show-all').addEventListener('click',()=>{allSteps=!allSteps;renderStep();scrollToStep();});
+$('open-other').addEventListener('click',()=>openExplore('other'));$('open-area').addEventListener('click',()=>openExplore('area'));
+$('modal-close').addEventListener('click',closeExplore);$('learning-modal').addEventListener('click',e=>{if(e.target===$('learning-modal'))closeExplore();});
+$('method-chips').addEventListener('click',e=>{const button=e.target.closest('[data-modal-method]');if(button)selectExploreMethod(button.dataset.modalMethod);});
+$('modal-prev').addEventListener('click',()=>{if(exploreStep>0){exploreStep--;renderExplore();}});$('modal-next').addEventListener('click',()=>{if(exploreStep===exploreLesson.steps.length-1)closeExplore();else{exploreStep++;renderExplore();}});
+$('rule-grid').addEventListener('click',e=>{const button=e.target.closest('[data-practice]');if(button){$('method-select').value=button.dataset.practice;switchTab('quiz');newQuestion();scrollToQuiz();}});
+$('review-list').addEventListener('click',e=>{const button=e.target.closest('[data-review]');if(button){const p=saved.wrong[Number(button.dataset.review)];if(p){$('method-select').value=p.id;switchTab('quiz');newQuestion({...p,review:true});scrollToQuiz();}}});
+$('custom-form').addEventListener('submit',e=>{e.preventDefault();const aText=$('custom-a').value.trim(),bText=$('custom-b').value.trim(),a=Number(aText),b=Number(bText);if(!/^[1-9][0-9]$/.test(aText)||!/^[1-9][0-9]$/.test(bText)){$('custom-error').textContent='10부터 99까지의 두 자리 정수를 각각 입력해 주세요.';return;}const id=pickMethod(a,b);$('method-select').value=id;newQuestion({a,b,id});scrollToQuiz();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('learning-modal').hidden){closeExplore();return;}if(e.ctrlKey||e.altKey||e.metaKey||e.repeat||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||e.target.isContentEditable)return;if(activeTab==='quiz'&&!answered&&!guided&&/^[1-5]$/.test(e.key)){e.preventDefault();answerQuestion(Number(e.key)-1);}});
+renderTheory();renderStats();newQuestion();
+</script>
+</body>
+</html>
