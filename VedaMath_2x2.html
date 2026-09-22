@@ -170,6 +170,13 @@ main,.layout>*,.lesson-heading h2,.modal-head>div{min-width:0}
 .cumulative-diagram text{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums}
 .cumulative-stage .board-caption span:last-child{flex-shrink:0}
 @media print{.cumulative-stage{background:#18334f!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+/* PPT처럼 넘기는 단계 탐색 */
+.step-progress{align-items:center;gap:7px}.step-dot,.step-dot.done,.step-dot.active{position:relative;height:38px;min-width:32px;padding:0;border:0;background:transparent!important;opacity:1;cursor:pointer;touch-action:manipulation}.step-dot::before{content:"";position:absolute;left:0;right:0;top:50%;height:10px;border-radius:999px;background:#dfe5dc;transform:translateY(-50%);transition:transform .18s,background .18s,box-shadow .18s}.step-dot::after{content:attr(data-step-number);position:absolute;inset:0;display:grid;place-items:center;font-size:9px;font-weight:900;color:#61736a;opacity:.78}.step-dot.done::before{background:#91aa70}.step-dot.active::before{background:var(--green);transform:translateY(-50%) scaleY(1.22);box-shadow:0 0 0 3px #174d4724}.step-dot.done::after,.step-dot.active::after{color:white;opacity:1}.step-dot:hover::before{transform:translateY(-50%) scaleY(1.25)}.step-dot:focus-visible{outline:3px solid #ef9a45;outline-offset:1px;border-radius:10px}
+.vertical-stage{touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;will-change:transform,opacity;padding-bottom:34px}.vertical-stage.is-dragging{cursor:grabbing;transition:none!important}.vertical-stage.swiping-left{box-shadow:0 10px 30px #10263d35,inset -7px 0 0 #7ce9c3}.vertical-stage.swiping-right{box-shadow:0 10px 30px #10263d35,inset 7px 0 0 #ffd36b}.vertical-stage:focus-visible{outline:4px solid #ef9a45;outline-offset:3px}.swipe-cue{position:absolute;left:12px;right:12px;bottom:7px;display:flex;align-items:center;justify-content:space-between;gap:8px;color:#c9e8f7;font:700 10px/1.4 sans-serif;pointer-events:none;opacity:.78}.swipe-cue b{font-weight:800;color:#fff}.swiping-left .swipe-cue span:last-child,.swiping-right .swipe-cue span:first-child{color:#ffe56f;transform:scale(1.12)}
+.step-card.slide-from-right{animation:slide-from-right .3s cubic-bezier(.2,.8,.3,1)}.step-card.slide-from-left{animation:slide-from-left .3s cubic-bezier(.2,.8,.3,1)}.vertical-stage.edge-bump{animation:edge-bump .28s ease-out}
+@keyframes slide-from-right{from{opacity:.25;transform:translateX(52px)}to{opacity:1;transform:none}}@keyframes slide-from-left{from{opacity:.25;transform:translateX(-52px)}to{opacity:1;transform:none}}@keyframes edge-bump{40%{transform:translateX(10px)}70%{transform:translateX(-5px)}100%{transform:none}}
+@media(max-width:680px){.step-progress{gap:4px;margin-block:6px}.step-dot,.step-dot.done,.step-dot.active{height:32px;min-width:28px}.step-dot::before{height:8px}.step-dot::after{font-size:8px}.vertical-stage{padding-bottom:30px}.swipe-cue{font-size:9px;bottom:6px}}
+@media(prefers-reduced-motion:reduce){.step-card.slide-from-right,.step-card.slide-from-left,.vertical-stage.edge-bump{animation:none!important}}
 </style>
 </head>
 <body>
@@ -374,6 +381,7 @@ try{const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(data&&ty
 }}catch(_){storageOK=false;}
 let current=null,answered=false,guided=false,lesson=null,stepIndex=0,allSteps=false,questionCount=0,methodBag=[],starterBag=[],activeTab='quiz';
 let exploreMode='other',exploreLesson=null,exploreStep=0,exploreMethod=null,lastFocus=null;
+let swipeState=null;
 function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(saved));}catch(_){storageOK=false;}renderStats();}
 function renderStats(){$('solved-stat').textContent=saved.solved;$('correct-stat').textContent=saved.correct;const percent=saved.solved?Math.round(saved.correct/saved.solved*100):0;$('accuracy-bar').style.width=percent+'%';$('stats-caption').textContent=saved.solved?`정답률 ${percent}% · 연속 ${saved.streak}문제 정답`:'첫 문제부터 시작해 볼까요?';$('review-count').textContent=saved.wrong.length;$('save-note').textContent=storageOK?'학습 기록은 이 브라우저에 자동 저장돼요.':'이 브라우저에서는 자동 저장이 제한돼요. 현재 창에서는 계속 연습할 수 있어요.';}
 function keyOf(p){return `${Math.min(p.a,p.b)}-${Math.max(p.a,p.b)}-${p.id}`;}
@@ -579,7 +587,7 @@ function verticalBoardHTML(sStep,i,total){
  const plain=String(sStep.formula).replace(/<br\s*\/?>/gi,' · ').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ');
  const finished=i===total-1,icon=finished?'🎉':carry?(String(carry.cls).includes('down')?'🛝':'🚀'):(i===0?'👀':'✨');
  const confetti=finished?'<span class="confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>':'';
- return `<div class="vertical-stage" role="img" aria-label="${a} 곱하기 ${b}, ${methodMap[id].name} ${i+1}단계${isIntermediate?', 중간 계산값':''}"><div class="board-caption"><span>${methodMap[id].name}</span><span>${isIntermediate?'중간값 · ':''}${i+1} / ${total}</span></div><div class="calc-board"><div class="calc-grid place-row"><span></span><span class="place-h">백</span><span class="place-t">십</span><span class="place-o">일</span></div><div class="calc-grid carry-lane"><span class="carry-label">이동</span>${carries}</div>${row(a)}${row(b,'×')}<div class="calc-line"></div><div class="calc-grid answer-row"><span class="answer-mark">${isIntermediate?'→':'='}</span>${answerCells}</div></div><div class="board-action"><span class="action-pop" aria-hidden="true">${icon}</span><span><strong>${sStep.title}</strong><br>${plain}</span></div>${confetti}</div>`;
+ return `<div class="vertical-stage" role="group" tabindex="0" aria-roledescription="단계 슬라이드" aria-label="${a} 곱하기 ${b}, ${methodMap[id].name} ${i+1}단계${isIntermediate?', 중간 계산값':''}. 왼쪽으로 밀면 다음 단계, 오른쪽으로 밀면 이전 단계입니다."><div class="board-caption"><span>${methodMap[id].name}</span><span>${isIntermediate?'중간값 · ':''}${i+1} / ${total}</span></div><div class="calc-board"><div class="calc-grid place-row"><span></span><span class="place-h">백</span><span class="place-t">십</span><span class="place-o">일</span></div><div class="calc-grid carry-lane"><span class="carry-label">이동</span>${carries}</div>${row(a)}${row(b,'×')}<div class="calc-line"></div><div class="calc-grid answer-row"><span class="answer-mark">${isIntermediate?'→':'='}</span>${answerCells}</div></div><div class="board-action"><span class="action-pop" aria-hidden="true">${icon}</span><span><strong>${sStep.title}</strong><br>${plain}</span></div>${confetti}<div class="swipe-cue" aria-hidden="true"><span>‹ 이전</span><b>밀어서 단계 이동</b><span>다음 ›</span></div></div>`;
 }
 function stepHTML(s,i,steps,showBoard=true){
  const board=showBoard?verticalBoardHTML(s,i,steps.length):'';
@@ -588,7 +596,7 @@ function stepHTML(s,i,steps,showBoard=true){
 }
 function renderStep(){
  $('step-counter').textContent=allSteps?`전체 ${lesson.steps.length}단계`:`${stepIndex+1} / ${lesson.steps.length}`;
- $('step-progress').innerHTML=lesson.steps.map((s,i)=>`<button class="step-dot ${allSteps||i<stepIndex?'done':''} ${!allSteps&&i===stepIndex?'active':''}" aria-label="${i+1}단계: ${s.title}" ${!allSteps&&i===stepIndex?'aria-current="step"':''} ${!allSteps&&i>stepIndex?'disabled':''} data-step="${i}"></button>`).join('');
+ $('step-progress').innerHTML=lesson.steps.map((s,i)=>`<button type="button" class="step-dot ${allSteps||i<stepIndex?'done':''} ${!allSteps&&i===stepIndex?'active':''}" aria-label="${i+1}단계로 이동: ${s.title}" title="${i+1}단계 · ${s.title}" ${!allSteps&&i===stepIndex?'aria-current="step"':''} data-step="${i}" data-step-number="${i+1}"></button>`).join('');
  $('step-content').innerHTML=allSteps?lesson.steps.map((s,i,steps)=>stepHTML(s,i,steps,false)).join(''):stepHTML(lesson.steps[stepIndex],stepIndex,lesson.steps,true);
  const finished=allSteps||stepIndex===lesson.steps.length-1;
  $('step-prev').disabled=allSteps||stepIndex===0;$('step-next').textContent=finished?'참 잘했어요! 다음 문제 →':'톡! 숫자 움직이기 ✨';$('show-all').textContent=allSteps?'한 걸음씩 다시 보기':'풀이를 한눈에 보기';
@@ -624,6 +632,34 @@ function closeExplore(){$('learning-modal').hidden=true;document.body.classList.
 function switchTab(name){activeTab=name;document.querySelectorAll('[data-tab]').forEach(button=>{const active=button.dataset.tab===name;button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;});['quiz','theory','review'].forEach(x=>$('page-'+x).hidden=x!==name);if(name==='review')renderReview();}
 function scrollToQuiz(){if(matchMedia('(max-width:680px)').matches)$('page-quiz').scrollIntoView({behavior:motion(),block:'start'});}
 function scrollToStep(){if(matchMedia('(max-width:680px)').matches)$('step-progress').scrollIntoView({behavior:motion(),block:'start'});}
+function moveToStep(target,{scroll=true,direction=null}={}){
+ if(!lesson||!lesson.steps.length)return false;
+ const max=lesson.steps.length-1;
+ if(target<0||target>max){
+   const stage=$('step-content').querySelector('.vertical-stage');
+   if(stage){stage.classList.remove('edge-bump');void stage.offsetWidth;stage.classList.add('edge-bump');}
+   $('announcement').textContent=target<0?'첫 번째 단계예요.':'마지막 단계예요.';
+   return false;
+ }
+ const previous=stepIndex;stepIndex=target;allSteps=false;renderStep();
+ const card=$('step-content').querySelector('.step-card');
+ const way=direction||(target>previous?'next':target<previous?'prev':'jump');
+ if(card&&way!=='jump')card.classList.add(way==='next'?'slide-from-right':'slide-from-left');
+ if(scroll)scrollToStep();
+ $('announcement').textContent=`${stepIndex+1}번째 단계입니다. ${lesson.steps[stepIndex].title}`;
+ return true;
+}
+function resetSwipeVisual(stage){
+ if(!stage)return;stage.classList.remove('is-dragging','swiping-left','swiping-right');stage.style.transition='transform .2s ease, opacity .2s ease';stage.style.transform='';stage.style.opacity='';setTimeout(()=>{if(stage.isConnected)stage.style.transition='';},220);
+}
+function finishSwipe(event,cancelled=false){
+ if(!swipeState||event.pointerId!==swipeState.id)return;
+ const state=swipeState;swipeState=null;const dx=event.clientX-state.x,dy=event.clientY-state.y,elapsed=Math.max(1,performance.now()-state.time),speed=Math.abs(dx)/elapsed;
+ try{state.stage.releasePointerCapture(event.pointerId);}catch(_){}
+ const threshold=Math.min(72,state.stage.clientWidth*.17),isSwipe=!cancelled&&state.horizontal&&Math.abs(dx)>Math.abs(dy)*1.15&&(Math.abs(dx)>=threshold||(Math.abs(dx)>=28&&speed>.45));
+ if(isSwipe){state.stage.classList.remove('is-dragging','swiping-left','swiping-right');if(!moveToStep(stepIndex+(dx<0?1:-1),{scroll:false,direction:dx<0?'next':'prev'}))resetSwipeVisual(state.stage);}
+ else resetSwipeVisual(state.stage);
+}
 function advanceQuestion(){newQuestion();scrollToQuiz();}
 function renderTheory(){
  $('rule-grid').innerHTML=methods.map((m,i)=>`<article class="panel rule-card"><div class="rule-top"><span class="rule-code">${String(i+1).padStart(2,'0')}</span><h3>${m.name}</h3></div><p class="condition">${m.condition}</p><div class="rule-example">${m.example[0]} × ${m.example[1]} = ${m.example[0]*m.example[1]}</div><p class="recipe">${m.recipe}</p><p class="rule-warning">${m.warning}</p><button class="button" data-practice="${m.id}">이 유형 연습하기 →</button></article>`).join('');
@@ -638,9 +674,13 @@ $('method-select').addEventListener('change',()=>{methodBag=[];starterBag=[];$('
 $('choices').addEventListener('click',e=>{const button=e.target.closest('[data-choice]');if(button)answerQuestion(Number(button.dataset.choice));});
 $('help-solve').addEventListener('click',()=>openLesson(true));
 $('skip').addEventListener('click',advanceQuestion);$('next-question').addEventListener('click',advanceQuestion);
-$('step-prev').addEventListener('click',()=>{if(stepIndex>0){stepIndex--;renderStep();scrollToStep();$('announcement').textContent=`${stepIndex+1}번째 걸음입니다. ${lesson.steps[stepIndex].title}`;}});
-$('step-next').addEventListener('click',()=>{if(allSteps||stepIndex===lesson.steps.length-1){advanceQuestion();}else{stepIndex++;renderStep();scrollToStep();$('announcement').textContent=`${stepIndex+1}번째 걸음입니다. ${lesson.steps[stepIndex].title}`;}});
-$('step-progress').addEventListener('click',e=>{const button=e.target.closest('[data-step]');if(button){stepIndex=Number(button.dataset.step);allSteps=false;renderStep();scrollToStep();}});
+$('step-prev').addEventListener('click',()=>moveToStep(stepIndex-1,{direction:'prev'}));
+$('step-next').addEventListener('click',()=>{if(allSteps||stepIndex===lesson.steps.length-1){advanceQuestion();}else moveToStep(stepIndex+1,{direction:'next'});});
+$('step-progress').addEventListener('click',e=>{const button=e.target.closest('[data-step]');if(button)moveToStep(Number(button.dataset.step),{direction:Number(button.dataset.step)>stepIndex?'next':Number(button.dataset.step)<stepIndex?'prev':'jump'});});
+$('step-content').addEventListener('pointerdown',e=>{const stage=e.target.closest('.vertical-stage');if(!stage||allSteps||(e.pointerType==='mouse'&&e.button!==0))return;swipeState={id:e.pointerId,x:e.clientX,y:e.clientY,time:performance.now(),stage,horizontal:false};stage.classList.add('is-dragging');try{stage.setPointerCapture(e.pointerId);}catch(_){}});
+$('step-content').addEventListener('pointermove',e=>{if(!swipeState||e.pointerId!==swipeState.id)return;const dx=e.clientX-swipeState.x,dy=e.clientY-swipeState.y;if(!swipeState.horizontal&&Math.abs(dx)>9)swipeState.horizontal=Math.abs(dx)>Math.abs(dy)*1.15;if(!swipeState.horizontal)return;e.preventDefault();const shift=Math.max(-95,Math.min(95,dx*.55));swipeState.stage.style.transform=`translateX(${shift}px) rotate(${shift*.015}deg)`;swipeState.stage.style.opacity=String(Math.max(.66,1-Math.abs(shift)/300));swipeState.stage.classList.toggle('swiping-left',dx<0);swipeState.stage.classList.toggle('swiping-right',dx>0);});
+$('step-content').addEventListener('pointerup',e=>finishSwipe(e));$('step-content').addEventListener('pointercancel',e=>finishSwipe(e,true));
+$('step-content').addEventListener('keydown',e=>{if(!e.target.closest('.vertical-stage'))return;if(e.key==='ArrowRight'){e.preventDefault();moveToStep(stepIndex+1,{scroll:false,direction:'next'});}else if(e.key==='ArrowLeft'){e.preventDefault();moveToStep(stepIndex-1,{scroll:false,direction:'prev'});}});
 $('show-all').addEventListener('click',()=>{allSteps=!allSteps;renderStep();scrollToStep();});
 $('open-other').addEventListener('click',()=>openExplore('other'));$('open-area').addEventListener('click',()=>openExplore('area'));
 $('modal-close').addEventListener('click',closeExplore);$('learning-modal').addEventListener('click',e=>{if(e.target===$('learning-modal'))closeExplore();});
