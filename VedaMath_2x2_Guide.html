@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#164c46">
+<title>톡톡 베다 곱셈 놀이터 · 쉬운 사용 가이드</title>
+<style>
+:root{--bg:#f4f2e9;--paper:#fffef9;--ink:#183e39;--muted:#60736b;--line:#d8e1d7;--green:#164c46;--mint:#dff2dc;--blue:#dff1ff;--yellow:#fff1a9;--orange:#ee8e3e;--shadow:0 12px 38px #153f3512}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#eaf5e5 0,#f5f2e9 360px);color:var(--ink);font-family:"Pretendard","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65;word-break:keep-all}a{color:inherit}button{font:inherit}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:3px}.wrap{width:min(920px,calc(100% - 32px));margin:auto}.hero{padding:34px 0 25px}.brand{display:flex;align-items:center;gap:10px;font-weight:900}.brand-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#f2a33d;color:#173f39;font-size:23px}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:34px;align-items:center;margin-top:30px}.kicker{font-size:12px;font-weight:900;letter-spacing:1.5px;color:#528069}.hero h1{font-size:clamp(34px,6vw,56px);line-height:1.18;letter-spacing:-2px;margin:8px 0 15px}.hero h1 em{font-style:normal;color:#d9692f}.hero p{margin:0;color:var(--muted);font-size:17px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:10px 18px;border:1px solid #c8d6ca;border-radius:13px;background:white;text-decoration:none;font-weight:850}.button.primary{background:var(--green);border-color:var(--green);color:white;box-shadow:0 5px 0 #0d342f}.button.primary:active{transform:translateY(2px);box-shadow:0 3px 0 #0d342f}.phone{border:8px solid #17312d;border-radius:31px;background:#fffdf6;box-shadow:0 20px 50px #173f3930;padding:15px 12px 18px;transform:rotate(1.5deg)}.phone-top{width:70px;height:6px;background:#17312d;border-radius:5px;margin:0 auto 15px}.phone-tabs{display:flex;gap:5px;margin-bottom:12px}.phone-tabs i{height:6px;flex:1;border-radius:8px;background:#e2e7dc}.phone-tabs i:first-child{background:#1f7770}.phone-board{background:linear-gradient(145deg,#274f75,#102941);border-radius:18px;color:white;padding:14px;min-height:235px}.phone-board small{color:#cce7ff;font-weight:800}.sum{width:120px;margin:15px auto 0;font:800 31px/1.45 ui-monospace,monospace;text-align:right}.sum .line{height:3px;background:#74d8e7;border-radius:5px}.swipe{display:flex;align-items:center;justify-content:space-between;margin-top:15px;padding:8px 10px;border-radius:10px;background:#ffffff16;color:#fff;font-size:11px;font-weight:800}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 34px}.quick article,.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.quick article{padding:19px}.number{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--orange);color:white;font-weight:900;margin-bottom:11px}.quick h2{font-size:17px;margin:0 0 5px}.quick p{margin:0;color:var(--muted);font-size:14px}.section{padding:21px 0;scroll-margin-top:12px}.section-title{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:14px}.section-title h2{font-size:27px;letter-spacing:-1px;margin:0}.section-title p{margin:0;color:var(--muted);font-size:13px}.steps{display:grid;gap:13px}.guide-step{display:grid;grid-template-columns:52px minmax(0,1fr);gap:15px;padding:20px}.guide-step .icon{width:52px;height:52px;display:grid;place-items:center;border-radius:15px;background:var(--mint);font-size:25px}.guide-step:nth-child(2n) .icon{background:var(--blue)}.guide-step:nth-child(3n) .icon{background:var(--yellow)}.guide-step h3{margin:0 0 6px;font-size:19px}.guide-step p{margin:0;color:#4f675d}.mini-ui{margin-top:13px;padding:13px;border:1px dashed #b6c9b8;border-radius:12px;background:#fbfcf7}.answer-row{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.answer-row span{padding:8px 2px;text-align:center;border:1px solid #ccd8cb;border-radius:8px;background:white;font:700 14px ui-monospace,monospace}.progress-demo{display:flex;gap:6px}.progress-demo button{position:relative;height:38px;flex:1;border:0;background:transparent;cursor:pointer}.progress-demo button:before{content:"";position:absolute;left:0;right:0;top:50%;height:9px;border-radius:10px;background:#dde3d9;transform:translateY(-50%)}.progress-demo button.active:before{background:var(--green)}.progress-demo button:after{content:attr(data-n);position:absolute;inset:0;display:grid;place-items:center;font-size:9px;font-weight:900;color:#60736b}.progress-demo button.active:after{color:white}.gesture-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.gesture{padding:20px;text-align:center}.gesture .arrow{font-size:42px;line-height:1;color:var(--orange);font-weight:900}.gesture h3{margin:8px 0 4px}.gesture p{margin:0;color:var(--muted);font-size:14px}.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.feature{padding:20px}.feature h3{margin:0 0 7px;font-size:18px}.feature p{margin:0;color:var(--muted);font-size:14px}.area-box{display:grid;grid-template-columns:3fr 1fr;grid-template-rows:3fr 1fr;height:150px;gap:4px;margin-top:15px}.area-box div{display:grid;place-items:center;border-radius:9px;font-weight:900}.area-box div:nth-child(1){background:#a9dfc2}.area-box div:nth-child(2){background:#a9d8f2}.area-box div:nth-child(3){background:#ffe08c}.area-box div:nth-child(4){background:#ffb4aa}.tip{padding:20px;background:#173f39;color:white;border-radius:18px}.tip h3{margin:0 0 8px}.tip p{margin:0;color:#d8e9e3}.faq{display:grid;gap:8px}.faq details{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:0 16px}.faq summary{padding:15px 0;font-weight:850;cursor:pointer}.faq p{margin:0;padding:0 0 16px;color:var(--muted)}.toc{position:sticky;top:0;z-index:5;background:#f5f2e9e8;backdrop-filter:blur(10px);border-block:1px solid #dde3d9}.toc-inner{display:flex;gap:5px;overflow-x:auto;padding:8px 0;scrollbar-width:none}.toc a{white-space:nowrap;padding:7px 11px;border-radius:999px;text-decoration:none;font-size:12px;font-weight:800;color:var(--muted)}.toc a:hover{background:white;color:var(--green)}footer{padding:35px 0 95px;text-align:center;color:var(--muted);font-size:13px}.sticky-start{display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:680px){.wrap{width:min(100% - 24px,520px)}.hero{padding-top:22px}.hero-grid{grid-template-columns:1fr;gap:23px}.hero h1{font-size:37px}.hero p{font-size:15px}.phone{width:min(300px,90%);margin:auto;transform:none}.quick{grid-template-columns:1fr}.section{padding:18px 0}.section-title{display:block}.section-title h2{font-size:24px}.section-title p{margin-top:4px}.guide-step{grid-template-columns:43px minmax(0,1fr);gap:12px;padding:16px}.guide-step .icon{width:43px;height:43px;border-radius:12px;font-size:21px}.guide-step h3{font-size:17px}.guide-step p{font-size:14px}.gesture-grid,.feature-grid{grid-template-columns:1fr}.toc-inner{padding-inline:12px}.sticky-start{display:flex;position:fixed;z-index:10;left:12px;right:12px;bottom:max(10px,env(safe-area-inset-bottom));min-height:50px;border-radius:14px;background:var(--green);color:white;align-items:center;justify-content:center;text-decoration:none;font-weight:900;box-shadow:0 8px 25px #0e3d3655}footer{padding-bottom:88px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button.primary:active{transform:none}}
+@media print{body{background:white}.toc,.actions,.sticky-start{display:none}.phone{box-shadow:none}.card,.quick article{box-shadow:none}.section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">✦</span>톡톡 베다 곱셈 놀이터</div>
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">처음 사용하는 어린이와 보호자를 위한</p>
+        <h1>한 번 보고 바로 쓰는<br><em>쉬운 사용 가이드</em></h1>
+        <p>문제를 고르고, 답을 눌러 보고, 계산판을 좌우로 밀면 됩니다. 틀려도 괜찮아요. 풀이가 한 단계씩 알려 줍니다.</p>
+        <div class="actions"><a class="button primary" href="VedaMath_2x2.html">학습기 시작하기 →</a><a class="button" href="#quick">3단계로 배우기</a></div>
+      </div>
+      <div class="phone" aria-label="학습기 화면 예시">
+        <div class="phone-top"></div><div class="phone-tabs"><i></i><i></i><i></i><i></i></div>
+        <div class="phone-board"><small>11을 곱하는 방법 · 1/4</small><div class="sum">21<br>× 11<div class="line"></div>···</div><div class="swipe"><span>‹ 이전</span><b>밀어서 단계 이동</b><span>다음 ›</span></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="가이드 목차"><div class="wrap toc-inner"><a href="#quick">빠른 시작</a><a href="#solve">문제 풀기</a><a href="#move">단계 이동</a><a href="#methods">다른 풀이</a><a href="#review">다시 풀기</a><a href="#faq">도움말</a></div></nav>
+
+<main class="wrap">
+  <section class="quick" id="quick" aria-label="빠른 시작">
+    <article><span class="number">1</span><h2>문제를 골라요</h2><p>처음에는 ‘첫걸음 · 쉬운 수부터’를 선택하세요.</p></article>
+    <article><span class="number">2</span><h2>답을 눌러 봐요</h2><p>모르겠다면 ‘같이 풀기 시작’을 눌러도 됩니다.</p></article>
+    <article><span class="number">3</span><h2>계산판을 밀어요</h2><p>왼쪽으로 밀며 다음 풀이를 하나씩 확인하세요.</p></article>
+  </section>
+
+  <section class="section" id="solve">
+    <div class="section-title"><h2>문제는 이렇게 풀어요</h2><p>위에서 아래 순서로 보면 쉬워요.</p></div>
+    <div class="steps">
+      <article class="card guide-step"><div class="icon" aria-hidden="true">🌱</div><div><h3>① 연습할 계산법을 골라요</h3><p>처음 배우면 <strong>첫걸음</strong>을 선택하세요. 익숙해진 뒤 여러 계산법이나 원하는 유형을 선택하면 됩니다.</p></div></article>
+      <article class="card guide-step"><div class="icon" aria-hidden="true">🔢</div><div><h3>② 문제와 다섯 개의 답을 봐요</h3><p>답이라고 생각하는 숫자를 한 번 누릅니다. 맞거나 틀린 이유가 바로 나타납니다.</p><div class="mini-ui answer-row" aria-label="답 보기 예시"><span>1106</span><span>1216</span><span>1210</span><span>1116</span><span>1196</span></div></div></article>
+      <article class="card guide-step"><div class="icon" aria-hidden="true">🤝</div><div><h3>③ 답을 몰라도 괜찮아요</h3><p><strong>같이 풀기 시작</strong>을 누르면 정답을 먼저 고르지 않아도 됩니다. 계산판의 설명을 읽으며 천천히 따라가세요.</p></div></article>
+      <article class="card guide-step"><div class="icon" aria-hidden="true">✨</div><div><h3>④ 움직이는 숫자를 살펴봐요</h3><p>아래로 내려오는 숫자는 답칸에 쓰는 수입니다. 위로 올라가는 노란 숫자는 다음 계산에 더할 올림입니다.</p></div></article>
+    </div>
+  </section>
+
+  <section class="section" id="move">
+    <div class="section-title"><h2>풀이 단계를 움직이는 방법</h2><p>PPT처럼 넘기거나 원하는 단계로 바로 이동할 수 있어요.</p></div>
+    <div class="gesture-grid">
+      <article class="card gesture"><div class="arrow" aria-hidden="true">←</div><h3>왼쪽으로 밀기</h3><p>계산판을 오른쪽에서 왼쪽으로 밀면 <strong>다음 단계</strong>로 넘어갑니다.</p></article>
+      <article class="card gesture"><div class="arrow" aria-hidden="true">→</div><h3>오른쪽으로 밀기</h3><p>계산판을 왼쪽에서 오른쪽으로 밀면 <strong>이전 단계</strong>로 돌아갑니다.</p></article>
+    </div>
+    <article class="card guide-step" style="margin-top:13px"><div class="icon" aria-hidden="true">☝</div><div><h3>위쪽 단계 막대를 눌러도 돼요</h3><p>원하는 번호의 막대를 누르면 그 단계로 바로 이동합니다. 아직 보지 않은 뒤 단계도 선택할 수 있습니다.</p><div class="mini-ui progress-demo" aria-label="단계 버튼 예시"><button class="active" data-n="1" aria-label="1단계"></button><button data-n="2" aria-label="2단계"></button><button data-n="3" aria-label="3단계"></button><button data-n="4" aria-label="4단계"></button></div></div></article>
+    <div class="tip" style="margin-top:13px"><h3>손가락 사용 팁</h3><p>가로로 충분히 밀어야 단계가 바뀝니다. 위아래로 움직이면 평소처럼 화면을 스크롤할 수 있어요.</p></div>
+  </section>
+
+  <section class="section" id="methods">
+    <div class="section-title"><h2>다른 방법으로도 배워요</h2><p>하나의 답으로 가는 여러 길을 비교해 보세요.</p></div>
+    <div class="feature-grid">
+      <article class="card feature"><h3>↗ 다른 계산법</h3><p>같은 숫자에 여러 베다 계산법을 쓸 수 있으면 가능한 방법만 골라서 보여 줍니다. 각 방법도 한 단계씩 볼 수 있어요.</p></article>
+      <article class="card feature"><h3>▦ 넓이로 풀기</h3><p>두 자리 수를 십의 묶음과 낱개로 나누고, 네 사각형의 넓이를 더해 곱셈을 이해합니다.</p><div class="area-box" aria-label="넓이 풀이 예시"><div>20×30</div><div>3×30</div><div>20×4</div><div>3×4</div></div></article>
+      <article class="card feature"><h3>📖 계산법 놀이터</h3><p>8가지 계산법의 조건과 예시를 먼저 살펴볼 수 있습니다. 원하는 유형의 ‘연습하기’를 누르면 바로 문제로 이동합니다.</p></article>
+      <article class="card feature"><h3>✍ 내가 입력한 숫자</h3><p>10부터 99까지 두 수를 직접 넣으면 사용할 수 있는 계산법을 자동으로 찾아 줍니다.</p></article>
+    </div>
+  </section>
+
+  <section class="section" id="review">
+    <div class="section-title"><h2>틀린 문제는 다시 만나요</h2><p>틀림은 실패가 아니라 다음 연습 표시예요.</p></div>
+    <article class="card guide-step"><div class="icon" aria-hidden="true">🔁</div><div><h3>‘한 번 더’ 탭을 눌러요</h3><p>틀린 문제는 자동으로 모입니다. 다시 맞히면 목록에서 사라져요. 문제 수와 정답 기록은 같은 브라우저에 저장됩니다.</p></div></article>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="section-title"><h2>자주 묻는 질문</h2></div>
+    <div class="faq">
+      <details><summary>밀어도 단계가 바뀌지 않아요.</summary><p>파란 계산판 안에서 손가락을 가로로 조금 더 길게 밀어 보세요. 짧은 터치는 단계 이동으로 처리하지 않습니다.</p></details>
+      <details><summary>마지막 단계에서 왼쪽으로 더 밀면 어떻게 되나요?</summary><p>계산판이 살짝 튕기며 마지막 단계라고 알려 줍니다. 새 문제는 아래의 다음 문제 버튼을 눌러 시작하세요.</p></details>
+      <details><summary>공식이 너무 어려워요.</summary><p>공식을 외우지 않아도 됩니다. 먼저 움직이는 숫자와 색을 보고, 익숙해지면 ‘왜 그럴까요?’ 설명을 보호자와 함께 읽어 보세요.</p></details>
+      <details><summary>학습 기록을 지우고 싶어요.</summary><p>기록은 브라우저 안에만 저장됩니다. 브라우저의 사이트 데이터나 저장공간을 지우면 기록도 초기화됩니다.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">톡톡 베다 곱셈 놀이터 · 서두르지 않고 한 단계씩 이해해요.</div></footer>
+<a class="sticky-start" href="VedaMath_2x2.html">학습기 시작하기 →</a>
+</body>
+</html>
