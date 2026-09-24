@@ -1,0 +1,12 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const dir = __dirname;
+const root = path.dirname(dir);
+const assets = Object.fromEntries(Object.entries({rabbit:'GPT_토끼.png',bear:'GPT_곰돌이.png',cat:'GPT_고양이.png',penguin:'GPT_펭귄.png'}).map(([key,file]) => [key, 'data:image/png;base64,' + fs.readFileSync(path.join(root,file)).toString('base64')]));
+let html = fs.readFileSync(path.join(dir,'shell.html'),'utf8');
+html = html.replace('/* APP_STYLES */', () => fs.readFileSync(path.join(dir,'app.css'),'utf8'));
+html = html.replace('/* APP_ASSETS */', () => 'const ART = ' + JSON.stringify(assets) + ';');
+html = html.replace('/* APP_CORE */', () => fs.readFileSync(path.join(dir,'core.js'),'utf8'));
+html = html.replace('/* APP_LOGIC */', () => fs.readFileSync(path.join(dir,'app.js'),'utf8'));
+fs.writeFileSync(path.join(root,'My_Storybook.html'),html);
+console.log('Built My_Storybook.html ('+(Buffer.byteLength(html)/1024/1024).toFixed(1)+' MB), all images embedded.');

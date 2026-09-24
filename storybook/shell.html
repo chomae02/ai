@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff8ed">
+  <meta name="color-scheme" content="light">
+  <title>나의 목소리 동화책</title>
+  <style>/* APP_STYLES */</style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand"><img data-art="rabbit" alt="" class="brand-friend"><div><span class="eyebrow">작은 이야기, 소중한 목소리</span><h1>나의 목소리 동화책<span class="brand-star">✦</span></h1></div></div>
+      <div class="file-actions"><button class="button small" data-action="open"><span aria-hidden="true">📂</span> 불러오기</button><button class="button small save" data-action="save"><span aria-hidden="true">💾</span> 기기에 저장</button></div>
+    </header>
+    <nav class="tabs" role="tablist" aria-label="동화책 놀이">
+      <button id="tab-edit" role="tab" aria-selected="true" aria-controls="panel-edit" data-tab="edit"><span class="tab-icon" aria-hidden="true">🎨</span><span><small>하나</small>책 만들기</span></button>
+      <button id="tab-record" role="tab" aria-selected="false" aria-controls="panel-record" tabindex="-1" data-tab="record"><span class="tab-icon" aria-hidden="true">🎙️</span><span><small>둘</small>목소리 담기</span></button>
+      <button id="tab-play" role="tab" aria-selected="false" aria-controls="panel-play" tabindex="-1" data-tab="play"><span class="tab-icon" aria-hidden="true">📖</span><span><small>셋</small>동화 듣기</span></button>
+    </nav>
+    <div class="book-line"><span id="book-label"></span><span class="draft-state" id="draft-state" role="status">준비하고 있어요</span></div>
+    <main>
+      <section id="panel-edit" role="tabpanel" aria-labelledby="tab-edit">
+        <div class="editor-heading"><div><span class="eyebrow">내가 만드는 작은 세상</span><h2>어떤 이야기를 만들까?</h2></div><button class="button small" id="new-book">＋ 새 책</button></div>
+        <div class="book-fields"><label>책 이름<input id="book-title" maxlength="100" placeholder="나의 동화책" autocomplete="off"></label><label>읽어 주는 사람<input id="book-author" maxlength="40" placeholder="내 이름" autocomplete="off"></label></div>
+        <div class="editor-layout">
+          <aside class="page-sidebar" aria-label="동화 페이지"><div class="sidebar-heading"><strong>나의 페이지</strong><span id="page-total"></span></div><div id="page-list" class="page-list"></div><button class="add-page" id="add-page"><span aria-hidden="true">＋</span> 한 장 더</button></aside>
+          <div class="editor-card">
+            <div class="section-line"><h3 id="editor-page-title">1번째 이야기</h3><span id="edit-recorded" class="pill"></span></div>
+            <button id="pick-image" class="image-picker" aria-label="이 페이지의 그림 고르기"><div id="edit-scene" class="scene"></div><span class="image-pick-label">🖼️ 그림 고르기</span></button>
+            <div class="friend-row"><span>친구 그림</span><div id="friend-choices" class="friend-choices"></div></div>
+            <label class="text-label" for="page-text">✏️ 여기에 이야기를 써요 <span id="text-count">0 / 5,000</span></label>
+            <textarea id="page-text" maxlength="5000" rows="4" placeholder="옛날 옛날, 작은 숲에…"></textarea>
+            <div class="editor-bottom"><details><summary>⚙️ 페이지 정리</summary><div class="organize"><button class="button small" id="move-left">← 앞으로</button><button class="button small" id="move-right">뒤로 →</button><button class="button small danger" id="delete-page">🗑️ 이 장 지우기</button></div></details><button class="button primary" id="go-record">목소리 담으러 가기 <span aria-hidden="true">→</span></button></div>
+          </div>
+        </div>
+      </section>
+      <section id="panel-record" role="tabpanel" aria-labelledby="tab-record" hidden>
+        <div class="reader-heading"><div><span class="eyebrow">들어 보고, 내 목소리로!</span><h2>이야기에 목소리를 담아요</h2></div><span id="record-progress" class="pill pink"></span></div>
+        <div class="story-card"><div class="scene-wrap"><div id="record-scene" class="scene large"></div><span class="page-ribbon" id="record-page"></span></div><div id="record-text" class="story-text"></div></div>
+        <div class="record-actions"><button id="tts-button" class="big-action listen"><span class="action-icon" aria-hidden="true">🔊</span><span class="action-label">들어 보기</span></button><button id="record-button" class="big-action record"><span class="action-icon" aria-hidden="true">🎙️</span><span class="action-label">녹음하기</span></button><button id="preview-button" class="big-action preview"><span class="action-icon" aria-hidden="true">🎧</span><span class="action-label">내 목소리</span></button></div>
+        <div class="record-feedback"><span id="record-status" role="status" aria-live="polite">듣고, 내 목소리로 읽어 보세요.</span><span id="record-clock" hidden>00:00</span><button class="link-button" id="undo-recording" hidden>↶ 이전 목소리</button></div>
+        <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="record-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
+        <div class="record-footer"><details class="voice-settings"><summary>🐢 읽기 속도 · 목소리</summary><div class="voice-fields"><label>목소리<select id="voice"><option value="">한국어 기본 목소리</option></select></label><label>속도 <output id="rate-label">0.9배</output><input id="rate" type="range" min="0.5" max="1.3" step="0.1" value="0.9"></label></div></details><button class="button primary" id="go-play">내 동화 듣기 📖</button></div>
+      </section>
+      <section id="panel-play" role="tabpanel" aria-labelledby="tab-play" hidden>
+        <div class="reader-heading"><div><span class="eyebrow" id="narrator"></span><h2 id="play-title"></h2></div><span class="pill" id="play-progress"></span></div>
+        <div class="story-card"><div class="scene-wrap"><div id="play-scene" class="scene large"></div><span class="page-ribbon" id="play-page"></span></div><div id="play-text" class="story-text"></div></div>
+        <div class="play-controls"><button id="play-button" class="button primary play-button"><span aria-hidden="true">▶</span> 동화 시작</button><button id="restart-button" class="button">↻ 처음부터</button></div>
+        <div class="play-message" id="play-status" role="status" aria-live="polite">내 목소리로 페이지가 하나씩 넘어가요.</div>
+        <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="play-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
+        <div class="finish-card" id="finish-card" hidden><img data-art="bear" alt="축하하는 곰돌이"><div><span class="eyebrow">짝짝짝! 끝까지 들었어요</span><h2>내 목소리 동화책, 완성!</h2><p id="finish-copy"></p><div class="finish-actions"><button class="button primary" id="play-again">↻ 한 번 더</button><button class="button save" data-action="save">💾 기기에 저장</button></div></div></div>
+        <div class="bottom-files"><button class="button small" data-action="open">📂 불러오기</button><button class="button small save" data-action="save">💾 기기에 저장</button></div>
+      </section>
+    </main>
+    <footer class="footer"><span>🌷 오늘의 목소리가 내일의 추억이 돼요.</span><button class="link-button" id="help-button">보호자 안내</button></footer>
+  </div>
+  <input id="image-input" type="file" accept="image/*" hidden>
+  <input id="book-input" type="file" accept=".json,.story,application/json" hidden>
+  <audio id="audio-player" preload="auto" playsinline></audio>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="dialog"><div id="dialog-content"></div><div class="dialog-actions" id="dialog-actions"></div></dialog>
+  <noscript>동화책을 사용하려면 브라우저의 JavaScript를 켜 주세요.</noscript>
+  <script>/* APP_ASSETS */</script>
+  <script>/* APP_CORE */</script>
+  <script>/* APP_LOGIC */</script>
+</body>
+</html>
