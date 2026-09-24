@@ -33,13 +33,19 @@
 .image-adjust{padding:12px 0 0}.zoom-row{display:flex;align-items:center;gap:11px}.zoom-row input{flex:1;min-width:60px;accent-color:var(--pink)}.zoom-row output{min-width:47px;text-align:right;font-size:13px;font-variant-numeric:tabular-nums}.zoom-row .button{width:44px;font-size:23px;padding:3px}
 .image-adjust-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}.image-adjust-bottom>span{font-size:12px;color:var(--muted)}.image-adjust-bottom>div{display:flex;gap:6px}.image-adjust-bottom .button{font-size:11px;padding:8px 10px}
 .story-text{font-size:var(--story-font-size);line-height:1.8}.story-text.placeholder{font-size:var(--story-font-size)}#page-text{font-size:clamp(18px,calc(var(--story-font-size) * .85),36px)}
-.cover-copy{white-space:normal;display:flex;flex-direction:column;justify-content:center;gap:14px;background:#fcf1d5;color:#6f5e51}.cover-copy h2{font-size:clamp(26px,calc(var(--story-font-size) * 1.3),58px);line-height:1.5;overflow-wrap:anywhere}.cover-copy p{font-size:clamp(16px,calc(var(--story-font-size) * .7),28px)}.cover-copy .eyebrow{font-size:12px;margin:0}
+.cover-card{max-width:820px;margin-inline:auto}
+#play-cover-scene{height:auto;aspect-ratio:4/3}
+#play-button,#restart-button{height:68px;min-height:68px;align-self:stretch}
+#restart-button{box-shadow:0 4px 0 #e7dad34d}
+:root:fullscreen{overflow-y:auto;background:var(--cream)}
+#fullscreen-button[aria-pressed=true]{background:var(--green-soft);border-color:#a4b594;color:var(--green)}
 .voice-shortcuts{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:24px}.voice-shortcuts .button{font-size:14px}.voice-shortcuts .button[aria-pressed=true]{background:#e8efd9;border:2px solid #78906c;padding:11px 19px}.voice-settings{max-width:680px}.voice-fields{grid-template-columns:1fr 1fr}.voice-fields .voice-note,.voice-help-actions{grid-column:1/-1}.voice-note{font-size:12px;line-height:1.75;color:var(--muted)}.voice-help-actions{display:flex;gap:8px;flex-wrap:wrap}.voice-fields #voice-test{align-self:end}.voice-fields label{min-width:0}
 @media(orientation:landscape) and (min-width:640px){
-  #panel-play{max-width:1100px}#panel-play .story-card{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:15px;align-items:stretch}
-  #panel-play .scene.large{height:clamp(290px,64vh,640px)}#panel-play .story-text{margin:0;max-height:clamp(290px,64vh,640px);overflow-y:auto;min-width:0;padding:26px 22px;text-align:left;scrollbar-width:thin}
-  #panel-play .cover-copy{text-align:center;justify-content:flex-start;padding-top:35px}.app{max-width:1280px}
+  #panel-play{max-width:1100px}#play-pages-view .story-card{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:15px;align-items:stretch}
+  #play-pages-view .scene.large{height:clamp(290px,64vh,640px)}#play-pages-view .story-text{margin:0;max-height:clamp(290px,64vh,640px);overflow-y:auto;min-width:0;padding:26px 22px;text-align:left;scrollbar-width:thin}
+  .app{max-width:1280px}
 }
+@media(max-width:700px){.header{flex-wrap:wrap}.file-actions{width:100%;justify-content:flex-end}.file-actions .button{flex:1;padding-inline:8px}}
 @media(max-width:580px){
   :root{--reading-image-height:clamp(290px,46svh,510px)}.book-appearance{gap:8px;padding:10px;margin-bottom:17px}.book-appearance label{width:100%}.book-appearance input{max-width:none}
   .page-sidebar{grid-template-columns:1fr 74px}.cover-thumb{grid-column:1/-1;min-height:49px;margin:0;font-size:13px}.cover-thumb>span:first-child{font-size:24px}.reader-tools{gap:7px;font-size:11px}.reader-tools .button{min-height:42px;padding:8px 11px}
@@ -52,7 +58,7 @@
   <div class="app">
     <header class="header">
       <div class="brand"><img data-art="rabbit" alt="" class="brand-friend"><div><span class="eyebrow">작은 이야기, 소중한 목소리</span><h1>나의 목소리 동화책<span class="brand-star">✦</span></h1></div></div>
-      <div class="file-actions"><button class="button small" data-action="open"><span aria-hidden="true">📂</span> 불러오기</button><button class="button small save" data-action="save"><span aria-hidden="true">💾</span> 기기에 저장</button></div>
+      <div class="file-actions"><button class="button small" data-action="open"><span aria-hidden="true">📂</span> 불러오기</button><button class="button small save" data-action="save"><span aria-hidden="true">💾</span> 기기에 저장</button><button id="fullscreen-button" class="button small" aria-label="전체화면 켜기" aria-pressed="false">⛶ 전체화면</button></div>
     </header>
     <nav class="tabs" role="tablist" aria-label="동화책 놀이">
       <button id="tab-edit" role="tab" aria-selected="true" aria-controls="panel-edit" data-tab="edit"><span class="tab-icon" aria-hidden="true">🎨</span><span><small>하나</small>책 만들기</span></button>
@@ -91,7 +97,7 @@
       <section id="panel-play" role="tabpanel" aria-labelledby="tab-play" hidden>
         <div class="reader-heading"><div><span class="eyebrow" id="narrator"></span><h2 id="play-title"></h2></div><span class="pill" id="play-progress"></span></div>
         <div class="reader-tools"><button id="show-cover" class="button small">📕 표지 보기</button><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
-        <div id="book-cover-view" hidden><div class="story-card cover-card"><div class="scene-wrap"><div id="play-cover-scene" class="scene large"></div></div><div class="story-text cover-copy"><span class="eyebrow">나만의 목소리 동화책</span><h2 id="cover-book-title"></h2><p id="cover-book-author"></p><span aria-hidden="true">✦ 🌷 ✦</span></div></div><div class="play-controls"><button id="open-cover" class="button primary play-button">▶ 책 펼치기</button></div></div>
+        <div id="book-cover-view" hidden><div class="story-card cover-card"><div class="scene-wrap"><div id="play-cover-scene" class="scene large"></div><div class="cover-overlay"><h2 id="cover-book-title"></h2><p id="cover-book-author"></p></div></div></div><div class="play-controls"><button id="open-cover" class="button primary play-button">▶ 책 펼치기</button></div></div>
         <div id="play-pages-view">
         <div class="story-card"><div class="scene-wrap"><div id="play-scene" class="scene large"></div><span class="page-ribbon" id="play-page"></span></div><div id="play-text" class="story-text"></div></div>
         <div class="play-controls"><button id="play-button" class="button primary play-button"><span aria-hidden="true">▶</span> 동화 시작</button><button id="restart-button" class="button">↻ 처음부터</button></div>
@@ -210,6 +216,7 @@ const StoryCore = (() => {
   let audioMode = 'none', audioPaused = false, playbackToken = 0, speechToken = 0, utterance = null;
   let voices = [], voiceChosen = false, toastTimer = null, completed = false;
   let editingCover = false, playCover = false;
+  let fullscreenPending = false;
   let voicePrefs = {engine:'all',female:'',male:'',mode:'custom',voice:'',rate:.9};
   try { const saved=JSON.parse(localStorage.getItem('little-storybook-voices') || 'null'); if(saved && typeof saved==='object') {
     for(const key of ['female','male','voice']) if(typeof saved[key]==='string') voicePrefs[key]=saved[key];
@@ -236,6 +243,32 @@ const StoryCore = (() => {
     $('toast').textContent = message;
     $('toast').hidden = false;
     toastTimer = setTimeout(() => { $('toast').hidden = true; }, duration);
+  }
+
+  function syncFullscreenButton() {
+    const active = !!document.fullscreenElement;
+    const button = $('fullscreen-button');
+    button.textContent = active ? '↙ 화면 줄이기' : '⛶ 전체화면';
+    button.setAttribute('aria-label',active ? '전체화면 끄기' : '전체화면 켜기');
+    button.setAttribute('aria-pressed',String(active));
+    button.disabled = fullscreenPending;
+  }
+
+  async function toggleFullscreen() {
+    if (fullscreenPending) return;
+    if (!document.fullscreenElement && (!document.documentElement.requestFullscreen || document.fullscreenEnabled === false)) {
+      toast('이 브라우저에서는 전체화면을 열 수 없어요. Chrome이나 Edge에서 직접 열어 주세요.');
+      return;
+    }
+    fullscreenPending = true; syncFullscreenButton();
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else await document.documentElement.requestFullscreen({navigationUI:'hide'});
+    } catch {
+      toast('전체화면을 바꾸지 못했어요. 잠시 후 버튼을 다시 눌러 주세요.');
+    } finally {
+      fullscreenPending = false; syncFullscreenButton();
+    }
   }
 
   function ask(title, message, choices = [{label:'알겠어요',value:true,primary:true}]) {
@@ -908,6 +941,8 @@ const StoryCore = (() => {
     '갤럭시의 설정에서 “텍스트 읽어주기” 또는 “글자 읽어주기”를 검색해 주세요.\n기본 엔진에서 삼성 TTS를 선택하고 한국어 음성을 설치하거나 골라 주세요. 메뉴 이름은 기기에 따라 달라요.\n\n설정 후 브라우저를 다시 열고 “음성 다시 찾기”를 눌러 주세요. 음성 종류에서 “삼성 TTS”를 고르면 삼성으로 표시된 목소리만 보여요.\n\n목록에 삼성 음성이 없다면 “기기 기본”으로 읽어 보고 확인해 주세요. 이 방법도 브라우저에 따라 다른 엔진을 사용할 수 있어요. HTML에서는 삼성 엔진을 강제로 켜거나 설치할 수 없어요.\n\n여자·남자 목소리가 각각 제공되면 버튼에 연결할 수 있어요. 음성 이름에 성별이 없으면 미리 듣고 직접 연결해 주세요. 음높이를 바꿔 다른 성별인 것처럼 표시하지 않아요.'
   );
   $('play-button').onclick=toggleStory;
+  $('fullscreen-button').onclick=toggleFullscreen;
+  document.addEventListener('fullscreenchange',syncFullscreenButton);
   $('restart-button').onclick=$('play-again').onclick=() => { if(locked())return; stopMedia(); index=0; completed=false; render(); startStory(); };
   $('help-button').onclick = () => ask('보호자 안내',
     '① 책 만들기: 그림을 고르고 글을 써 주세요.\n② 목소리 담기: TTS를 들은 뒤 아이의 목소리를 녹음해요.\n③ 동화 듣기: 녹음이 끝나면 다음 장으로 넘어가요.\n\n💾 기기에 저장: 그림·글·녹음을 한 개의 .story.json 파일로 내려받아요. 불러오기에서 이 파일을 선택하면 복원돼요. 태블릿·휴대폰에서는 파일 앱이나 다운로드 폴더를 확인해 주세요. 저장 창이나 미리보기가 열리면 기기의 파일 저장 메뉴를 이용해 주세요.\n\n작업은 이 브라우저에도 임시 보관하지만, 오래 간직할 책은 꼭 파일로 저장해 주세요. 비공개 모드나 사이트 데이터 삭제 시 임시 작업은 사라질 수 있어요. 서버에는 그림과 녹음을 업로드하지 않아요.\n\n🎙️ 서버는 HTTPS로 열고 마이크 사용을 허용해 주세요. 녹음은 한 장에 최대 5분이며, 화면을 벗어나면 진행 중인 녹음을 마무리해요. 한 책은 최대 100장, 작업 파일은 200MB까지예요. 사진은 긴 쪽 1,600픽셀로 줄여 담아요.\n\n🔊 TTS 목소리는 기기마다 다르며 일부는 인터넷을 사용해요. 내장 목소리가 없으면 기기의 한국어 음성을 설치해 주세요. 다른 기기로 옮긴 녹음은 브라우저의 오디오 형식 지원에 따라 재생이 달라질 수 있어요.'
