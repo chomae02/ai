@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>글 읽어 주기</title>
+  <style>
+    :root { color-scheme: light; font-family: "Malgun Gothic", system-ui, sans-serif; color: #26372f; background: #f2f6f1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 48px 20px; }
+    main { max-width: 780px; margin: auto; }
+    .tag { color: #357450; font-size: 13px; font-weight: 700; letter-spacing: .12em; }
+    h1 { margin: 12px 0; font-size: clamp(28px, 5vw, 40px); letter-spacing: -.06em; }
+    .intro { color: #617168; line-height: 1.7; margin: 0 0 28px; }
+    .card { background: white; border: 1px solid #dce5dc; border-radius: 24px; padding: 28px; box-shadow: 0 12px 40px #29483008; }
+    label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    textarea, select, button { font: inherit; }
+    textarea { display: block; width: 100%; min-height: 240px; resize: vertical; padding: 18px; border: 1px solid #cbd8ce; border-radius: 14px; background: #fcfdfb; font-size: 18px; line-height: 1.8; color: inherit; }
+    textarea::placeholder { color: #859187; }
+    :focus-visible { outline: 3px solid #81bd94; outline-offset: 3px; }
+    .meta { display: flex; justify-content: space-between; gap: 12px; color: #6d7c71; font-size: 12px; margin: 10px 0 26px; }
+    .settings { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; align-items: start; }
+    select { width: 100%; padding: 11px; border: 1px solid #cbd8ce; border-radius: 10px; background: white; color: inherit; }
+    input[type="range"] { width: 100%; margin: 12px 0; accent-color: #387951; }
+    .rate-label { display: flex; justify-content: space-between; }
+    output { color: #357450; font-variant-numeric: tabular-nums; }
+    .actions { display: flex; gap: 10px; margin-top: 28px; }
+    button { cursor: pointer; border: 0; border-radius: 12px; padding: 13px 20px; font-weight: 700; background: #edf2ec; color: #35513d; }
+    button.primary { flex: 1; background: #32754c; color: white; }
+    button:hover:enabled { filter: brightness(.94); }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    .status { margin: 20px 0 0; min-height: 24px; font-size: 14px; line-height: 1.7; color: #42714e; }
+    .status.error { color: #b34032; }
+    .note { margin: 20px 8px 0; font-size: 13px; line-height: 1.8; color: #6b7b70; }
+    @media (max-width: 540px) { body { padding: 28px 16px; } .card { padding: 20px; } .settings { grid-template-columns: 1fr; gap: 18px; } .meta { flex-wrap: wrap; } textarea { min-height: 220px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="tag">TEXT TO SPEECH</div>
+    <h1>글을 소리로 들어 보세요.</h1>
+    <p class="intro">읽고 싶은 글을 입력하고, 편안한 속도로 들어 보세요.</p>
+    <section class="card" aria-label="글 읽어 주기">
+      <label for="text">읽을 내용</label>
+      <textarea id="text" maxlength="20000" placeholder="여기에 글을 입력하거나 붙여 넣으세요.&#10;예: 안녕하세요. 오늘도 즐거운 하루 보내세요!"></textarea>
+      <div class="meta"><span>Ctrl + Enter로 읽기 · 최대 20,000자</span><span id="count">0자</span></div>
+      <div class="settings">
+        <div>
+          <label for="voice">목소리</label>
+          <select id="voice"><option value="">한국어 기본 목소리</option></select>
+        </div>
+        <div>
+          <label class="rate-label" for="rate">읽기 속도 <output id="rate-value" for="rate">1.0배</output></label>
+          <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1" aria-valuetext="1.0배">
+        </div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="read" type="button">▶ 읽어 주기</button>
+        <button id="stop" type="button" disabled>■ 중지</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite">글을 입력하면 읽을 준비가 돼요.</p>
+    </section>
+    <p class="note">사용할 수 있는 목소리는 기기와 브라우저에 따라 달라요. 일부 목소리는 인터넷 연결이 필요해요.<br>글이나 설정을 바꾼 뒤 읽기 버튼을 누르면 처음부터 다시 읽어요.</p>
+  </main>
+  <script>
+    'use strict';
+    const textInput = document.getElementById('text');
+    const voiceSelect = document.getElementById('voice');
+    const rateInput = document.getElementById('rate');
+    const readButton = document.getElementById('read');
+    const stopButton = document.getElementById('stop');
+    const status = document.getElementById('status');
+    const supported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+    const synth = supported ? window.speechSynthesis : null;
+    let voices = [];
+    let voiceChosen = false;
+    let runId = 0;
+    let currentUtterance = null;
+
+    function setStatus(message, error = false) {
+      status.textContent = message;
+      status.classList.toggle('error', error);
+    }
+
+    function voiceKey(voice) {
+      return JSON.stringify([voice.voiceURI, voice.name, voice.lang]);
+    }
+
+    function loadVoices() {
+      const previous = voiceSelect.value;
+      voices = synth.getVoices().slice().sort((a, b) =>
+        Number(/^ko\b/i.test(b.lang)) - Number(/^ko\b/i.test(a.lang)) || a.name.localeCompare(b.name)
+      );
+      voiceSelect.replaceChildren(new Option('한국어 기본 목소리', ''));
+      for (const voice of voices) {
+        voiceSelect.add(new Option(`${voice.name} · ${voice.lang}`, voiceKey(voice)));
+      }
+      if (previous && voices.some(voice => voiceKey(voice) === previous)) {
+        voiceSelect.value = previous;
+      } else if (!voiceChosen) {
+        const korean = voices.find(voice => /^ko\b/i.test(voice.lang));
+        voiceSelect.value = korean ? voiceKey(korean) : '';
+      }
+    }
+
+    // Keep utterances short, preferring sentence and word boundaries.
+    function splitText(text) {
+      const characters = Array.from(text);
+      const chunks = [];
+      let start = 0;
+      while (start < characters.length) {
+        let end = Math.min(start + 180, characters.length);
+        if (end < characters.length) {
+          const windowText = characters.slice(start, end).join('');
+          const boundaries = [...windowText.matchAll(/[.!?。！？\n]|\s/gu)];
+          const boundary = boundaries.at(-1);
+          if (boundary) {
+            const length = Array.from(windowText.slice(0, boundary.index + boundary[0].length)).length;
+            if (length >= 60) end = start + length;
+          }
+        }
+        const chunk = characters.slice(start, end).join('').trim();
+        if (chunk) chunks.push(chunk);
+        start = end;
+      }
+      return chunks;
+    }
+
+    function cancelReading() {
+      runId += 1;
+      if (synth) synth.cancel();
+      currentUtterance = null;
+      stopButton.disabled = true;
+      readButton.textContent = '▶ 읽어 주기';
+    }
+
+    function readText() {
+      if (!supported) return;
+      const text = textInput.value.trim();
+      cancelReading();
+      if (!text) {
+        setStatus('읽을 글을 먼저 입력해 주세요.', true);
+        textInput.focus();
+        return;
+      }
+      const thisRun = runId;
+      const chunks = splitText(text);
+      const voice = voices.find(item => voiceKey(item) === voiceSelect.value);
+      const rate = Number(rateInput.value);
+      stopButton.disabled = false;
+      readButton.textContent = '↻ 처음부터 읽기';
+      setStatus('목소리를 준비하고 있어요…');
+
+      function speakChunk(index) {
+        if (thisRun !== runId) return;
+        if (index >= chunks.length) {
+          cancelReading();
+          setStatus('모두 읽었어요. 다시 들으려면 읽기 버튼을 눌러 주세요.');
+          return;
+        }
+        const utterance = new SpeechSynthesisUtterance(chunks[index]);
+        currentUtterance = utterance;
+        utterance.lang = voice ? voice.lang : 'ko-KR';
+        if (voice) utterance.voice = voice;
+        utterance.rate = rate;
+        utterance.onstart = () => {
+          if (thisRun === runId) setStatus(`읽고 있어요… (${index + 1} / ${chunks.length})`);
+        };
+        utterance.onend = () => speakChunk(index + 1);
+        utterance.onerror = event => {
+          if (thisRun !== runId) return;
+          const messages = {
+            'language-unavailable': '한국어 음성을 사용할 수 없어요. 다른 목소리를 선택하거나 기기에 한국어 음성을 설치해 주세요.',
+            'voice-unavailable': '선택한 목소리를 사용할 수 없어요. 다른 목소리를 선택해 주세요.',
+            'network': '음성을 불러오지 못했어요. 인터넷 연결을 확인하거나 다른 목소리를 선택해 주세요.',
+            'not-allowed': '음성 재생이 허용되지 않았어요. 브라우저의 소리 설정을 확인하고 읽기 버튼을 다시 눌러 주세요.'
+          };
+          cancelReading();
+          setStatus(messages[event.error] || '읽기를 완료하지 못했어요. 다른 목소리를 선택하거나 브라우저를 새로 열어 주세요.', true);
+        };
+        try {
+          synth.speak(utterance);
+        } catch (error) {
+          cancelReading();
+          setStatus('음성을 재생하지 못했어요. 브라우저를 새로 열고 다시 시도해 주세요.', true);
+        }
+      }
+      speakChunk(0);
+    }
+
+    textInput.addEventListener('input', () => {
+      document.getElementById('count').textContent = `${textInput.value.length.toLocaleString('ko-KR')}자`;
+    });
+    textInput.addEventListener('keydown', event => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter' && !event.isComposing) {
+        event.preventDefault();
+        readText();
+      }
+    });
+    rateInput.addEventListener('input', () => {
+      const label = `${Number(rateInput.value).toFixed(1)}배`;
+      document.getElementById('rate-value').textContent = label;
+      rateInput.setAttribute('aria-valuetext', label);
+    });
+    voiceSelect.addEventListener('change', () => { voiceChosen = true; });
+    readButton.addEventListener('click', readText);
+    stopButton.addEventListener('click', () => {
+      cancelReading();
+      setStatus('읽기를 멈췄어요.');
+    });
+    window.addEventListener('pagehide', cancelReading);
+    if (supported) {
+      loadVoices();
+      synth.addEventListener('voiceschanged', loadVoices);
+    } else {
+      readButton.disabled = true;
+      voiceSelect.disabled = true;
+      rateInput.disabled = true;
+      setStatus('이 브라우저는 글 읽기를 지원하지 않아요. Chrome 또는 Edge에서 열어 주세요.', true);
+    }
+  </script>
+</body>
+</html>
