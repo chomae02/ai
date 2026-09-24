@@ -12,6 +12,40 @@
 @media(max-width:800px){.app{padding:20px}.header{gap:12px}.brand-friend{width:52px;height:66px}h1{font-size:23px}.brand-star{display:none}.header .eyebrow{font-size:10px}.file-actions{gap:6px}.file-actions .button{font-size:12px;padding:8px 11px}.tabs{gap:6px}.tabs button{font-size:18px;min-height:75px;gap:9px}.editor-layout{grid-template-columns:130px minmax(0,1fr);gap:15px}.page-sidebar{padding:10px}.thumb-art{height:75px}.editor-card{padding:19px}.scene.large{height:clamp(270px,39vh,420px)}.story-text{padding:20px}.record-actions{gap:12px}.big-action{font-size:18px;gap:9px}.action-icon{font-size:28px}.sidebar-heading{font-size:11px}.editor-bottom .button.primary{width:100%}}
 @media(max-width:580px){.app{padding:16px 14px max(20px,env(safe-area-inset-bottom))}.header{flex-wrap:wrap;margin-bottom:18px}.brand{gap:8px}.brand-friend{width:46px;height:57px}h1{font-size:23px}.brand .eyebrow{font-size:10px}.file-actions{width:100%;justify-content:flex-end;gap:8px}.file-actions .button{flex:1;min-height:45px;font-size:13px}.tabs{border-radius:20px;padding:5px;gap:4px}.tabs button{flex-direction:column;gap:3px;font-size:14px;text-align:center;min-height:87px;border-radius:15px;line-height:1.4}.tabs small{display:none}.tab-icon{font-size:28px}.book-line{font-size:11px;padding:13px 3px 20px;align-items:start}.draft-state{max-width:40%;font-size:10px}.editor-heading h2,.reader-heading h2{font-size:22px}.editor-heading .eyebrow,.reader-heading .eyebrow{font-size:10px}.book-fields{grid-template-columns:1.3fr 1fr;gap:10px;margin-bottom:17px}.book-fields input{padding:10px;font-size:15px}.editor-layout{display:flex;flex-direction:column;gap:17px}.page-sidebar{width:100%;padding:12px;display:grid;grid-template-columns:1fr 74px;gap:10px}.sidebar-heading{grid-column:1/-1;margin:0}.page-list{display:flex;overflow:auto;gap:10px;max-height:none;padding:4px}.page-thumb{width:93px}.thumb-art{height:61px}.thumb-caption{font-size:10px;padding:6px}.add-page{margin:4px 0;width:74px;min-height:95px;font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center}.editor-card{width:100%;padding:16px;border-radius:21px}.friend-row{gap:9px;margin:11px 0 18px}.friend-choices{gap:7px}.friend-choices button{width:42px;height:42px}.text-label{font-size:12px}textarea{font-size:19px;padding:13px}.editor-bottom{margin-top:14px}.scene{aspect-ratio:4/3}.scene.large{height:clamp(235px,36vh,380px)}.scene.builtin img{inset:7% 7%;width:86%;height:86%}.scene .scene-star{left:10%;font-size:23px}.scene .scene-flower{right:9%;font-size:24px}.story-card{padding:8px;border-radius:23px}.scene-wrap{border-radius:17px}.story-text{font-size:22px;padding:18px 15px;margin-top:8px;border-radius:17px;line-height:1.8;min-height:100px}.page-ribbon{top:10px;left:10px;font-size:11px;padding:6px 10px}.record-actions{gap:10px;margin-top:20px}.big-action{min-height:99px;flex-direction:column;gap:7px;font-size:15px;border-radius:18px;padding:10px 4px}.action-icon{font-size:30px}.record-feedback{font-size:12px;min-height:60px}.page-navigation{gap:8px}.nav-button{min-width:77px;padding:10px;font-size:14px}.page-dots{gap:5px}.page-dots button{height:32px;width:32px;font-size:11px}.record-footer{flex-direction:column;margin-top:20px}.record-footer>.button{width:100%}.voice-settings{width:100%}.voice-fields{grid-template-columns:1fr}.voice-fields input{margin-top:12px}.reader-heading{gap:8px}.reader-heading .pill{font-size:10px;padding:7px 9px}.play-controls{gap:10px}.play-button{min-width:190px;font-size:19px;flex:1}.play-controls #restart-button{font-size:13px;padding:10px}.finish-card{flex-direction:column;text-align:center;padding:20px;gap:12px}.finish-card img{height:115px;width:110px}.finish-card h2{font-size:23px}.finish-actions{justify-content:center}.footer{font-size:10px;gap:8px;margin-top:24px}.footer .link-button{font-size:11px}.image-pick-label{font-size:12px;padding:8px 14px}.empty-scene{font-size:14px;gap:10px}dialog{padding:22px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Cover, adjustable illustrations and a comfortable landscape reading spread. */
+:root{--story-font-size:28px;--reading-image-height:clamp(340px,52vh,650px)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.book-appearance,.reader-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.book-appearance{margin:-4px 0 22px;padding:13px 17px;border:1px solid var(--line);border-radius:16px;background:#fffefa80}
+.book-appearance input{accent-color:var(--green);flex:1;max-width:300px;min-width:80px}.book-appearance label{font-weight:750}.book-appearance output{min-width:27px;font-variant-numeric:tabular-nums}
+.reader-tools{justify-content:flex-end;margin:-8px 0 14px}.reader-tools #show-cover{margin-right:auto}
+.cover-thumb{display:flex;justify-content:center;align-items:center;gap:9px;min-height:64px;width:100%;border:2px solid #ddc4ba;border-radius:14px;background:#fae8e5;color:#9c5d69;font-size:14px;font-weight:800;margin-bottom:15px}
+.cover-thumb>span:first-child{font-size:27px}.cover-thumb[aria-current=true]{border-color:#bc698b;box-shadow:0 0 0 3px #f7dce6}
+.cover-toggle{display:flex;align-items:center;gap:10px;font-size:14px;padding:0 0 16px}.cover-toggle input{width:23px;height:23px;accent-color:var(--pink)}
+.image-picker{cursor:default}.image-pick-label{border:1px solid var(--line);color:var(--ink);z-index:3;cursor:pointer}
+.scene{aspect-ratio:4/3}.scene.large{height:var(--reading-image-height)}.editable-scene{touch-action:none;cursor:grab}.editable-scene.dragging{cursor:grabbing}
+.image-layer{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform}.image-layer img{pointer-events:none}
+.scene.fill .image-layer img{inset:0;width:100%;height:100%}
+.scene-star,.scene-flower{pointer-events:none}.scene.builtin img{filter:drop-shadow(0 10px 8px #a7967320)}
+.cover-overlay{position:absolute;top:15px;left:18px;right:18px;z-index:2;pointer-events:none;text-align:center;background:#fffdf6df;border-radius:16px;padding:13px 17px;box-shadow:0 3px 12px #6858480a}
+.cover-overlay h2{font-size:clamp(23px,calc(var(--story-font-size) * 1.1),43px);line-height:1.4;overflow-wrap:anywhere}.cover-overlay p{font-size:13px;margin-top:5px;color:var(--muted)}
+.image-adjust{padding:12px 0 0}.zoom-row{display:flex;align-items:center;gap:11px}.zoom-row input{flex:1;min-width:60px;accent-color:var(--pink)}.zoom-row output{min-width:47px;text-align:right;font-size:13px;font-variant-numeric:tabular-nums}.zoom-row .button{width:44px;font-size:23px;padding:3px}
+.image-adjust-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}.image-adjust-bottom>span{font-size:12px;color:var(--muted)}.image-adjust-bottom>div{display:flex;gap:6px}.image-adjust-bottom .button{font-size:11px;padding:8px 10px}
+.story-text{font-size:var(--story-font-size);line-height:1.8}.story-text.placeholder{font-size:var(--story-font-size)}#page-text{font-size:clamp(18px,calc(var(--story-font-size) * .85),36px)}
+.cover-copy{white-space:normal;display:flex;flex-direction:column;justify-content:center;gap:14px;background:#fcf1d5;color:#6f5e51}.cover-copy h2{font-size:clamp(26px,calc(var(--story-font-size) * 1.3),58px);line-height:1.5;overflow-wrap:anywhere}.cover-copy p{font-size:clamp(16px,calc(var(--story-font-size) * .7),28px)}.cover-copy .eyebrow{font-size:12px;margin:0}
+.voice-shortcuts{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:24px}.voice-shortcuts .button{font-size:14px}.voice-shortcuts .button[aria-pressed=true]{background:#e8efd9;border:2px solid #78906c;padding:11px 19px}.voice-settings{max-width:680px}.voice-fields{grid-template-columns:1fr 1fr}.voice-fields .voice-note,.voice-help-actions{grid-column:1/-1}.voice-note{font-size:12px;line-height:1.75;color:var(--muted)}.voice-help-actions{display:flex;gap:8px;flex-wrap:wrap}.voice-fields #voice-test{align-self:end}.voice-fields label{min-width:0}
+@media(orientation:landscape) and (min-width:640px){
+  #panel-play{max-width:1100px}#panel-play .story-card{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:15px;align-items:stretch}
+  #panel-play .scene.large{height:clamp(290px,64vh,640px)}#panel-play .story-text{margin:0;max-height:clamp(290px,64vh,640px);overflow-y:auto;min-width:0;padding:26px 22px;text-align:left;scrollbar-width:thin}
+  #panel-play .cover-copy{text-align:center;justify-content:flex-start;padding-top:35px}.app{max-width:1280px}
+}
+@media(max-width:580px){
+  :root{--reading-image-height:clamp(290px,46svh,510px)}.book-appearance{gap:8px;padding:10px;margin-bottom:17px}.book-appearance label{width:100%}.book-appearance input{max-width:none}
+  .page-sidebar{grid-template-columns:1fr 74px}.cover-thumb{grid-column:1/-1;min-height:49px;margin:0;font-size:13px}.cover-thumb>span:first-child{font-size:24px}.reader-tools{gap:7px;font-size:11px}.reader-tools .button{min-height:42px;padding:8px 11px}
+  .image-adjust-bottom{gap:7px}.image-adjust-bottom>span{font-size:11px}.image-adjust-bottom .button{font-size:11px;padding:8px}.cover-overlay{top:10px;left:12px;right:12px;padding:9px}.cover-overlay h2{font-size:clamp(21px,calc(var(--story-font-size) * .85),36px)}
+  .voice-shortcuts{gap:7px}.voice-shortcuts .button{font-size:12px;padding:10px 12px;flex:1;white-space:nowrap;min-height:49px}.voice-shortcuts .button[aria-pressed=true]{padding:9px 11px}.voice-fields{grid-template-columns:1fr}.voice-help-actions .button{flex:1}
+}
 </style>
 </head>
 <body>
@@ -30,32 +64,40 @@
       <section id="panel-edit" role="tabpanel" aria-labelledby="tab-edit">
         <div class="editor-heading"><div><span class="eyebrow">내가 만드는 작은 세상</span><h2>어떤 이야기를 만들까?</h2></div><button class="button small" id="new-book">＋ 새 책</button></div>
         <div class="book-fields"><label>책 이름<input id="book-title" maxlength="100" placeholder="나의 동화책" autocomplete="off"></label><label>읽어 주는 사람<input id="book-author" maxlength="40" placeholder="내 이름" autocomplete="off"></label></div>
+        <div class="book-appearance"><label for="font-size">가 글자 크기</label><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><input id="font-size" type="range" min="18" max="48" step="2" value="28"><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button><output id="font-size-label" for="font-size">28</output></div>
         <div class="editor-layout">
-          <aside class="page-sidebar" aria-label="동화 페이지"><div class="sidebar-heading"><strong>나의 페이지</strong><span id="page-total"></span></div><div id="page-list" class="page-list"></div><button class="add-page" id="add-page"><span aria-hidden="true">＋</span> 한 장 더</button></aside>
+          <aside class="page-sidebar" aria-label="동화 페이지"><div class="sidebar-heading"><strong>나의 페이지</strong><span id="page-total"></span></div><button id="edit-cover" class="cover-thumb"><span aria-hidden="true">📕</span><span>표지 만들기</span></button><div id="page-list" class="page-list"></div><button class="add-page" id="add-page"><span aria-hidden="true">＋</span> 한 장 더</button></aside>
           <div class="editor-card">
             <div class="section-line"><h3 id="editor-page-title">1번째 이야기</h3><span id="edit-recorded" class="pill"></span></div>
-            <button id="pick-image" class="image-picker" aria-label="이 페이지의 그림 고르기"><div id="edit-scene" class="scene"></div><span class="image-pick-label">🖼️ 그림 고르기</span></button>
+            <label id="cover-toggle-row" class="cover-toggle" hidden><input id="cover-enabled" type="checkbox"> 이 표지로 책 시작하기</label>
+            <div class="image-picker"><div id="edit-scene" class="scene editable-scene" tabindex="0" role="group" aria-label="그림 위치 조정. 손가락으로 움직이거나 방향키를 누르세요."></div><div id="edit-cover-copy" class="cover-overlay" hidden><h2 id="edit-cover-title"></h2><p id="edit-cover-author"></p></div><button id="pick-image" class="image-pick-label" aria-label="그림 고르기">🖼️ 그림 고르기</button></div>
+            <div class="image-adjust"><div class="zoom-row"><button id="zoom-out" class="button small" aria-label="그림 축소">−</button><label for="image-zoom" class="sr-only">그림 크기</label><input id="image-zoom" type="range" min="50" max="300" step="5" value="100"><button id="zoom-in" class="button small" aria-label="그림 확대">＋</button><output id="image-zoom-label" for="image-zoom">100%</output></div><div class="image-adjust-bottom"><span>👆 그림을 움직여 맞춰요</span><div><button id="image-contain" class="button small">전체 보기</button><button id="image-fill" class="button small">가득 채우기</button><button id="image-reset" class="button small" aria-label="그림 위치와 크기 초기화">↺</button></div></div></div>
             <div class="friend-row"><span>친구 그림</span><div id="friend-choices" class="friend-choices"></div></div>
-            <label class="text-label" for="page-text">✏️ 여기에 이야기를 써요 <span id="text-count">0 / 5,000</span></label>
-            <textarea id="page-text" maxlength="5000" rows="4" placeholder="옛날 옛날, 작은 숲에…"></textarea>
-            <div class="editor-bottom"><details><summary>⚙️ 페이지 정리</summary><div class="organize"><button class="button small" id="move-left">← 앞으로</button><button class="button small" id="move-right">뒤로 →</button><button class="button small danger" id="delete-page">🗑️ 이 장 지우기</button></div></details><button class="button primary" id="go-record">목소리 담으러 가기 <span aria-hidden="true">→</span></button></div>
+            <div id="page-writing"><label class="text-label" for="page-text">✏️ 여기에 이야기를 써요 <span id="text-count">0 / 5,000</span></label><textarea id="page-text" maxlength="5000" rows="4" placeholder="옛날 옛날, 작은 숲에…"></textarea></div>
+            <div class="editor-bottom"><details id="page-organize"><summary>⚙️ 페이지 정리</summary><div class="organize"><button class="button small" id="move-left">← 앞으로</button><button class="button small" id="move-right">뒤로 →</button><button class="button small danger" id="delete-page">🗑️ 이 장 지우기</button></div></details><button class="button primary" id="go-record">목소리 담으러 가기 <span aria-hidden="true">→</span></button></div>
           </div>
         </div>
       </section>
       <section id="panel-record" role="tabpanel" aria-labelledby="tab-record" hidden>
         <div class="reader-heading"><div><span class="eyebrow">들어 보고, 내 목소리로!</span><h2>이야기에 목소리를 담아요</h2></div><span id="record-progress" class="pill pink"></span></div>
+        <div class="reader-tools"><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
         <div class="story-card"><div class="scene-wrap"><div id="record-scene" class="scene large"></div><span class="page-ribbon" id="record-page"></span></div><div id="record-text" class="story-text"></div></div>
         <div class="record-actions"><button id="tts-button" class="big-action listen"><span class="action-icon" aria-hidden="true">🔊</span><span class="action-label">들어 보기</span></button><button id="record-button" class="big-action record"><span class="action-icon" aria-hidden="true">🎙️</span><span class="action-label">녹음하기</span></button><button id="preview-button" class="big-action preview"><span class="action-icon" aria-hidden="true">🎧</span><span class="action-label">내 목소리</span></button></div>
         <div class="record-feedback"><span id="record-status" role="status" aria-live="polite">듣고, 내 목소리로 읽어 보세요.</span><span id="record-clock" hidden>00:00</span><button class="link-button" id="undo-recording" hidden>↶ 이전 목소리</button></div>
         <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="record-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
-        <div class="record-footer"><details class="voice-settings"><summary>🐢 읽기 속도 · 목소리</summary><div class="voice-fields"><label>목소리<select id="voice"><option value="">한국어 기본 목소리</option></select></label><label>속도 <output id="rate-label">0.9배</output><input id="rate" type="range" min="0.5" max="1.3" step="0.1" value="0.9"></label></div></details><button class="button primary" id="go-play">내 동화 듣기 📖</button></div>
+        <div class="voice-shortcuts" aria-label="읽어 주는 목소리"><button id="voice-female" class="button" aria-pressed="false">👩 여자 목소리</button><button id="voice-male" class="button" aria-pressed="false">👨 남자 목소리</button><button id="voice-default" class="button" aria-pressed="false">🔊 기기 기본</button></div>
+        <div class="record-footer"><details id="voice-settings" class="voice-settings"><summary>🐢 읽기 속도 · 목소리 설정</summary><div class="voice-fields"><label>음성 종류<select id="voice-engine"><option value="all">사용 가능한 모든 음성</option><option value="samsung">삼성 TTS</option></select></label><label>목소리<select id="voice"><option value="">한국어 기본 목소리</option></select></label><label>속도 <output id="rate-label">0.9배</output><input id="rate" type="range" min="0.5" max="1.3" step="0.1" value="0.9"></label><button id="voice-test" class="button small">🔊 미리 듣기</button><label>👩 여자 버튼에 연결<select id="female-voice"></select></label><label>👨 남자 버튼에 연결<select id="male-voice"></select></label><p class="voice-note">성별이 표시되지 않는 음성은 미리 듣고 버튼에 연결해 주세요.</p><p id="voice-availability" class="voice-note" role="status"></p><div class="voice-help-actions"><button id="refresh-voices" class="button small">↻ 음성 다시 찾기</button><button id="samsung-help" class="button small">삼성 TTS 설정 안내</button></div></div></details><button class="button primary" id="go-play">내 동화 듣기 📖</button></div>
       </section>
       <section id="panel-play" role="tabpanel" aria-labelledby="tab-play" hidden>
         <div class="reader-heading"><div><span class="eyebrow" id="narrator"></span><h2 id="play-title"></h2></div><span class="pill" id="play-progress"></span></div>
+        <div class="reader-tools"><button id="show-cover" class="button small">📕 표지 보기</button><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
+        <div id="book-cover-view" hidden><div class="story-card cover-card"><div class="scene-wrap"><div id="play-cover-scene" class="scene large"></div></div><div class="story-text cover-copy"><span class="eyebrow">나만의 목소리 동화책</span><h2 id="cover-book-title"></h2><p id="cover-book-author"></p><span aria-hidden="true">✦ 🌷 ✦</span></div></div><div class="play-controls"><button id="open-cover" class="button primary play-button">▶ 책 펼치기</button></div></div>
+        <div id="play-pages-view">
         <div class="story-card"><div class="scene-wrap"><div id="play-scene" class="scene large"></div><span class="page-ribbon" id="play-page"></span></div><div id="play-text" class="story-text"></div></div>
         <div class="play-controls"><button id="play-button" class="button primary play-button"><span aria-hidden="true">▶</span> 동화 시작</button><button id="restart-button" class="button">↻ 처음부터</button></div>
         <div class="play-message" id="play-status" role="status" aria-live="polite">내 목소리로 페이지가 하나씩 넘어가요.</div>
         <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="play-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
+        </div>
         <div class="finish-card" id="finish-card" hidden><img data-art="bear" alt="축하하는 곰돌이"><div><span class="eyebrow">짝짝짝! 끝까지 들었어요</span><h2>내 목소리 동화책, 완성!</h2><p id="finish-copy"></p><div class="finish-actions"><button class="button primary" id="play-again">↻ 한 번 더</button><button class="button save" data-action="save">💾 기기에 저장</button></div></div></div>
         <div class="bottom-files"><button class="button small" data-action="open">📂 불러오기</button><button class="button small save" data-action="save">💾 기기에 저장</button></div>
       </section>
@@ -73,8 +115,25 @@
 const StoryCore = (() => {
   const MAX_PAGES = 100;
   const uid = () => globalThis.crypto?.randomUUID?.() || 'p-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
-  const page = (image = '', text = '') => ({id:uid(),image,text,decorated:image.startsWith('art:'),audio:null,previousAudio:null});
-  function blank() { return {title:'나의 동화책',author:'',pages:[page()]}; }
+  const clamp = (value,min,max) => Math.min(max,Math.max(min,value));
+  const frame = (value = {}) => ({zoom:clamp(Number.isFinite(value?.zoom)?value.zoom:1,.5,3),x:clamp(Number.isFinite(value?.x)?value.x:0,-100,100),y:clamp(Number.isFinite(value?.y)?value.y:0,-100,100),fit:value?.fit==='cover'?'cover':'contain'});
+  const page = (image = '', text = '') => ({id:uid(),image,text,decorated:image.startsWith('art:'),frame:frame(),audio:null,previousAudio:null});
+  const cover = (enabled = false) => ({enabled,image:'art:rabbit',decorated:true,frame:frame()});
+  function blank() { return {title:'나의 동화책',author:'',fontSize:28,cover:cover(true),pages:[page()]}; }
+  function normalizeBook(book) {
+    book.fontSize=clamp(Number.isFinite(book.fontSize)?book.fontSize:28,18,48);
+    book.cover=book.cover || cover(); book.cover.frame=frame(book.cover.frame);
+    book.pages.forEach(p=>{p.frame=frame(p.frame);}); return book;
+  }
+  function voiceGender(voice) {
+    const name=voice.name || '';
+    if (/\bfemale\b|여성|여자/i.test(name)) return 'female';
+    if (/\bmale\b|남성|남자/i.test(name)) return 'male';
+    if (/microsoft/i.test(name) && /sunhi|선히/i.test(name)) return 'female';
+    if (/microsoft/i.test(name) && /injoon|인준/i.test(name)) return 'male';
+    return ''; // The Web Speech API has no standardized gender property.
+  }
+  const samsungVoice = voice => /samsung|삼성|com\.samsung\.smt/i.test(`${voice.name || ''} ${voice.voiceURI || ''}`);
   function splitText(text) {
     const chunks = [];
     const sentences = text.match(/[^.!?。！？\n]+[.!?。！？\n]*|[.!?。！？\n]+/gu) || [];
@@ -105,7 +164,7 @@ const StoryCore = (() => {
     return body.length > 0 && body.length % 4 === 0 && /^[A-Za-z0-9+/]*={0,2}$/.test(body);
   }
   function validate(raw, assets = {}) {
-    if (!raw || raw.format !== 'little-storybook' || raw.version !== 1) throw new Error('이 동화책에서 저장한 .story.json 파일을 골라 주세요.');
+    if (!raw || raw.format !== 'little-storybook' || ![1,2].includes(raw.version)) throw new Error('이 동화책에서 저장한 .story.json 파일을 골라 주세요.');
     if (typeof raw.title !== 'string' || raw.title.length > 100 || typeof raw.author !== 'string' || raw.author.length > 40) throw new Error('책 제목이나 이름을 확인해 주세요.');
     if (!Array.isArray(raw.pages) || !raw.pages.length || raw.pages.length > MAX_PAGES) throw new Error('책은 1~100장까지 불러올 수 있어요.');
     function audio(value) {
@@ -113,20 +172,28 @@ const StoryCore = (() => {
       if (!validMedia(value.data,'audio',assets) || !Number.isFinite(value.duration) || value.duration < 0 || value.duration > 3600) throw new Error('녹음 파일 정보가 올바르지 않아요.');
       return {data:value.data,duration:value.duration};
     }
-    return {title:raw.title,author:raw.author,pages:raw.pages.map(p => {
+    let bookCover=cover();
+    if (raw.cover != null) {
+      if (typeof raw.cover.enabled!=='boolean' || !validMedia(raw.cover.image,'image',assets)) throw new Error('표지 그림 정보가 올바르지 않아요.');
+      bookCover={enabled:raw.cover.enabled,image:raw.cover.image,decorated:raw.cover.decorated===true || raw.cover.image.startsWith('art:'),frame:frame(raw.cover.frame)};
+    }
+    return normalizeBook({title:raw.title,author:raw.author,cover:bookCover,fontSize:raw.fontSize,pages:raw.pages.map(p => {
       if (!p || typeof p.text !== 'string' || p.text.length > 5000 || !validMedia(p.image,'image',assets)) throw new Error('페이지의 그림이나 글 정보가 올바르지 않아요.');
-      return {...page(p.image,p.text),decorated:p.decorated===true || p.image.startsWith('art:'),audio:audio(p.audio),previousAudio:audio(p.previousAudio)};
-    })};
+      return {...page(p.image,p.text),frame:frame(p.frame),decorated:p.decorated===true || p.image.startsWith('art:'),audio:audio(p.audio),previousAudio:audio(p.previousAudio)};
+    })});
   }
   function pack(book, assets = {}, portable = true) {
-    return {format:'little-storybook',version:1,savedAt:new Date().toISOString(),title:book.title,author:book.author,pages:book.pages.map(p => ({
+    const image = source => portable && source.startsWith('art:') ? assets[source.slice(4)] : source;
+    const bookCover=book.cover || cover();
+    return {format:'little-storybook',version:2,savedAt:new Date().toISOString(),title:book.title,author:book.author,fontSize:book.fontSize || 28,
+    cover:{...bookCover,image:bookCover.enabled?image(bookCover.image):'',frame:frame(bookCover.frame)},pages:book.pages.map(p => ({
       image:portable && p.image.startsWith('art:') ? assets[p.image.slice(4)] : p.image,
-      text:p.text,decorated:p.decorated===true || p.image.startsWith('art:'),audio:p.audio,previousAudio:p.previousAudio || null
+      text:p.text,frame:frame(p.frame),decorated:p.decorated===true || p.image.startsWith('art:'),audio:p.audio,previousAudio:p.previousAudio || null
     }))};
   }
   function missing(book, start = 0) { return book.pages.slice(start).map((p,i) => p.audio ? null : start+i).filter(i => i !== null); }
   function filename(title) { return (title.trim().replace(/[<>:"/\\|?*\u0000-\u001f]/g,'_').replace(/[. ]+$/g,'').slice(0,70) || '나의 동화책') + '.story.json'; }
-  return {MAX_PAGES,uid,page,blank,splitText,validate,pack,missing,filename};
+  return {MAX_PAGES,uid,page,blank,cover,frame,clamp,normalizeBook,voiceGender,samsungVoice,splitText,validate,pack,missing,filename};
 })();
 </script>
   <script>'use strict';
@@ -142,17 +209,26 @@ const StoryCore = (() => {
   let ioBusy = true, recordingState = 'idle', recordSession = null, permissionToken = 0;
   let audioMode = 'none', audioPaused = false, playbackToken = 0, speechToken = 0, utterance = null;
   let voices = [], voiceChosen = false, toastTimer = null, completed = false;
+  let editingCover = false, playCover = false;
+  let voicePrefs = {engine:'all',female:'',male:'',mode:'custom',voice:'',rate:.9};
+  try { const saved=JSON.parse(localStorage.getItem('little-storybook-voices') || 'null'); if(saved && typeof saved==='object') {
+    for(const key of ['female','male','voice']) if(typeof saved[key]==='string') voicePrefs[key]=saved[key];
+    if(['all','samsung'].includes(saved.engine))voicePrefs.engine=saved.engine;
+    if(['custom','female','male','system'].includes(saved.mode))voicePrefs.mode=saved.mode;
+    if(Number.isFinite(saved.rate))voicePrefs.rate=StoryCore.clamp(saved.rate,.5,1.3);
+  }} catch {}
   let dialogResolve = null;
   const locked = () => ioBusy || recordingState !== 'idle';
   const current = () => book.pages[index];
+  const editing = () => editingCover ? book.cover : current();
   const resolveImage = source => source.startsWith('art:') ? ART[source.slice(4)] : source;
 
   function sampleBook() {
-    return {title:'작은 숲의 선물',author:'',pages:[
+    return StoryCore.normalizeBook({title:'작은 숲의 선물',author:'',cover:StoryCore.cover(true),pages:[
       StoryCore.page('art:rabbit','토끼 루루가 작은 씨앗을 발견했어요.\n“어떤 꽃이 피어날까?”'),
       StoryCore.page('art:bear','곰돌이가 물을 주러 왔어요.\n“우리 함께 꽃을 키우자!”'),
       StoryCore.page('art:cat','따뜻한 햇살 아래 꽃이 활짝 피었어요.\n친구들은 환하게 웃었답니다.')
-    ]};
+    ]});
   }
 
   function toast(message, duration = 4200) {
@@ -187,7 +263,7 @@ const StoryCore = (() => {
   }
   $('dialog').addEventListener('cancel', () => { if (dialogResolve) dialogResolve(null); dialogResolve = null; });
 
-  function drawScene(container, source, decorated = false) {
+  function drawScene(container, source, decorated = false, imageFrame = StoryCore.frame()) {
     container.replaceChildren();
     container.classList.toggle('builtin',decorated);
     container.classList.toggle('empty',!source);
@@ -203,7 +279,8 @@ const StoryCore = (() => {
     img.alt = `${index+1}번째 이야기 그림`;
     img.src = resolveImage(source);
     img.onerror = () => { img.remove(); container.textContent = '그림을 열 수 없어요. 새 그림을 골라 주세요.'; };
-    container.append(img);
+    const layer=document.createElement('div'); layer.className='image-layer'; layer.append(img); container.append(layer);
+    applyFrame(container,imageFrame);
     if (decorated) {
       const star = document.createElement('span'); star.className = 'scene-star'; star.textContent = '✦'; star.setAttribute('aria-hidden','true');
       const flower = document.createElement('span'); flower.className = 'scene-flower'; flower.textContent = '🌼'; flower.setAttribute('aria-hidden','true');
@@ -211,12 +288,44 @@ const StoryCore = (() => {
     }
   }
 
+  function applyFrame(container, imageFrame) {
+    container.classList.toggle('fill',imageFrame.fit==='cover');
+    const layer=container.querySelector('.image-layer');
+    if (!layer) return;
+    layer.style.transform=`translate(${imageFrame.x}%, ${imageFrame.y}%) scale(${imageFrame.zoom})`;
+    const img=layer.querySelector('img'); if(img)img.style.objectFit=imageFrame.fit;
+  }
+
+  function syncCoverTitles() {
+    for(const id of ['edit-cover-title','cover-book-title'])$(id).textContent=book.title || '나의 동화책';
+    for(const id of ['edit-cover-author','cover-book-author'])$(id).textContent=book.author ? `${book.author}의 목소리로 들려드려요` : '내 목소리로 들려드려요';
+  }
+  function applyFontSize() {
+    document.documentElement.style.setProperty('--story-font-size',`${book.fontSize}px`);
+    $('font-size').value=book.fontSize; $('font-size-label').textContent=book.fontSize;
+    all('[data-font-step]').forEach(b=>{b.disabled=locked() || (Number(b.dataset.fontStep)<0?book.fontSize<=18:book.fontSize>=48);});
+  }
+  function setFontSize(value) { if(locked())return; book.fontSize=StoryCore.clamp(value,18,48); changed(true); applyFontSize(); }
+  function updateFrameControls() {
+    const frame=editing().frame;
+    $('image-zoom').value=Math.round(frame.zoom*100); $('image-zoom-label').textContent=`${Math.round(frame.zoom*100)}%`;
+    $('image-contain').setAttribute('aria-pressed',String(frame.fit==='contain'));
+    $('image-fill').setAttribute('aria-pressed',String(frame.fit==='cover'));
+    $('zoom-out').disabled=locked() || !editing().image || frame.zoom<=.5;
+    $('zoom-in').disabled=locked() || !editing().image || frame.zoom>=3;
+  }
+  function setFrame(patch) {
+    if(locked() || !editing().image)return;
+    editing().frame=StoryCore.frame({...editing().frame,...patch});
+    applyFrame($('edit-scene'),editing().frame); updateFrameControls(); changed();
+  }
+
   function renderPages() {
     $('page-list').replaceChildren();
     book.pages.forEach((page,i) => {
       const button = document.createElement('button');
       button.className = 'page-thumb';
-      button.setAttribute('aria-current',String(i === index));
+      button.setAttribute('aria-current',String(!editingCover && i === index));
       button.setAttribute('aria-label',`${i+1}번째 페이지${page.audio ? ', 녹음 완료' : ''}`);
       button.disabled = locked();
       const art = document.createElement('div'); art.className = 'thumb-art';
@@ -230,6 +339,7 @@ const StoryCore = (() => {
       $('page-list').append(button);
     });
     $('page-total').textContent = `${book.pages.length}장`;
+    $('edit-cover').setAttribute('aria-current',String(editingCover));
   }
 
   function renderDots(target) {
@@ -248,6 +358,7 @@ const StoryCore = (() => {
 
   function render() {
     const p = current();
+    const edit=editing();
     const count = book.pages.filter(p => p.audio).length;
     for (const element of all('[data-tab]')) {
       const selected = element.dataset.tab === tab;
@@ -257,12 +368,15 @@ const StoryCore = (() => {
     }
     $('book-label').textContent = `📚 ${book.title || '나의 동화책'} · ${book.pages.length}장`;
     $('book-title').value = book.title; $('book-author').value = book.author;
-    $('editor-page-title').textContent = `${index+1}번째 이야기`;
-    $('edit-recorded').textContent = p.audio ? '★ 목소리를 담았어요' : '☆ 목소리를 기다려요';
+    $('editor-page-title').textContent = editingCover ? '나만의 책 표지' : `${index+1}번째 이야기`;
+    $('edit-recorded').textContent = editingCover ? '📕 표지' : p.audio ? '★ 목소리를 담았어요' : '☆ 목소리를 기다려요';
+    $('cover-toggle-row').hidden=!editingCover; $('cover-enabled').checked=book.cover.enabled;
+    $('edit-cover-copy').hidden=!editingCover; $('page-writing').hidden=editingCover; $('page-organize').hidden=editingCover;
+    syncCoverTitles();
     $('page-text').value = p.text; updateTextCount();
-    drawScene($('edit-scene'),p.image,p.decorated);
+    drawScene($('edit-scene'),edit.image,edit.decorated,edit.frame);
     for (const prefix of ['record','play']) {
-      drawScene($(prefix+'-scene'),p.image,p.decorated);
+      drawScene($(prefix+'-scene'),p.image,p.decorated,p.frame);
       $(prefix+'-page').textContent = `${index+1} / ${book.pages.length}`;
       $(prefix+'-text').textContent = p.text || '여기에 나만의 이야기를 담아 주세요.';
       $(prefix+'-text').classList.toggle('placeholder',!p.text);
@@ -274,6 +388,9 @@ const StoryCore = (() => {
     $('narrator').textContent = book.author ? `${book.author}의 목소리로 들려주는 이야기` : '내 목소리로 들려주는 이야기';
     $('undo-recording').hidden = !p.previousAudio;
     $('finish-card').hidden = !completed;
+    $('show-cover').hidden=!book.cover.enabled || playCover;
+    $('book-cover-view').hidden=!playCover; $('play-pages-view').hidden=playCover;
+    drawScene($('play-cover-scene'),book.cover.image,book.cover.decorated,book.cover.frame);
     renderPages(); updateControls();
   }
 
@@ -282,6 +399,7 @@ const StoryCore = (() => {
     const busy = locked();
     for (const element of all('[data-tab],[data-action],.page-thumb,.page-dots button')) element.disabled = busy;
     for (const id of ['new-book','add-page','pick-image','page-text','book-title','book-author','move-left','move-right','delete-page','go-record','go-play','undo-recording','voice','rate','help-button']) $(id).disabled = busy;
+    for(const id of ['edit-cover','cover-enabled','font-size','image-zoom','image-contain','image-fill','image-reset','open-cover','show-cover','voice-engine','female-voice','male-voice','voice-female','voice-male','voice-default','voice-test','refresh-voices','samsung-help'])$(id).disabled=busy;
     all('#friend-choices button').forEach(b => { b.disabled = busy; });
     $('add-page').disabled = busy || book.pages.length >= StoryCore.MAX_PAGES;
     $('move-left').disabled = busy || index === 0;
@@ -303,11 +421,14 @@ const StoryCore = (() => {
     $('restart-button').disabled = busy;
     $('play-again').disabled = busy;
     $('play-button').textContent = audioMode === 'book' ? (audioPaused ? '▶ 이어 듣기' : 'Ⅱ 잠깐 멈춤') : (completed ? '↻ 한 번 더 듣기' : index === 0 ? '▶ 동화 시작' : '▶ 여기부터 듣기');
+    for(const id of ['image-zoom','image-contain','image-fill','image-reset'])$(id).disabled=busy || !editing().image;
+    $('voice-test').disabled=busy || !synth;
+    updateFrameControls(); applyFontSize();
   }
 
   function updateTextCount() { $('text-count').textContent = `${current().text.length.toLocaleString('ko-KR')} / 5,000`; }
-  function changed() {
-    revision++; completed = false;
+  function changed(preserveCompletion = false) {
+    revision++; if(!preserveCompletion)completed = false;
     $('book-label').textContent = `📚 ${book.title || '나의 동화책'} · ${book.pages.length}장`;
     $('draft-state').textContent = db ? '● 이 기기에 임시 보관 중…' : '● 파일로 저장해 주세요';
     clearTimeout(persistTimer); persistTimer = setTimeout(persistDraft,600);
@@ -360,14 +481,15 @@ const StoryCore = (() => {
   }
   function goPage(next) {
     if (locked() || next < 0 || next >= book.pages.length) return;
-    stopMedia(); index = next; completed = false;
+    stopMedia(); index = next; completed = false; editingCover=false; playCover=false;
     $('record-status').textContent = current().audio ? '★ 내 목소리가 담겨 있어요.' : '듣고, 내 목소리로 읽어 보세요.';
     $('play-status').textContent = '내 목소리로 페이지가 하나씩 넘어가요.';
     render();
   }
   function switchTab(next) {
     if (locked()) return;
-    stopMedia(); tab = next; completed = false;
+    stopMedia(); tab = next; completed = false; playCover=next==='play' && book.cover.enabled;
+    if(next!=='edit')editingCover=false;
     $('record-status').textContent = current().audio ? '★ 내 목소리가 담겨 있어요.' : '듣고, 내 목소리로 읽어 보세요.';
     $('play-status').textContent = '내 목소리로 페이지가 하나씩 넘어가요.';
     render();
@@ -375,22 +497,53 @@ const StoryCore = (() => {
   }
 
   function voiceKey(v) { return JSON.stringify([v.voiceURI,v.name,v.lang]); }
-  function loadVoices() {
-    const previous = $('voice').value;
-    voices = synth.getVoices().slice().sort((a,b) => Number(/^ko\b/i.test(b.lang))-Number(/^ko\b/i.test(a.lang)) || a.name.localeCompare(b.name));
-    $('voice').replaceChildren(new Option('한국어 기본 목소리',''));
-    voices.forEach(v => $('voice').add(new Option(`${v.name} · ${v.lang}`,voiceKey(v))));
-    if (voices.some(v => voiceKey(v)===previous)) $('voice').value = previous;
-    else if (!voiceChosen) { const korean = voices.find(v => /^ko\b/i.test(v.lang)); $('voice').value = korean ? voiceKey(korean) : ''; }
+  const filteredVoices = () => $('voice-engine').value==='samsung' ? voices.filter(StoryCore.samsungVoice) : voices;
+  function saveVoicePrefs() {
+    voicePrefs.engine=$('voice-engine').value || 'all'; voicePrefs.voice=$('voice').value;
+    voicePrefs.rate=Number($('rate').value);
+    try { localStorage.setItem('little-storybook-voices',JSON.stringify(voicePrefs)); } catch {}
   }
-  function readAloud() {
+  function voiceButtons() {
+    for(const mode of ['female','male'])$('voice-'+mode).setAttribute('aria-pressed',String(voicePrefs.mode===mode && $('voice').value===voicePrefs[mode] && !!voicePrefs[mode]));
+    $('voice-default').setAttribute('aria-pressed',String(voicePrefs.mode==='system'));
+  }
+  function loadVoices() {
+    if(!synth)return;
+    const previous = $('voice').value || voicePrefs.voice;
+    voices = synth.getVoices().slice().sort((a,b) => Number(/^ko\b/i.test(b.lang))-Number(/^ko\b/i.test(a.lang)) || a.name.localeCompare(b.name));
+    const available=filteredVoices(), samsung=$('voice-engine').value==='samsung';
+    $('voice').replaceChildren(new Option(samsung?'삼성 음성을 골라 주세요':'한국어 기기 기본 목소리',''));
+    available.forEach(v => $('voice').add(new Option(`${v.name} · ${v.lang}`,voiceKey(v))));
+    if(voicePrefs.mode==='system')$('voice').value='';
+    else if (available.some(v => voiceKey(v)===previous)) $('voice').value = previous;
+    else if (!voiceChosen || samsung) { const korean = available.find(v => /^ko\b/i.test(v.lang)); $('voice').value = korean ? voiceKey(korean) : ''; }
+    for(const mode of ['female','male']) {
+      const select=$(mode+'-voice'); select.replaceChildren(new Option('목소리를 듣고 골라 주세요',''));
+      available.forEach(v=>select.add(new Option(`${v.name} · ${v.lang}`,voiceKey(v))));
+      if(!voicePrefs[mode]) { const suggested=available.find(v=>/^ko\b/i.test(v.lang) && StoryCore.voiceGender(v)===mode); if(suggested)voicePrefs[mode]=voiceKey(suggested); }
+      select.value=available.some(v=>voiceKey(v)===voicePrefs[mode])?voicePrefs[mode]:'';
+    }
+    const samsungCount=voices.filter(StoryCore.samsungVoice).length;
+    $('voice-availability').textContent=samsung ? (available.length?`삼성 음성 ${available.length}개를 찾았어요.`:'삼성 음성이 이 브라우저에 표시되지 않아요. 아래 설정 안내를 확인해 주세요.') : `${voices.length}개 음성 · 삼성으로 표시된 음성 ${samsungCount}개. 목소리는 기기마다 달라요.`;
+    voiceButtons();
+  }
+  function selectGender(mode) {
+    if(locked())return; stopMedia();
+    const voice=filteredVoices().find(v=>voiceKey(v)===voicePrefs[mode]);
+    if(!voice) { $('voice-settings').open=true; $(mode+'-voice').focus(); toast(`${mode==='female'?'여자':'남자'} 버튼에 사용할 실제 목소리를 먼저 연결해 주세요.`); return; }
+    $('voice').value=voiceKey(voice); voicePrefs.mode=mode; voiceChosen=true; saveVoicePrefs(); voiceButtons();
+    $('record-status').textContent=`${mode==='female'?'👩 여자':'👨 남자'} 목소리를 골랐어요. 🔊 눌러 들어 보세요.`;
+  }
+  function readAloud(previewText) {
     if (locked() || !synth) return;
     if (utterance) { stopMedia(); $('record-status').textContent = '듣기를 멈췄어요.'; return; }
     stopMedia();
-    const chunks = StoryCore.splitText(current().text);
+    const selected=filteredVoices().find(v => voiceKey(v)===$('voice').value);
+    if($('voice-engine').value==='samsung' && !selected) { $('voice-settings').open=true; toast('삼성 TTS 음성이 없어요. 삼성 TTS 설정 안내를 확인하거나 기기 기본을 골라 주세요.',6500); return; }
+    const chunks = StoryCore.splitText(typeof previewText==='string'?previewText:current().text);
     if (!chunks.length) return;
     const token = speechToken;
-    const voice = voices.find(v => voiceKey(v)===$('voice').value);
+    const voice = selected;
     function speak(i) {
       if (token !== speechToken) return;
       if (i >= chunks.length) { utterance = null; $('record-status').textContent = '이제 내 목소리로 읽어 볼까요? 🎙️'; updateControls(); return; }
@@ -523,7 +676,7 @@ const StoryCore = (() => {
       if (answer) { index = missing[0]; switchTab('record'); }
       return;
     }
-    stopMedia(); completed = false; $('finish-card').hidden = true;
+    stopMedia(); completed = false; playCover=false; $('finish-card').hidden = true;
     audioMode = 'book'; const token = playbackToken;
     playStoryPage(token);
   }
@@ -610,7 +763,7 @@ const StoryCore = (() => {
     ioBusy = true; updateControls();
     try {
       const restored = StoryCore.validate(JSON.parse(await file.text()),ART);
-      stopMedia(); book = restored; index = 0; completed = false; revision++; exportedRevision = revision;
+      stopMedia(); book = restored; index = 0; editingCover=false; playCover=tab==='play' && book.cover.enabled; completed = false; revision++; exportedRevision = revision;
       await persistDraft(); render();
       $('play-status').textContent = '불러온 내 목소리 동화책을 들어 보세요.';
       toast('그림, 글, 목소리를 모두 불러왔어요! 📖');
@@ -630,7 +783,7 @@ const StoryCore = (() => {
       const scale = Math.min(1,1600/Math.max(img.naturalWidth,img.naturalHeight));
       const canvas = document.createElement('canvas'); canvas.width = Math.round(img.naturalWidth*scale); canvas.height = Math.round(img.naturalHeight*scale);
       const ctx = canvas.getContext('2d'); ctx.fillStyle = '#fffdf7'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0,canvas.width,canvas.height);
-      current().image = canvas.toDataURL('image/jpeg',.88); current().decorated = false; changed(); render(); toast('이야기 그림을 넣었어요. 🖼️');
+      editing().image = canvas.toDataURL('image/jpeg',.88); editing().decorated = false; editing().frame=StoryCore.frame(); changed(); render(); toast('이야기 그림을 넣었어요. 🖼️');
     } catch { toast('그림을 열지 못했어요. JPG, PNG 또는 WebP 그림을 골라 주세요.'); }
     finally { URL.revokeObjectURL(url); ioBusy = false; render(); }
   }
@@ -639,7 +792,7 @@ const StoryCore = (() => {
   Object.entries(names).forEach(([key,name]) => {
     const button = document.createElement('button'); button.setAttribute('aria-label',`${name} 그림 넣기`); button.title = name;
     const img = document.createElement('img'); img.src = ART[key]; img.alt = ''; button.append(img);
-    button.onclick = () => { if (locked()) return; current().image = 'art:'+key; current().decorated = true; changed(); render(); };
+    button.onclick = () => { if (locked()) return; editing().image = 'art:'+key; editing().decorated = true; editing().frame=StoryCore.frame(); changed(); render(); };
     $('friend-choices').append(button);
   });
   all('[data-tab]').forEach(button => button.onclick = () => switchTab(button.dataset.tab));
@@ -654,15 +807,15 @@ const StoryCore = (() => {
   all('[data-prev]').forEach(button => button.onclick = () => goPage(index-1));
   all('[data-next]').forEach(button => button.onclick = () => goPage(index+1));
   $('go-record').onclick = () => switchTab('record'); $('go-play').onclick = () => switchTab('play');
-  $('book-title').oninput = event => { book.title = event.target.value; changed(); };
-  $('book-author').oninput = event => { book.author = event.target.value; changed(); };
+  $('book-title').oninput = event => { book.title = event.target.value; changed(); syncCoverTitles(); };
+  $('book-author').oninput = event => { book.author = event.target.value; changed(); syncCoverTitles(); };
   $('page-text').oninput = event => { current().text = event.target.value; changed(); updateTextCount(); };
   $('pick-image').onclick = () => { $('image-input').value = ''; $('image-input').click(); };
   $('image-input').onchange = event => uploadImage(event.target.files[0]);
   $('book-input').onchange = event => importBook(event.target.files[0]);
   $('add-page').onclick = () => {
     if (locked() || book.pages.length>=StoryCore.MAX_PAGES) return;
-    stopMedia(); book.pages.splice(index+1,0,StoryCore.page()); index++; changed(); render();
+    stopMedia(); book.pages.splice(index+1,0,StoryCore.page()); index++; editingCover=false; changed(); render();
     $('page-list').querySelector('[aria-current="true"]')?.scrollIntoView({block:'nearest',inline:'nearest'});
   };
   $('move-left').onclick = () => {
@@ -683,7 +836,7 @@ const StoryCore = (() => {
     if (locked()) return;
     const answer = await ask('새 이야기를 만들까요?','지금 책을 간직하려면 먼저 기기에 저장해 주세요.',[{label:'지금 책 유지',value:false},{label:'새 책 만들기',value:true,primary:true}]);
     if (!answer) return;
-    stopMedia(); book=StoryCore.blank(); index=0; changed(); render(); $('book-title').focus();
+    stopMedia(); book=StoryCore.blank(); index=0; editingCover=true; playCover=false; changed(); render(); $('book-title').focus();
   };
   $('tts-button').onclick = readAloud; $('record-button').onclick = recordClick; $('preview-button').onclick = previewRecording;
   $('undo-recording').onclick = () => {
@@ -691,8 +844,69 @@ const StoryCore = (() => {
     stopMedia(); const p=current(); [p.audio,p.previousAudio]=[p.previousAudio,p.audio]; changed(); render();
     $('record-status').textContent = '이전 목소리로 바꿨어요. 🎧 눌러 들어 보세요.';
   };
-  $('voice').onchange = () => { voiceChosen=true; };
-  $('rate').oninput = () => { $('rate-label').textContent=Number($('rate').value).toFixed(1)+'배'; };
+  $('voice').onchange = () => { stopMedia(); voiceChosen=true; voicePrefs.mode=$('voice').value?'custom':'system'; saveVoicePrefs(); voiceButtons(); };
+  $('rate').oninput = () => { $('rate-label').textContent=Number($('rate').value).toFixed(1)+'배'; saveVoicePrefs(); };
+  $('font-size').oninput=event=>setFontSize(Number(event.target.value));
+  all('[data-font-step]').forEach(button=>button.onclick=()=>setFontSize(book.fontSize+Number(button.dataset.fontStep)));
+  $('edit-cover').onclick=()=>{
+    if(locked())return; stopMedia(); editingCover=true;
+    if(!book.cover.enabled){book.cover.enabled=true; if(!book.cover.image)book.cover=StoryCore.cover(true); changed();}
+    render();
+  };
+  $('cover-enabled').onchange=event=>{book.cover.enabled=event.target.checked;changed();};
+  $('show-cover').onclick=()=>{if(locked())return; stopMedia(); playCover=true; completed=false; render();};
+  $('open-cover').onclick=()=>{if(locked())return; index=0; startStory();};
+  $('zoom-in').onclick=()=>setFrame({zoom:editing().frame.zoom+.1});
+  $('zoom-out').onclick=()=>setFrame({zoom:editing().frame.zoom-.1});
+  $('image-zoom').oninput=event=>setFrame({zoom:Number(event.target.value)/100});
+  $('image-contain').onclick=()=>setFrame({zoom:1,x:0,y:0,fit:'contain'});
+  $('image-fill').onclick=()=>setFrame({zoom:1,x:0,y:0,fit:'cover'});
+  $('image-reset').onclick=()=>setFrame(StoryCore.frame());
+  $('edit-scene').addEventListener('keydown',event=>{
+    const direction={ArrowLeft:[-3,0],ArrowRight:[3,0],ArrowUp:[0,-3],ArrowDown:[0,3]}[event.key];
+    if(!direction || locked())return;
+    event.preventDefault();setFrame({x:editing().frame.x+direction[0],y:editing().frame.y+direction[1]});
+  });
+  const pointers=new Map(); let gesture=null;
+  function gestureBasis() {
+    const points=[...pointers.values()];
+    if(!points.length){gesture=null;return;}
+    const center=points.length>1?{x:(points[0].x+points[1].x)/2,y:(points[0].y+points[1].y)/2}:points[0];
+    gesture={center,distance:points.length>1?Math.hypot(points[0].x-points[1].x,points[0].y-points[1].y):0,frame:{...editing().frame},rect:$('edit-scene').getBoundingClientRect()};
+  }
+  $('edit-scene').addEventListener('pointerdown',event=>{
+    if(locked() || !editing().image || (event.pointerType==='mouse' && event.button!==0))return;
+    event.preventDefault();$('edit-scene').setPointerCapture(event.pointerId);pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});gestureBasis();$('edit-scene').classList.add('dragging');
+  });
+  $('edit-scene').addEventListener('pointermove',event=>{
+    if(!pointers.has(event.pointerId) || !gesture || locked())return;
+    pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});const points=[...pointers.values()];
+    const center=points.length>1?{x:(points[0].x+points[1].x)/2,y:(points[0].y+points[1].y)/2}:points[0];
+    const {frame,rect}=gesture;
+    if(!rect.width || !rect.height)return;
+    const distance=points.length>1?Math.hypot(points[0].x-points[1].x,points[0].y-points[1].y):0;
+    const zoom=gesture.distance>0?StoryCore.clamp(frame.zoom*distance/gesture.distance,.5,3):frame.zoom;
+    const ratio=zoom/frame.zoom;
+    setFrame({zoom,x:frame.x+(center.x-gesture.center.x)/rect.width*100+(1-ratio)*((gesture.center.x-rect.left)/rect.width*100-50-frame.x),y:frame.y+(center.y-gesture.center.y)/rect.height*100+(1-ratio)*((gesture.center.y-rect.top)/rect.height*100-50-frame.y)});
+  });
+  function endPointer(event){pointers.delete(event.pointerId);gestureBasis();if(!pointers.size)$('edit-scene').classList.remove('dragging');}
+  for(const type of ['pointerup','pointercancel','lostpointercapture'])$('edit-scene').addEventListener(type,endPointer);
+  $('voice-female').onclick=()=>selectGender('female');$('voice-male').onclick=()=>selectGender('male');
+  $('voice-default').onclick=()=>{
+    if(locked())return;stopMedia();voicePrefs.mode='system';voicePrefs.voice='';voiceChosen=true;$('voice-engine').value='all';$('voice').value='';loadVoices();saveVoicePrefs();voiceButtons();
+    $('record-status').textContent='기기에 설정된 기본 목소리로 읽어요.';
+  };
+  $('voice-engine').onchange=()=>{stopMedia();voicePrefs.mode='custom';voiceChosen=false;loadVoices();saveVoicePrefs();};
+  for(const mode of ['female','male'])$(mode+'-voice').onchange=()=>{
+    stopMedia();voicePrefs[mode]=$(mode+'-voice').value;
+    if(voicePrefs[mode]){$('voice').value=voicePrefs[mode];voicePrefs.mode=mode;voiceChosen=true;}else voicePrefs.mode='custom';
+    saveVoicePrefs();voiceButtons();
+  };
+  $('voice-test').onclick=()=>readAloud('안녕! 오늘은 어떤 이야기를 읽어 볼까?');
+  $('refresh-voices').onclick=()=>{loadVoices();toast('이 브라우저에서 사용할 수 있는 음성을 다시 찾았어요.');};
+  $('samsung-help').onclick=()=>ask('삼성 TTS 사용하기',
+    '갤럭시의 설정에서 “텍스트 읽어주기” 또는 “글자 읽어주기”를 검색해 주세요.\n기본 엔진에서 삼성 TTS를 선택하고 한국어 음성을 설치하거나 골라 주세요. 메뉴 이름은 기기에 따라 달라요.\n\n설정 후 브라우저를 다시 열고 “음성 다시 찾기”를 눌러 주세요. 음성 종류에서 “삼성 TTS”를 고르면 삼성으로 표시된 목소리만 보여요.\n\n목록에 삼성 음성이 없다면 “기기 기본”으로 읽어 보고 확인해 주세요. 이 방법도 브라우저에 따라 다른 엔진을 사용할 수 있어요. HTML에서는 삼성 엔진을 강제로 켜거나 설치할 수 없어요.\n\n여자·남자 목소리가 각각 제공되면 버튼에 연결할 수 있어요. 음성 이름에 성별이 없으면 미리 듣고 직접 연결해 주세요. 음높이를 바꿔 다른 성별인 것처럼 표시하지 않아요.'
+  );
   $('play-button').onclick=toggleStory;
   $('restart-button').onclick=$('play-again').onclick=() => { if(locked())return; stopMedia(); index=0; completed=false; render(); startStory(); };
   $('help-button').onclick = () => ask('보호자 안내',
@@ -710,6 +924,7 @@ const StoryCore = (() => {
   window.addEventListener('beforeunload',event => {
     if (recordingState!=='idle' || ioBusy || (revision!==persistedRevision && revision!==exportedRevision)) { event.preventDefault(); event.returnValue=''; }
   });
+  $('voice-engine').value=voicePrefs.engine; $('rate').value=voicePrefs.rate; $('rate-label').textContent=voicePrefs.rate.toFixed(1)+'배'; voiceChosen=!!voicePrefs.voice || voicePrefs.mode==='system';
   if (synth) { loadVoices(); synth.addEventListener('voiceschanged',loadVoices); }
   else $('record-status').textContent='이 브라우저는 TTS를 지원하지 않아요. 녹음은 할 수 있어요.';
   render(); initDraft();
