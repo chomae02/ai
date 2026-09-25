@@ -78,6 +78,24 @@
 #edit-back-copy{bottom:60px;padding:14px 20px}#edit-back-copy h2{font-size:24px}#edit-back-copy p{font-size:15px}#play-back-scene{height:auto;aspect-ratio:16/9}
 .story-text strong{font-weight:800}.video-music{background:#f5f3e9;border:1px solid var(--line);padding:14px;border-radius:16px;margin-bottom:14px}.music-buttons,.music-settings{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.music-buttons>span{font-size:13px;overflow-wrap:anywhere;flex:1;min-width:100px}.music-settings{margin-top:12px;font-size:13px}.music-settings audio{width:min(100%,320px);height:36px}.music-settings input[type=range]{width:130px;accent-color:var(--green)}.video-local-images{background:#fff1d6;border:1px solid #e7ce9b;border-radius:14px;padding:14px;margin-bottom:14px}#video-dialog .video-local-images p{font-size:13px;line-height:1.7;white-space:normal;margin-bottom:10px}
 @media(max-width:580px){.page-sidebar .cover-thumb{grid-column:1/-1}.back-overlay{padding:14px 16px}.back-overlay h2{font-size:20px}.back-overlay small{margin-top:8px;font-size:11px}.music-settings audio{width:100%}}
+
+/* Match the 1280 × 720 movie's picture, caption and heading coordinates. */
+#play-pages-view{container-type:inline-size;overflow-x:auto}
+#play-pages-view .story-card{display:block;position:relative;width:100%;aspect-ratio:16/9;min-height:0;padding:0;border:0;border-radius:0;background:#f7f7ef;box-shadow:none;overflow:hidden}
+#play-pages-view #play-video-title{position:absolute;left:3.125%;top:5.28%;max-width:80%;font-size:2.1875cqw;line-height:1.2;font-weight:700;color:#454a43;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#play-pages-view .scene-wrap{position:absolute;left:2.5%;top:13.3333%;width:63.75%;height:82.2222%;border-radius:2.03125cqw;overflow:hidden}
+#play-pages-view #play-scene{width:100%;height:100%;min-height:0;max-height:none;aspect-ratio:auto;background:#f5f4ec;border-radius:0}
+#play-pages-view #play-scene.builtin{background:#f2efdf}
+#play-pages-view #play-scene.builtin:before,#play-pages-view #play-scene .scene-star,#play-pages-view #play-scene .scene-flower{display:none}
+#play-pages-view #play-scene.builtin img{inset:0;width:100%;height:100%;filter:none}
+#play-pages-view #play-text{position:absolute;left:68.125%;top:13.3333%;width:29.375%;height:82.2222%;min-height:0;max-height:none;margin:0;padding:2.8125cqw 2.5cqw 4.6875cqw;border:1px solid #deded8;border-radius:2.1875cqw;background:#fff;color:#303330;text-align:left;font-size:calc(2.03125cqw * var(--reader-font-scale,1));line-height:1.5;letter-spacing:0;overflow:auto;scrollbar-width:thin}
+#play-pages-view #play-text.placeholder{font-size:calc(2.03125cqw * var(--reader-font-scale,1))}
+#play-pages-view #play-page{position:absolute;top:5.56%;right:3.125%;left:auto;bottom:auto;padding:0;border-radius:0;background:transparent;box-shadow:none;color:#82877d;font-size:1.875cqw;font-weight:400;line-height:1.2}
+#play-pages-view[data-layout=bottom] #play-video-title{display:none}
+#play-pages-view[data-layout=bottom] .scene-wrap{left:0;top:0;width:100%;height:100%;border-radius:0}
+#play-pages-view[data-layout=bottom] #play-text{left:3.28125%;top:70%;width:93.4375%;height:26.1111%;padding:1.875cqw 2.34375cqw 3.59375cqw;border-radius:2.1875cqw;background:rgba(255,255,255,.94)}
+#play-pages-view[data-layout=bottom] #play-page{top:auto;right:5.46875%;bottom:9.1667%;font-size:1.5625cqw}
+@media(max-width:700px){#play-pages-view .story-card{min-width:640px}}
 </style>
 </head>
 <body>
@@ -128,7 +146,7 @@
         <div id="book-cover-view" hidden><div class="story-card cover-card"><div class="scene-wrap"><div id="play-cover-scene" class="scene large"></div><div class="cover-overlay"><h2 id="cover-book-title"></h2><p id="cover-book-author"></p></div></div></div><div class="play-controls"><button id="open-cover" class="button primary play-button">▶ 책 펼치기</button></div></div>
         <div id="book-back-view" hidden><div class="story-card cover-card"><div class="scene-wrap"><div id="play-back-scene" class="scene large"></div><div class="back-overlay"><h2 id="back-book-title"></h2><p id="back-book-message"></p><small id="back-book-author"></small></div></div></div><div class="play-controls"><button id="back-restart" class="button primary">↻ 처음부터 다시 듣기</button></div></div>
         <div id="play-pages-view">
-        <div class="story-card"><div class="scene-wrap"><div id="play-scene" class="scene large"></div><span class="page-ribbon" id="play-page"></span></div><div id="play-text" class="story-text"></div></div>
+        <div class="story-card"><div id="play-video-title"></div><div class="scene-wrap"><div id="play-scene" class="scene large"></div></div><div id="play-text" class="story-text"></div><span class="page-ribbon" id="play-page"></span></div>
         <div class="play-controls"><button id="play-button" class="button primary play-button"><span aria-hidden="true">▶</span> 동화 시작</button><button id="restart-button" class="button">↻ 처음부터</button></div>
         <div class="play-message" id="play-status" role="status" aria-live="polite">내 목소리로 페이지가 하나씩 넘어가요.</div>
         <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="play-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
@@ -164,8 +182,6 @@
     <div class="video-actions"><button id="video-create" class="button primary">🎬 영상 만들기</button><button id="video-cancel" class="button danger" hidden>만들기 취소</button><a id="video-download" class="button save" hidden>↓ WebM 저장</a></div>
   </dialog>
   <noscript>동화책을 사용하려면 브라우저의 JavaScript를 켜 주세요.</noscript>
-  <!-- WebM 재생 시간 및 탐색 색인(Cues) 보정 라이브러리 -->
-  <script src="https://cdn.jsdelivr.net/npm/ts-ebml@2.0.2/dist/EBML.js"></script>
   <script>const ART = {"rabbit":"./rabbit.png","bear":"./bear.png","cat":"./cat.png","penguin":"./penguin.png"};</script>
   <script>'use strict';
 const StoryCore = (() => {
@@ -419,7 +435,7 @@ const StoryVideo = (() => {
   }
   function mimeType() {
     if(!globalThis.MediaRecorder)return '';
-    return ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(type=>MediaRecorder.isTypeSupported(type)) || '';
+    return ['video/webm;codecs=vp8,opus','video/webm;codecs=vp9,opus','video/webm'].find(type=>MediaRecorder.isTypeSupported(type)) || '';
   }
   function supported(canvas) { return !!(mimeType() && canvas.captureStream && (globalThis.AudioContext || globalThis.webkitAudioContext)); }
   function duration(page,copy,audioDuration=0) {
@@ -427,6 +443,114 @@ const StoryVideo = (() => {
     return Math.max(5,Array.from(page.text.replace(/\s/g,'')).length/7,copy.parts.length*4);
   }
   return {WIDTH,HEIGHT,geometry,wrap,captions,draw,loadImage,mimeType,supported,duration,record:options=>StoryRecorder.record(options)};
+})();
+</script>
+  <script>'use strict';
+// Add Duration, SeekHead and video Cues to Chromium's streaming MediaRecorder WebM.
+// The recorder emits unknown-sized Segment/Cluster elements without an index.
+const SeekableWebM=(()=>{
+  const id=hex=>Uint8Array.from(hex.match(/../g).map(part=>parseInt(part,16)));
+  const join=(...parts)=>{const size=parts.reduce((sum,p)=>sum+p.length,0),out=new Uint8Array(size);let at=0;for(const p of parts){out.set(p,at);at+=p.length;}return out;};
+  function vint(bytes,at,identifier=false){
+    if(at>=bytes.length)throw new Error('잘린 WebM 데이터예요.');
+    let length=1;while(length<=8 && !(bytes[at]&(0x80>>(length-1))))length++;
+    if(length>8 || at+length>bytes.length)throw new Error('WebM 요소 길이가 올바르지 않아요.');
+    let value=BigInt(identifier?bytes[at]:bytes[at]&(0xff>>length));
+    for(let i=1;i<length;i++)value=value*256n+BigInt(bytes[at+i]);
+    return {length,value,unknown:!identifier && value===(1n<<BigInt(length*7))-1n};
+  }
+  function elementAt(bytes,at){
+    const tag=vint(bytes,at,true),size=vint(bytes,at+tag.length),data=at+tag.length+size.length;
+    const end=size.unknown?bytes.length:data+Number(size.value);
+    if(end>bytes.length)throw new Error('WebM 요소가 파일 범위를 넘었어요.');
+    return {at,id:Number(tag.value),data,end,unknown:size.unknown,header:data-at};
+  }
+  function children(bytes,start,end,visit){
+    for(let at=start;at<end;){const item=elementAt(bytes,at);if(item.unknown || item.end>end)throw new Error('WebM 메타데이터를 읽지 못했어요.');visit(item);at=item.end;}
+  }
+  function uint(bytes,start,end){let value=0n;for(let i=start;i<end;i++)value=value*256n+BigInt(bytes[i]);return value;}
+  function uintBytes(value,width=0){
+    value=BigInt(value);let count=width||1;if(!width)while(value>=1n<<BigInt(count*8))count++;
+    const out=new Uint8Array(count);for(let i=count-1;i>=0;i--){out[i]=Number(value&255n);value>>=8n;}
+    return out;
+  }
+  function sizeBytes(value,width=0){
+    value=BigInt(value);let count=width||1;while(!width && count<8 && value>=(1n<<BigInt(count*7))-1n)count++;
+    if(value>=(1n<<BigInt(count*7))-1n)throw new Error('WebM 파일이 너무 커요.');
+    return uintBytes((1n<<BigInt(count*7))|value,count);
+  }
+  const element=(tag,payload)=>join(id(tag),sizeBytes(payload.length),payload);
+  const number=(tag,value,width=0)=>element(tag,uintBytes(value,width));
+  function repair(buffer,durationMs){
+    const bytes=new Uint8Array(buffer);
+    const ebml=elementAt(bytes,0),segment=elementAt(bytes,ebml.end);
+    if(ebml.id!==0x1a45dfa3 || segment.id!==0x18538067 || !segment.unknown)throw new Error('이 브라우저의 WebM 형식을 보정할 수 없어요.');
+    const segmentStart=segment.data;
+    let info,tracks,firstCluster,scale=1000000n,videoTrack=null;
+    for(let at=segmentStart;at<bytes.length;){
+      const item=elementAt(bytes,at);
+      if(item.id===0x1549a966){info=item;children(bytes,item.data,item.end,child=>{if(child.id===0x2ad7b1)scale=uint(bytes,child.data,child.end);});}
+      if(item.id===0x1654ae6b){tracks=item;children(bytes,item.data,item.end,entry=>{
+        if(entry.id!==0xae)return;
+        let type,number;
+        children(bytes,entry.data,entry.end,field=>{if(field.id===0x83)type=Number(uint(bytes,field.data,field.end));if(field.id===0xd7)number=Number(uint(bytes,field.data,field.end));});
+        if(type===1)videoTrack=number;
+      });}
+      if(item.id===0x1f43b675){firstCluster=at;break;}
+      if(item.unknown)throw new Error('WebM 메타데이터가 끝나지 않았어요.');
+      at=item.end;
+    }
+    if(!info || !tracks || firstCluster==null || videoTrack==null || scale<=0n)throw new Error('WebM 영상 트랙과 시간을 찾지 못했어요.');
+    const clusters=[];
+    for(let at=firstCluster;at<bytes.length;){
+      const cluster=elementAt(bytes,at);if(cluster.id!==0x1f43b675)throw new Error('WebM 영상 블록이 올바르지 않아요.');
+      let time=0n,key=false,next=cluster.end;
+      for(let cursor=cluster.data;cursor<cluster.end;){
+        const child=elementAt(bytes,cursor);
+        if(child.id===0x1f43b675){next=cursor;break;}
+        if(child.unknown)throw new Error('WebM 블록 길이가 올바르지 않아요.');
+        if(child.id===0xe7)time=uint(bytes,child.data,child.end);
+        if(child.id===0xa3 && child.end-child.data>=4){
+          const track=vint(bytes,child.data);
+          const flags=bytes[child.data+track.length+2];
+          if(Number(track.value)===videoTrack && flags&0x80)key=true;
+        }
+        if(child.id===0xa0){
+          let block=null,reference=false;
+          children(bytes,child.data,child.end,field=>{
+            if(field.id===0xa1)block=field;
+            if(field.id===0xfb)reference=true;
+          });
+          if(block && !reference && Number(vint(bytes,block.data).value)===videoTrack)key=true;
+        }
+        cursor=child.end;
+      }
+      clusters.push({at,data:cluster.data,time,key});
+      if(next<=at)throw new Error('WebM 블록 순서가 올바르지 않아요.');at=next;
+    }
+    if(!clusters.length)throw new Error('WebM 영상 프레임이 없어요.');
+    const durationTicks=Math.max(Number(BigInt(Math.ceil(durationMs))*1000000n/scale),Number(clusters.at(-1).time)+50);
+    const durationData=new Uint8Array(8);new DataView(durationData.buffer).setFloat64(0,durationTicks,false);
+    const newInfo=element('1549a966',join(bytes.subarray(info.data,info.end),element('4489',durationData)));
+    // Use an eight-byte SeekPosition so SeekHead's size is stable before Cues is built.
+    const seekHeadPlaceholder=element('114d9b74',element('4dbb',join(element('53ab',id('1c53bb6b')),number('53ac',0,8))));
+    const shift=seekHeadPlaceholder.length+newInfo.length-(info.end-info.at);
+    const points=clusters.filter(cluster=>cluster.key);
+    if(!points.length)throw new Error('WebM에서 탐색할 키프레임을 찾지 못했어요.');
+    const cues=element('1c53bb6b',join(...points.map(cluster=>element('bb',join(
+      number('b3',cluster.time),element('b7',join(number('f7',videoTrack),number('f1',cluster.at-segmentStart+shift)))
+    )))));
+    const cuePosition=bytes.length-segmentStart+shift;
+    const seekHead=element('114d9b74',element('4dbb',join(element('53ab',id('1c53bb6b')),number('53ac',cuePosition,8))));
+    const output=join(bytes.subarray(0,segmentStart),seekHead,bytes.subarray(segmentStart,info.at),newInfo,bytes.subarray(info.end),cues);
+    output.set(sizeBytes(output.length-segmentStart,8),segment.at+4);
+    clusters.forEach((cluster,index)=>{
+      const next=index+1<clusters.length?clusters[index+1].at:bytes.length;
+      output.set(sizeBytes(next-cluster.data,8),cluster.at+shift+4);
+    });
+    return new Blob([output],{type:'video/webm'});
+  }
+  return {repair};
 })();
 </script>
   <script>'use strict';
@@ -512,7 +636,7 @@ const StoryRecorder=(()=>{
           stopped=new Promise(resolve=>{recorder.onstop=resolve;});
           recorder.ondataavailable=event=>{if(!event.data.size)return;bytes+=event.data.size;if(bytes>400*1024*1024){control.abort(new Error('영상이 400MB를 넘었어요. 책을 나누어 만들어 주세요.'));return;}chunks.push(event.data);};
           recorder.onerror=event=>control.abort(event.error || new Error('영상 기록을 마치지 못했어요.'));
-          recorder.start(1000);started=true;recordStartedAt=Date.now();timer=setInterval(paint,33);
+          recorder.start(1000);recordStartedAt=performance.now();started=true;timer=setInterval(paint,33);
           if(hasMusic){await music.play();musicGain.gain.setValueAtTime(0,context.currentTime);musicGain.gain.linearRampToValueAtTime(book.music.volume,context.currentTime+1);}
           await wait(120,active);
         }
@@ -542,36 +666,11 @@ const StoryRecorder=(()=>{
       }
       abort(active);clearInterval(timer);paint();recorder.stop();
       await Promise.race([stopped,wait(10000,active).then(()=>{throw new Error('영상 저장을 마치지 못했어요.');})]);abort(active);
-      const rawBlob=new Blob(chunks,{type:recorder.mimeType});if(!rawBlob.size)throw new Error('영상 파일을 만들지 못했어요.');
-      
-      // MediaRecorder가 생성한 WebM 바이너리에 Cues(탐색 색인) 및 Duration(재생시간) 보정
-      let blob=rawBlob;
-      if(typeof EBML!=='undefined' && recorder.mimeType.includes('webm')){
-        try{
-          report('영상 탐색 색인(Cues) 만드는 중…',0.99);
-          const decoder=new EBML.Decoder();
-          const reader=new EBML.Reader();
-          reader.logging=false;
-          reader.drop_default_duration=false;
-
-          const buffer=await rawBlob.arrayBuffer();
-          const elements=decoder.decode(buffer);
-          elements.forEach(el=>reader.read(el));
-          reader.stop();
-
-          const refinedMetadataBuf=EBML.tools.makeMetadataSeekable(
-            reader.metadatas,
-            reader.duration,
-            reader.cues
-          );
-          const body=buffer.slice(reader.metadataSize);
-          blob=new Blob([refinedMetadataBuf,body],{type:recorder.mimeType || 'video/webm'});
-        }catch(error){
-          console.warn('EBML Cues 색인 생성 실패, 기본 Blob 저장:',error);
-          blob=rawBlob;
-        }
-      }
-      report('영상 완성! WebM 파일을 저장해 주세요.',1);return blob;
+      const blob=new Blob(chunks,{type:recorder.mimeType});if(!blob.size)throw new Error('영상 파일을 만들지 못했어요.');
+      report('재생 시간과 탐색 정보 작성 중…',.99);
+      const recordedBytes=await blob.arrayBuffer();abort(active);
+      const playable=SeekableWebM.repair(recordedBytes,performance.now()-recordStartedAt);abort(active);
+      report('영상 완성! WebM 파일을 저장해 주세요.',1);return playable;
     }catch(error){
       if(error.name==='SecurityError')throw new Error('영상 창에서 기본 그림 PNG 파일을 연결한 뒤 다시 만들어 주세요.');
       throw error;
@@ -732,6 +831,7 @@ const StoryRecorder=(()=>{
   }
   function applyFontSize() {
     document.documentElement.style.setProperty('--story-font-size',`${book.fontSize}px`);
+    document.documentElement.style.setProperty('--reader-font-scale',String(book.fontSize/28));
     $('font-size').value=book.fontSize; $('font-size-label').textContent=book.fontSize;
     all('[data-font-step]').forEach(b=>{b.disabled=locked() || (Number(b.dataset.fontStep)<0?book.fontSize<=18:book.fontSize>=48);});
   }
@@ -819,6 +919,8 @@ const StoryRecorder=(()=>{
     $('record-progress').textContent = `★ ${count} / ${book.pages.length}장`;
     $('play-progress').textContent = `🎙️ ${count} / ${book.pages.length}장`;
     $('play-title').textContent = book.title || '나의 동화책';
+    $('play-video-title').textContent = book.title || '나의 동화책';
+    $('play-pages-view').dataset.layout=$('video-layout').value;
     $('narrator').textContent = book.author ? `${book.author}의 목소리로 들려주는 이야기` : '내 목소리로 들려주는 이야기';
     $('undo-recording').hidden = !p.previousAudio;
     $('finish-card').hidden = !completed;
@@ -1284,7 +1386,8 @@ const StoryRecorder=(()=>{
       videoURL=URL.createObjectURL(blob);
       $('video-result').src=videoURL;$('video-result').hidden=false;$('video-canvas').hidden=true;
       $('video-download').href=videoURL;
-      $('video-download').download=StoryCore.filename(book.title).replace(/\.story\.json$/,`-${$('video-layout').value==='side'?'오른쪽':'하단'}말풍선.webm`);
+      const now=new Date(),stamp=String(now.getFullYear())+[now.getMonth()+1,now.getDate(),now.getHours(),now.getMinutes(),now.getSeconds()].map(value=>String(value).padStart(2,'0')).join('');
+      $('video-download').download=StoryCore.filename(book.title).replace(/\.story\.json$/,'')+`_${stamp}.webm`;
       $('video-download').hidden=false;
       $('video-status').textContent=`영상 완성 (${(blob.size/1024/1024).toFixed(1)} MB)! 재생해 보고 ‘WebM 저장’을 눌러 주세요.`;
     } catch(error) {
@@ -1352,7 +1455,7 @@ const StoryRecorder=(()=>{
   all('[data-action="save"]').forEach(button => button.onclick = saveBook);
   all('[data-action="open"]').forEach(button => button.onclick = chooseBook);
   all('[data-action="video"]').forEach(button => button.onclick = openVideo);
-  for(const id of ['video-layout','video-font','video-scene'])$(id).onchange=()=>previewVideo();
+  for(const id of ['video-layout','video-font','video-scene'])$(id).onchange=()=>{if(id==='video-layout')$('play-pages-view').dataset.layout=$('video-layout').value;previewVideo();};
   $('video-caption-prev').onclick=()=>{if(videoPart>0){videoPart--;previewVideo(false);}};
   $('video-caption-next').onclick=()=>{if(videoPart<videoParts-1){videoPart++;previewVideo(false);}};
   $('video-create').onclick=createVideo;
@@ -1372,17 +1475,22 @@ const StoryRecorder=(()=>{
       try{const img=new Image();img.src=url;await img.decode();if(videoImageURLs.has(key))URL.revokeObjectURL(videoImageURLs.get(key));videoImageURLs.set(key,url);matched++;}
       catch{URL.revokeObjectURL(url);}
     }
-    toast(matched?`${matched}개의 기본 그림을 영상에 연결했어요.`:'같은 폴더의 cat.png, bear.png, rabbit.png, penguin.png를 골라 주세요.');previewVideo();
+    toast(matched?`${matched}개의 기본 그림을 영상에 연결했어요.`:'같은 폴더의 고양이.png, 곰돌이.png, 토끼.png, 펭귄.png를 골라 주세요.');previewVideo();
   };
   $('video-cancel').onclick=()=>videoJob?.abort(new DOMException('취소했어요.','AbortError'));
-  $('video-close').onclick=()=>{if(!videoJob && !ioBusy)$('video-dialog').close();};$('video-dialog').addEventListener('cancel',event=>{if(videoJob || ioBusy)event.preventDefault();});
+  $('video-close').onclick=()=>{if(!videoJob && !ioBusy)$('video-dialog').close();};
+  $('video-dialog').addEventListener('cancel',event=>{if(videoJob || ioBusy)event.preventDefault();});
   $('video-dialog').addEventListener('close',()=>{++videoPreviewToken;videoPreviewBusy=false;clearVideoResult();$('music-preview').pause();});
   all('[data-prev]').forEach(button => button.onclick = () => goPage(index-1));
   all('[data-next]').forEach(button => button.onclick = () => goPage(index+1));
-  $('go-record').onclick = () => switchTab('record'); $('go-play').onclick = () => switchTab('play');$('book-title').oninput = event => { book.title = event.target.value; changed(); syncCoverTitles(); };
-  $('book-author').oninput = event => { book.author = event.target.value; changed(); syncCoverTitles(); };$('page-text').oninput = event => { current().text = event.target.value; changed(); updateTextCount(); };
-  $('pick-image').onclick = () => {$('image-input').value = ''; $('image-input').click(); };$('image-input').onchange = event => uploadImage(event.target.files[0]);
-  $('book-input').onchange = event => importBook(event.target.files[0]);$('add-page').onclick = () => {
+  $('go-record').onclick = () => switchTab('record'); $('go-play').onclick = () => switchTab('play');
+  $('book-title').oninput = event => { book.title = event.target.value; changed(); syncCoverTitles(); };
+  $('book-author').oninput = event => { book.author = event.target.value; changed(); syncCoverTitles(); };
+  $('page-text').oninput = event => { current().text = event.target.value; changed(); updateTextCount(); };
+  $('pick-image').onclick = () => { $('image-input').value = ''; $('image-input').click(); };
+  $('image-input').onchange = event => uploadImage(event.target.files[0]);
+  $('book-input').onchange = event => importBook(event.target.files[0]);
+  $('add-page').onclick = () => {
     if (locked() || book.pages.length>=StoryCore.MAX_PAGES) return;
     stopMedia(); book.pages.splice(index+1,0,StoryCore.page()); index++; editingCover=false; editingBack=false; changed(); render();
     $('page-list').querySelector('[aria-current="true"]')?.scrollIntoView({block:'nearest',inline:'nearest'});
@@ -1422,7 +1530,8 @@ const StoryRecorder=(()=>{
     if(!book.cover.enabled){book.cover.enabled=true; if(!book.cover.image)book.cover=StoryCore.cover(true); changed();}
     render();
   };
-  $('cover-enabled').onchange=event=>{book.cover.enabled=event.target.checked;changed();};$('edit-back-cover').onclick=()=>{
+  $('cover-enabled').onchange=event=>{book.cover.enabled=event.target.checked;changed();};
+  $('edit-back-cover').onclick=()=>{
     if(locked())return;stopMedia();editingBack=true;editingCover=false;
     if(!book.backCover.enabled){
       book.backCover.enabled=true;
@@ -1431,13 +1540,20 @@ const StoryRecorder=(()=>{
     }
     render();
   };
-  $('back-cover-enabled').onchange=event=>{book.backCover.enabled=event.target.checked;changed();};$('back-cover-title').oninput=event=>{book.backCover.title=event.target.value;changed();syncCoverTitles();};
-  $('back-cover-text').oninput=event=>{book.backCover.text=event.target.value;changed();syncCoverTitles();};$('show-back-cover').onclick=()=>{if(locked())return;stopMedia();playBack=true;playCover=false;completed=false;render();};
-  $('back-restart').onclick=()=>{if(locked())return;index=0;startStory();};$('show-cover').onclick=()=>{if(locked())return; stopMedia(); playCover=true; playBack=false; completed=false; render();};
-  $('open-cover').onclick=()=>{if(locked())return; index=0; startStory();};$('zoom-in').onclick=()=>setFrame({zoom:editing().frame.zoom+.1});
-  $('zoom-out').onclick=()=>setFrame({zoom:editing().frame.zoom-.1});$('image-zoom').oninput=event=>setFrame({zoom:Number(event.target.value)/100});
-  $('image-contain').onclick=()=>setFrame({zoom:1,x:0,y:0,fit:'contain'});$('image-fill').onclick=()=>setFrame({zoom:1,x:0,y:0,fit:'cover'});
-  $('image-reset').onclick=()=>setFrame(StoryCore.frame());$('edit-scene').addEventListener('keydown',event=>{
+  $('back-cover-enabled').onchange=event=>{book.backCover.enabled=event.target.checked;changed();};
+  $('back-cover-title').oninput=event=>{book.backCover.title=event.target.value;changed();syncCoverTitles();};
+  $('back-cover-text').oninput=event=>{book.backCover.text=event.target.value;changed();syncCoverTitles();};
+  $('show-back-cover').onclick=()=>{if(locked())return;stopMedia();playBack=true;playCover=false;completed=false;render();};
+  $('back-restart').onclick=()=>{if(locked())return;index=0;startStory();};
+  $('show-cover').onclick=()=>{if(locked())return; stopMedia(); playCover=true; playBack=false; completed=false; render();};
+  $('open-cover').onclick=()=>{if(locked())return; index=0; startStory();};
+  $('zoom-in').onclick=()=>setFrame({zoom:editing().frame.zoom+.1});
+  $('zoom-out').onclick=()=>setFrame({zoom:editing().frame.zoom-.1});
+  $('image-zoom').oninput=event=>setFrame({zoom:Number(event.target.value)/100});
+  $('image-contain').onclick=()=>setFrame({zoom:1,x:0,y:0,fit:'contain'});
+  $('image-fill').onclick=()=>setFrame({zoom:1,x:0,y:0,fit:'cover'});
+  $('image-reset').onclick=()=>setFrame(StoryCore.frame());
+  $('edit-scene').addEventListener('keydown',event=>{
     const direction={ArrowLeft:[-3,0],ArrowRight:[3,0],ArrowUp:[0,-3],ArrowDown:[0,3]}[event.key];
     if(!direction || locked())return;
     event.preventDefault();setFrame({x:editing().frame.x+direction[0],y:editing().frame.y+direction[1]});
@@ -1465,8 +1581,11 @@ const StoryRecorder=(()=>{
     setFrame({zoom,x:frame.x+(center.x-gesture.center.x)/rect.width*100+(1-ratio)*((gesture.center.x-rect.left)/rect.width*100-50-frame.x),y:frame.y+(center.y-gesture.center.y)/rect.height*100+(1-ratio)*((gesture.center.y-rect.top)/rect.height*100-50-frame.y)});
   });
   function endPointer(event){pointers.delete(event.pointerId);gestureBasis();if(!pointers.size)$('edit-scene').classList.remove('dragging');}
-  for(const type of ['pointerup','pointercancel','lostpointercapture'])$('edit-scene').addEventListener(type,endPointer);$('voice-female').onclick=()=>selectGender('female');$('voice-male').onclick=()=>selectGender('male');$('voice-default').onclick=()=>{
-    if(locked())return;stopMedia();voicePrefs.mode='system';voicePrefs.voice='';voiceChosen=true;$('voice-engine').value='all';$('voice').value='';loadVoices();saveVoicePrefs();voiceButtons();$('record-status').textContent='기기에 설정된 기본 목소리로 읽어요.';
+  for(const type of ['pointerup','pointercancel','lostpointercapture'])$('edit-scene').addEventListener(type,endPointer);
+  $('voice-female').onclick=()=>selectGender('female');$('voice-male').onclick=()=>selectGender('male');
+  $('voice-default').onclick=()=>{
+    if(locked())return;stopMedia();voicePrefs.mode='system';voicePrefs.voice='';voiceChosen=true;$('voice-engine').value='all';$('voice').value='';loadVoices();saveVoicePrefs();voiceButtons();
+    $('record-status').textContent='기기에 설정된 기본 목소리로 읽어요.';
   };
   $('voice-engine').onchange=()=>{stopMedia();voicePrefs.mode='custom';voiceChosen=false;loadVoices();saveVoicePrefs();};
   for(const mode of ['female','male'])$(mode+'-voice').onchange=()=>{
@@ -1482,7 +1601,8 @@ const StoryRecorder=(()=>{
   $('play-button').onclick=toggleStory;
   $('fullscreen-button').onclick=toggleFullscreen;
   document.addEventListener('fullscreenchange',syncFullscreenButton);
-  $('restart-button').onclick=$('play-again').onclick=() => { if(locked())return; stopMedia(); index=0; completed=false; render(); startStory(); };$('help-button').onclick = () => ask('보호자 안내',
+  $('restart-button').onclick=$('play-again').onclick=() => { if(locked())return; stopMedia(); index=0; completed=false; render(); startStory(); };
+  $('help-button').onclick = () => ask('보호자 안내',
     '① 책 만들기: 그림을 고르고 글을 써 주세요.\n② 목소리 담기: TTS를 들은 뒤 아이의 목소리를 녹음해요.\n③ 동화 듣기: 녹음이 끝나면 다음 장으로 넘어가요.\n\n💾 기기에 저장: 그림·글·녹음을 한 개의 .story.json 파일로 내려받아요. 불러오기에서 이 파일을 선택하면 복원돼요. 태블릿·휴대폰에서는 파일 앱이나 다운로드 폴더를 확인해 주세요. 저장 창이나 미리보기가 열리면 기기의 파일 저장 메뉴를 이용해 주세요.\n\n작업은 이 브라우저에도 임시 보관하지만, 오래 간직할 책은 꼭 파일로 저장해 주세요. 비공개 모드나 사이트 데이터 삭제 시 임시 작업은 사라질 수 있어요. 서버에는 그림과 녹음을 업로드하지 않아요.\n\n🎙️ 서버는 HTTPS로 열고 마이크 사용을 허용해 주세요. 녹음은 한 장에 최대 5분이며, 화면을 벗어나면 진행 중인 녹음을 마무리해요. 한 책은 최대 100장, 작업 파일은 200MB까지예요. 사진은 긴 쪽 1,600픽셀로 줄여 담아요.\n\n🔊 TTS 목소리는 기기마다 다르며 일부는 인터넷을 사용해요. 내장 목소리가 없으면 기기의 한국어 음성을 설치해 주세요. 다른 기기로 옮긴 녹음은 브라우저의 오디오 형식 지원에 따라 재생이 달라질 수 있어요.'
   );
   document.addEventListener('visibilitychange',() => {
