@@ -164,7 +164,7 @@
     <div class="video-actions"><button id="video-create" class="button primary">🎬 영상 만들기</button><button id="video-cancel" class="button danger" hidden>만들기 취소</button><a id="video-download" class="button save" hidden>↓ WebM 저장</a></div>
   </dialog>
   <noscript>동화책을 사용하려면 브라우저의 JavaScript를 켜 주세요.</noscript>
-  <script>const ART = {"rabbit":"./토끼.png","bear":"./곰돌이.png","cat":"./고양이.png","penguin":"./펭귄.png"};</script>
+  <script>const ART = {"rabbit":"./rabbit.png","bear":"./bear.png","cat":"./cat.png","penguin":"./penguin.png"};</script>
   <script>'use strict';
 const StoryCore = (() => {
   const MAX_PAGES = 100;
@@ -1342,7 +1342,7 @@ const StoryRecorder=(()=>{
       try{const img=new Image();img.src=url;await img.decode();if(videoImageURLs.has(key))URL.revokeObjectURL(videoImageURLs.get(key));videoImageURLs.set(key,url);matched++;}
       catch{URL.revokeObjectURL(url);}
     }
-    toast(matched?`${matched}개의 기본 그림을 영상에 연결했어요.`:'같은 폴더의 고양이.png, 곰돌이.png, 토끼.png, 펭귄.png를 골라 주세요.');previewVideo();
+    toast(matched?`${matched}개의 기본 그림을 영상에 연결했어요.`:'같은 폴더의 cat.png, bear.png, rabbit.png, penguin.png를 골라 주세요.');previewVideo();
   };
   $('video-cancel').onclick=()=>videoJob?.abort(new DOMException('취소했어요.','AbortError'));
   $('video-close').onclick=()=>{if(!videoJob && !ioBusy)$('video-dialog').close();};
