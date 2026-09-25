@@ -95,7 +95,34 @@
 #play-pages-view[data-layout=bottom] .scene-wrap{left:0;top:0;width:100%;height:100%;border-radius:0}
 #play-pages-view[data-layout=bottom] #play-text{left:3.28125%;top:70%;width:93.4375%;height:26.1111%;padding:1.875cqw 2.34375cqw 3.59375cqw;border-radius:2.1875cqw;background:rgba(255,255,255,.94)}
 #play-pages-view[data-layout=bottom] #play-page{top:auto;right:5.46875%;bottom:9.1667%;font-size:1.5625cqw}
-@media(max-width:700px){#play-pages-view .story-card{min-width:640px}}
+/* The reader adapts to the device; the exported movie keeps its 16:9 layout. */
+@media(max-width:1099px){
+  #play-pages-view{overflow-x:visible}
+  #play-pages-view .story-card{width:100%;height:auto;min-width:0;min-height:0;aspect-ratio:auto;overflow:visible;background:transparent}
+  #play-pages-view #play-video-title{position:static;display:none}
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{position:relative;left:auto;top:auto;width:100%;height:auto;aspect-ratio:816/592;border-radius:18px}
+  #play-pages-view[data-layout=bottom] .scene-wrap{aspect-ratio:16/9}
+  #play-pages-view #play-scene{position:absolute;inset:0;width:100%;height:100%}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{position:relative;left:auto;top:auto;width:100%;height:auto;min-height:150px;max-height:none;margin:0;padding:20px 20px 43px;border-radius:18px;background:#fff;font-size:clamp(16px,2.5vw,22px);line-height:1.6;overflow:visible}
+  #play-pages-view #play-text.placeholder{font-size:clamp(16px,2.5vw,22px)}
+  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{position:absolute;top:auto;left:auto;right:19px;bottom:17px;font-size:14px;line-height:1.2}
+}
+@media(min-width:700px) and (max-width:1099px) and (orientation:landscape){
+  #play-pages-view .story-card{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:12px;min-height:380px;padding:18px;border:1px solid var(--line);border-radius:22px;background:#f7f7ef}
+  #play-pages-view #play-video-title{display:block;grid-column:1/-1;max-width:none;font-size:22px;line-height:1.3;white-space:normal}
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{grid-column:1;grid-row:2;height:100%;min-height:310px;aspect-ratio:auto}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{grid-column:2;grid-row:2;height:100%;min-height:310px;padding:22px 20px 44px;font-size:clamp(17px,1.9vw,21px);overflow:auto}
+  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{right:38px;bottom:35px}
+}
+@media(max-width:699px), (min-width:700px) and (max-width:1099px) and (orientation:portrait){
+  #play-pages-view .story-card{display:flex;flex-direction:column;gap:10px}
+}
+@media(max-width:699px){
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{border-radius:16px}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{min-height:132px;padding:16px 17px 41px;border-radius:16px;font-size:clamp(15px,4vw,18px)}
+  #play-pages-view #play-text.placeholder{font-size:clamp(15px,4vw,18px)}
+  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{right:17px;bottom:13px;font-size:13px}
+}
 </style>
 </head>
 <body>
