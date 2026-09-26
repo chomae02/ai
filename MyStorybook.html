@@ -141,6 +141,10 @@
 .record-output{padding:0;border:0;border-radius:0}.record-output>.scene-wrap,.record-output>.story-text{display:none}
 .appearance-panel{margin:0 0 20px;border:1px solid var(--line);border-radius:14px;padding:0 14px 12px;background:#fffdfa}
 .appearance-panel summary{font-size:14px;font-weight:700}.appearance-panel p{font-size:12px;line-height:1.6;color:var(--muted);margin-top:12px}
+.appearance-panel:not([open]){padding-bottom:0}
+.details-hint{font-size:11px;font-weight:400;color:var(--muted);margin-left:8px}
+.box-align{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#video-tts-voice{margin-left:12px;padding:9px;border:1px solid var(--line);border-radius:10px;background:#fff}
 .appearance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:8px}
 .appearance-grid label{display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:700;min-width:0}
 .appearance-grid input,.appearance-grid select{width:100%;min-height:38px;border:1px solid var(--line);border-radius:9px;padding:6px;background:white}
@@ -162,6 +166,17 @@
   .page-sidebar .cover-thumb{flex-direction:row;justify-content:flex-start;min-height:54px}
   .page-sidebar .cover-thumb canvas{width:96px;flex:0 0 96px}
   #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text,#play-pages-view #play-text.placeholder{font-size:calc(clamp(15px,4vw,18px) * var(--page-font-scale,1))}
+}
+/* The recording script stays readable on phones and portrait tablets. */
+@media(max-width:699px), (min-width:700px) and (max-width:1099px) and (orientation:portrait){
+  .record-output[data-scene=page]{display:flex;flex-direction:column;gap:10px;background:transparent;box-shadow:none}
+  .record-output[data-scene=page]>canvas{display:none}
+  .record-output[data-scene=page]>.scene-wrap{display:block;position:relative;width:100%;height:auto;aspect-ratio:var(--reader-image-ratio,816 / 592);border-radius:16px;overflow:hidden}
+  .record-output[data-scene=page] #record-scene{position:absolute;inset:0;width:100%;height:100%;min-height:0;max-height:none;aspect-ratio:auto;border-radius:0;background:#f5f4ec}
+  .record-output[data-scene=page] #record-scene.builtin{background:#f2efdf}
+  .record-output[data-scene=page] #record-scene.builtin img{inset:0;width:100%;height:100%;filter:none}
+  .record-output[data-scene=page] #record-scene.builtin:before,.record-output[data-scene=page] .scene-star,.record-output[data-scene=page] .scene-flower{display:none}
+  .record-output[data-scene=page]>#record-text{display:block;width:100%;height:auto;min-height:132px;max-height:none;margin:0;padding:16px 17px;border:1px solid #deded8;border-radius:16px;background:white;text-align:left;font-size:calc(clamp(15px,4vw,22px) * var(--page-font-scale,1));line-height:1.6;overflow-wrap:anywhere;overflow:visible}
 }
 </style>
 </head>
@@ -193,7 +208,8 @@
             <p class="output-hint">영상과 같은 화면이에요. 그림 부분을 움직여 위치를 맞춰 주세요.</p>
             <div class="image-adjust"><div class="zoom-row"><button id="zoom-out" class="button small" aria-label="그림 축소">−</button><label for="image-zoom" class="sr-only">그림 크기</label><input id="image-zoom" type="range" min="50" max="300" step="5" value="100"><button id="zoom-in" class="button small" aria-label="그림 확대">＋</button><output id="image-zoom-label" for="image-zoom">100%</output></div><div class="image-adjust-bottom"><span>👆 그림을 움직여 맞춰요</span><div><button id="image-contain" class="button small">전체 보기</button><button id="image-fill" class="button small">가득 채우기</button><button id="image-reset" class="button small" aria-label="그림 위치와 크기 초기화">↺</button></div></div></div>
             <div class="friend-row"><span>친구 그림</span><div id="friend-choices" class="friend-choices"></div></div>
-            <details id="appearance-panel" class="appearance-panel" open><summary>글자 · 표지 상자 꾸미기</summary><div class="appearance-grid"><label>글자 영역<select id="style-text-part"><option value="title">본문</option></select></label><label>글자 크기<input id="style-font-size" type="number" min="14" max="96" value="26"></label><label>글자 색<input id="style-font-color" type="color" value="#303330"></label></div><div id="cover-box-controls" class="appearance-grid" hidden><label>상자 가로 위치 (%)<input id="box-x" type="range" min="0" max="100" step="0.5"><output id="box-x-value"></output></label><label>상자 세로 위치 (%)<input id="box-y" type="range" min="0" max="100" step="0.5"><output id="box-y-value"></output></label><label>상자 너비 (%)<input id="box-width" type="range" min="20" max="100" step="0.5"><output id="box-width-value"></output></label><label>상자 높이 (%)<input id="box-height" type="range" min="15" max="100" step="0.5"><output id="box-height-value"></output></label><label>상자 배경색<input id="box-color" type="color"></label><label>배경 불투명도 (%)<input id="box-opacity" type="range" min="0" max="100"><output id="box-opacity-value"></output></label></div><p>선택한 표지·뒷표지·페이지만 바뀌어요. 화면이 작아지면 같은 비율로 표시해요.</p></details>
+            <details id="appearance-panel" class="appearance-panel"><summary>글자 상자 꾸미기 <span class="details-hint">누르면 펼치기 / 접기</span></summary><div class="appearance-grid"><label>글자 영역<select id="style-text-part"><option value="title">본문</option></select></label><label>글자 크기<input id="style-font-size" type="number" min="14" max="96" value="26"></label><label>글자 색<input id="style-font-color" type="color" value="#303330"></label></div><p>선택한 표지·뒷표지·페이지의 글자만 바뀌어요.</p></details>
+            <details id="cover-box-panel" class="appearance-panel" hidden><summary>표지 상자 꾸미기 <span class="details-hint">누르면 펼치기 / 접기</span></summary><div id="cover-box-controls" class="appearance-grid" hidden><label>상자 가로 위치 (%)<input id="box-x" type="range" min="0" max="100" step="0.5"><output id="box-x-value"></output></label><label>상자 세로 위치 (%)<input id="box-y" type="range" min="0" max="100" step="0.5"><output id="box-y-value"></output></label><label>상자 너비 (%)<input id="box-width" type="range" min="20" max="100" step="0.5"><output id="box-width-value"></output></label><label>상자 높이 (%)<input id="box-height" type="range" min="15" max="100" step="0.5"><output id="box-height-value"></output></label><label>상자 배경색<input id="box-color" type="color"></label><label>배경 불투명도 (%)<input id="box-opacity" type="range" min="0" max="100"><output id="box-opacity-value"></output></label></div><div class="box-align"><button id="box-center-x" class="button small" type="button">↔ 가로 가운데</button><button id="box-center-y" class="button small" type="button">↕ 세로 가운데</button></div><p>선택한 표지 또는 뒷표지 상자만 바뀌어요.</p></details>
             <div id="back-cover-writing" class="back-cover-writing" hidden><label>마무리 제목<input id="back-cover-title" maxlength="80" placeholder="함께해 줘서 고마워요"></label><label>마지막 인사<textarea id="back-cover-text" maxlength="300" rows="3" placeholder="우리의 이야기는 내일도 계속돼요."></textarea></label><p>녹음이 있으면 목소리가 끝날 때까지, 없으면 6초 동안 보여 줘요.</p></div>
             <div id="page-writing"><label class="text-label" for="page-text">✏️ 여기에 이야기를 써요 <span id="text-count">0 / 5,000</span></label><textarea id="page-text" maxlength="5000" rows="4" placeholder="옛날 옛날, 작은 숲에…"></textarea></div>
             <div class="editor-bottom"><details id="page-organize"><summary>⚙️ 페이지 정리</summary><div class="organize"><button class="button small" id="move-left">← 앞으로</button><button class="button small" id="move-right">뒤로 →</button><button class="button small danger" id="delete-page">🗑️ 이 장 지우기</button></div></details><button class="button primary" id="go-record">목소리 담으러 가기 <span aria-hidden="true">→</span></button></div>
@@ -204,7 +220,7 @@
         <label class="record-scene-label">목소리를 담을 곳<select id="record-scene-select"></select></label>
         <div class="reader-heading"><div><span class="eyebrow">들어 보고, 내 목소리로!</span><h2>이야기에 목소리를 담아요</h2></div><span id="record-progress" class="pill pink"></span></div>
         <div class="reader-tools"><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
-        <div class="story-card record-output"><canvas id="record-output" width="1280" height="720" aria-label="녹음할 장면"></canvas><div class="scene-wrap"><div id="record-scene" class="scene large"></div><span class="page-ribbon" id="record-page"></span></div><div id="record-text" class="story-text"></div></div>
+        <div id="record-story-card" class="story-card record-output" data-scene="page"><canvas id="record-output" width="1280" height="720" aria-label="녹음할 장면"></canvas><div class="scene-wrap"><div id="record-scene" class="scene large"></div><span class="page-ribbon" id="record-page"></span></div><div id="record-text" class="story-text"></div></div>
         <div class="record-actions"><button id="tts-button" class="big-action listen"><span class="action-icon" aria-hidden="true">🔊</span><span class="action-label">들어 보기</span></button><button id="record-button" class="big-action record"><span class="action-icon" aria-hidden="true">🎙️</span><span class="action-label">녹음하기</span></button><button id="preview-button" class="big-action preview"><span class="action-icon" aria-hidden="true">🎧</span><span class="action-label">내 목소리</span></button></div>
         <div class="record-feedback"><span id="record-status" role="status" aria-live="polite">듣고, 내 목소리로 읽어 보세요.</span><span id="record-clock" hidden>00:00</span><button class="link-button" id="undo-recording" hidden>↶ 이전 목소리</button></div>
         <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="record-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
@@ -246,7 +262,8 @@
     <div id="video-local-images" class="video-local-images" hidden><p id="video-local-note"></p><button id="video-link-images" class="button small">기본 그림 PNG 연결</button></div>
     <div class="video-stage"><canvas id="video-canvas" width="1280" height="720" role="img" aria-label="저장할 동화 영상 미리보기"></canvas><video id="video-result" controls playsinline hidden aria-label="완성된 동화 영상"></video></div>
     <div id="video-caption-controls" class="video-caption-controls" hidden><button id="video-caption-prev" class="button small">← 이전 글</button><span id="video-caption-label"></span><button id="video-caption-next" class="button small">다음 글 →</button></div>
-    <p class="video-note" id="video-note">표지는 4초, 녹음이 있는 장은 내 목소리와 함께 이어져요. 녹음이 없는 장은 글 길이에 맞춰 조용히 보여 줘요. TTS 읽기 음성은 포함되지 않아요.</p>
+    <div id="video-tts-settings" class="video-music" hidden><label for="video-tts-voice">영상용 TTS 목소리</label><select id="video-tts-voice"><option value="F1">여자 목소리</option><option value="M1">남자 목소리</option></select><p class="video-note">녹음 없는 본문을 한국어 TTS로 읽어 영상에 담아요. 기기 기본 읽기와는 다른 목소리예요. 처음에는 음성 모델 약 400MB를 내려받으며, 이후 기기에서 음성을 만들어요. 브라우저 저장 공간이 허용하면 모델을 보관해 다시 사용해요. 최초 사용은 Wi-Fi와 PC를 권장해요.</p></div>
+    <p class="video-note" id="video-note">녹음한 장은 내 목소리로, 녹음이 없는 본문은 TTS로 읽어요. 표지와 뒷표지는 녹음 없이도 만들 수 있어요.</p>
     <p class="video-note">1280 × 720 가로 영상 · 긴 글은 말풍선 안에서 나누어 보여 줘요. 만드는 동안 이 창을 열어 두세요. 영상 길이만큼 시간이 걸려요.</p>
     <progress id="video-progress" value="0" max="1" hidden aria-label="영상 생성 진행률"></progress>
     <p id="video-status" role="status" aria-live="polite">배치를 고르고 미리보기를 확인해 주세요.</p>
@@ -444,7 +461,7 @@ const StoryVideo = (() => {
   }
   function drawCover(ctx,book,scene,img) {
     const back=scene===-2,item=back?book.backCover:book.cover,a=StoryCore.appearance(back?'back':'cover',item.appearance),b=a.box;
-    picture(ctx,img,item,[0,0,WIDTH,HEIGHT]);
+    picture(ctx,img,item,[0,0,WIDTH,HEIGHT],26);
     const rect=[b.x*12.8,b.y*7.2,b.width*12.8,b.height*7.2];
     const red=parseInt(b.color.slice(1,3),16),green=parseInt(b.color.slice(3,5),16),blue=parseInt(b.color.slice(5,7),16);
     rounded(ctx,rect,Math.min(36,rect[3]/6),`rgba(${red},${green},${blue},${b.opacity})`);
@@ -618,6 +635,694 @@ const SeekableWebM=(()=>{
     return new Blob([output],{type:'video/webm'});
   }
   return {repair};
+})();
+</script>
+  <script>'use strict';
+// Browser speechSynthesis has no audio output stream. Export uses locally generated WAV.
+const StoryTTS=(()=>{
+  function workerMain(){
+    /* MIT License
+
+Copyright (c) 2025 Supertone Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
+
+// Available languages for multilingual TTS
+const AVAILABLE_LANGS = ['en', 'ko', 'ja', 'ar', 'bg', 'cs', 'da', 'de', 'el', 'es', 'et', 'fi', 'fr', 'hi', 'hr', 'hu', 'id', 'it', 'lt', 'lv', 'nl', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'sv', 'tr', 'uk', 'vi', 'na'];
+
+function isValidLang(lang) {
+    return AVAILABLE_LANGS.includes(lang);
+}
+
+/**
+ * Unicode Text Processor
+ */
+class UnicodeProcessor {
+    constructor(indexer) {
+        this.indexer = indexer;
+    }
+
+    call(textList, langList) {
+        const processedTexts = textList.map((text, i) => this.preprocessText(text, langList[i]));
+        
+        const textIdsLengths = processedTexts.map(text => text.length);
+        const maxLen = Math.max(...textIdsLengths);
+        
+        const textIds = processedTexts.map(text => {
+            const row = new Array(maxLen).fill(0);
+            for (let j = 0; j < text.length; j++) {
+                const codePoint = text.codePointAt(j);
+                row[j] = (codePoint < this.indexer.length) ? this.indexer[codePoint] : -1;
+            }
+            return row;
+        });
+        
+        const textMask = this.getTextMask(textIdsLengths);
+        return { textIds, textMask };
+    }
+
+    preprocessText(text, lang) {
+        // TODO: Need advanced normalizer for better performance
+        text = text.normalize('NFKD');
+
+        // Remove emojis (wide Unicode range)
+        const emojiPattern = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}]+/gu;
+        text = text.replace(emojiPattern, '');
+
+        // Replace various dashes and symbols
+        const replacements = {
+            '–': '-',
+            '‑': '-',
+            '—': '-',
+            '_': ' ',
+            '\u201C': '"',  // left double quote "
+            '\u201D': '"',  // right double quote "
+            '\u2018': "'",  // left single quote '
+            '\u2019': "'",  // right single quote '
+            '´': "'",
+            '`': "'",
+            '[': ' ',
+            ']': ' ',
+            '|': ' ',
+            '/': ' ',
+            '#': ' ',
+            '→': ' ',
+            '←': ' ',
+        };
+        for (const [k, v] of Object.entries(replacements)) {
+            text = text.replaceAll(k, v);
+        }
+
+        // Remove special symbols
+        text = text.replace(/[♥☆♡©\\]/g, '');
+
+        // Replace known expressions
+        const exprReplacements = {
+            '@': ' at ',
+            'e.g.,': 'for example, ',
+            'i.e.,': 'that is, ',
+        };
+        for (const [k, v] of Object.entries(exprReplacements)) {
+            text = text.replaceAll(k, v);
+        }
+
+        // Fix spacing around punctuation
+        text = text.replace(/ ,/g, ',');
+        text = text.replace(/ \./g, '.');
+        text = text.replace(/ !/g, '!');
+        text = text.replace(/ \?/g, '?');
+        text = text.replace(/ ;/g, ';');
+        text = text.replace(/ :/g, ':');
+        text = text.replace(/ '/g, "'");
+
+        // Remove duplicate quotes
+        while (text.includes('""')) {
+            text = text.replace('""', '"');
+        }
+        while (text.includes("''")) {
+            text = text.replace("''", "'");
+        }
+        while (text.includes('``')) {
+            text = text.replace('``', '`');
+        }
+
+        // Remove extra spaces
+        text = text.replace(/\s+/g, ' ').trim();
+
+        // If text doesn't end with punctuation, quotes, or closing brackets, add a period
+        if (!/[.!?;:,'\"')\]}…。」』】〉》›»]$/.test(text)) {
+            text += '.';
+        }
+
+        // Validate language
+        if (!isValidLang(lang)) {
+            throw new Error(`Invalid language: ${lang}. Available: ${AVAILABLE_LANGS.join(', ')}`);
+        }
+
+        // Wrap text with language tags
+        text = `<${lang}>${text}</${lang}>`;
+
+        return text;
+    }
+
+    getTextMask(textIdsLengths) {
+        const maxLen = Math.max(...textIdsLengths);
+        return this.lengthToMask(textIdsLengths, maxLen);
+    }
+
+    lengthToMask(lengths, maxLen = null) {
+        const actualMaxLen = maxLen || Math.max(...lengths);
+        return lengths.map(len => {
+            const row = new Array(actualMaxLen).fill(0.0);
+            for (let j = 0; j < Math.min(len, actualMaxLen); j++) {
+                row[j] = 1.0;
+            }
+            return [row];
+        });
+    }
+}
+
+/**
+ * Style class to hold TTL and DP tensors
+ */
+class Style {
+    constructor(ttlTensor, dpTensor) {
+        this.ttl = ttlTensor;
+        this.dp = dpTensor;
+    }
+}
+
+/**
+ * Text-to-Speech class
+ */
+class TextToSpeech {
+    constructor(cfgs, textProcessor, dpOrt, textEncOrt, vectorEstOrt, vocoderOrt) {
+        this.cfgs = cfgs;
+        this.textProcessor = textProcessor;
+        this.dpOrt = dpOrt;
+        this.textEncOrt = textEncOrt;
+        this.vectorEstOrt = vectorEstOrt;
+        this.vocoderOrt = vocoderOrt;
+        this.sampleRate = cfgs.ae.sample_rate;
+    }
+
+    async _infer(textList, langList, style, totalStep, speed = 1.05, progressCallback = null) {
+        const bsz = textList.length;
+        
+        // Process text
+        const { textIds, textMask } = this.textProcessor.call(textList, langList);
+        
+        const textIdsFlat = new BigInt64Array(textIds.flat().map(x => BigInt(x)));
+        const textIdsShape = [bsz, textIds[0].length];
+        const textIdsTensor = new ort.Tensor('int64', textIdsFlat, textIdsShape);
+        
+        const textMaskFlat = new Float32Array(textMask.flat(2));
+        const textMaskShape = [bsz, 1, textMask[0][0].length];
+        const textMaskTensor = new ort.Tensor('float32', textMaskFlat, textMaskShape);
+        
+        // Predict duration
+        const dpOutputs = await this.dpOrt.run({
+            text_ids: textIdsTensor,
+            style_dp: style.dp,
+            text_mask: textMaskTensor
+        });
+        const duration = Array.from(dpOutputs.duration.data);
+        
+        // Apply speed factor to duration
+        for (let i = 0; i < duration.length; i++) {
+            duration[i] /= speed;
+        }
+        
+        // Encode text
+        const textEncOutputs = await this.textEncOrt.run({
+            text_ids: textIdsTensor,
+            style_ttl: style.ttl,
+            text_mask: textMaskTensor
+        });
+        const textEmb = textEncOutputs.text_emb;
+        
+        // Sample noisy latent
+        let { xt, latentMask } = this.sampleNoisyLatent(
+            duration,
+            this.sampleRate,
+            this.cfgs.ae.base_chunk_size,
+            this.cfgs.ttl.chunk_compress_factor,
+            this.cfgs.ttl.latent_dim
+        );
+        
+        const latentMaskFlat = new Float32Array(latentMask.flat(2));
+        const latentMaskShape = [bsz, 1, latentMask[0][0].length];
+        const latentMaskTensor = new ort.Tensor('float32', latentMaskFlat, latentMaskShape);
+        
+        // Prepare constant arrays
+        const totalStepArray = new Float32Array(bsz).fill(totalStep);
+        const totalStepTensor = new ort.Tensor('float32', totalStepArray, [bsz]);
+        
+        // Denoising loop
+        for (let step = 0; step < totalStep; step++) {
+            if (progressCallback) {
+                progressCallback(step + 1, totalStep);
+            }
+            
+            const currentStepArray = new Float32Array(bsz).fill(step);
+            const currentStepTensor = new ort.Tensor('float32', currentStepArray, [bsz]);
+            
+            const xtFlat = new Float32Array(xt.flat(2));
+            const xtShape = [bsz, xt[0].length, xt[0][0].length];
+            const xtTensor = new ort.Tensor('float32', xtFlat, xtShape);
+            
+            const vectorEstOutputs = await this.vectorEstOrt.run({
+                noisy_latent: xtTensor,
+                text_emb: textEmb,
+                style_ttl: style.ttl,
+                latent_mask: latentMaskTensor,
+                text_mask: textMaskTensor,
+                current_step: currentStepTensor,
+                total_step: totalStepTensor
+            });
+            
+            const denoised = Array.from(vectorEstOutputs.denoised_latent.data);
+            
+            // Reshape to 3D
+            const latentDim = xt[0].length;
+            const latentLen = xt[0][0].length;
+            xt = [];
+            let idx = 0;
+            for (let b = 0; b < bsz; b++) {
+                const batch = [];
+                for (let d = 0; d < latentDim; d++) {
+                    const row = [];
+                    for (let t = 0; t < latentLen; t++) {
+                        row.push(denoised[idx++]);
+                    }
+                    batch.push(row);
+                }
+                xt.push(batch);
+            }
+        }
+        
+        // Generate waveform
+        const finalXtFlat = new Float32Array(xt.flat(2));
+        const finalXtShape = [bsz, xt[0].length, xt[0][0].length];
+        const finalXtTensor = new ort.Tensor('float32', finalXtFlat, finalXtShape);
+        
+        const vocoderOutputs = await this.vocoderOrt.run({
+            latent: finalXtTensor
+        });
+        
+        const wav = Array.from(vocoderOutputs.wav_tts.data);
+        
+        return { wav, duration };
+    }
+
+    async call(text, lang, style, totalStep, speed = 1.05, silenceDuration = 0.3, progressCallback = null) {
+        if (style.ttl.dims[0] !== 1) {
+            throw new Error('Single speaker text to speech only supports single style');
+        }
+        const maxLen = (lang === 'ko' || lang === 'ja') ? 120 : 300;
+        const textList = chunkText(text, maxLen);
+        const langList = new Array(textList.length).fill(lang);
+        let wavCat = [];
+        let durCat = 0;
+        
+        for (let i = 0; i < textList.length; i++) {
+            const { wav, duration } = await this._infer([textList[i]], [langList[i]], style, totalStep, speed, progressCallback);
+            
+            if (wavCat.length === 0) {
+                wavCat = wav;
+                durCat = duration[0];
+            } else {
+                const silenceLen = Math.floor(silenceDuration * this.sampleRate);
+                const silence = new Array(silenceLen).fill(0);
+                wavCat = [...wavCat, ...silence, ...wav];
+                durCat += duration[0] + silenceDuration;
+            }
+        }
+        
+        return { wav: wavCat, duration: [durCat] };
+    }
+
+    async batch(textList, langList, style, totalStep, speed = 1.05, progressCallback = null) {
+        return await this._infer(textList, langList, style, totalStep, speed, progressCallback);
+    }
+
+    sampleNoisyLatent(duration, sampleRate, baseChunkSize, chunkCompress, latentDim) {
+        const bsz = duration.length;
+        const maxDur = Math.max(...duration);
+        
+        const wavLenMax = Math.floor(maxDur * sampleRate);
+        const wavLengths = duration.map(d => Math.floor(d * sampleRate));
+        
+        const chunkSize = baseChunkSize * chunkCompress;
+        const latentLen = Math.floor((wavLenMax + chunkSize - 1) / chunkSize);
+        const latentDimVal = latentDim * chunkCompress;
+        
+        const xt = [];
+        for (let b = 0; b < bsz; b++) {
+            const batch = [];
+            for (let d = 0; d < latentDimVal; d++) {
+                const row = [];
+                for (let t = 0; t < latentLen; t++) {
+                    // Box-Muller transform
+                    const u1 = Math.max(0.0001, Math.random());
+                    const u2 = Math.random();
+                    const val = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+                    row.push(val);
+                }
+                batch.push(row);
+            }
+            xt.push(batch);
+        }
+        
+        const latentLengths = wavLengths.map(len => Math.floor((len + chunkSize - 1) / chunkSize));
+        const latentMask = this.lengthToMask(latentLengths, latentLen);
+        
+        // Apply mask
+        for (let b = 0; b < bsz; b++) {
+            for (let d = 0; d < latentDimVal; d++) {
+                for (let t = 0; t < latentLen; t++) {
+                    xt[b][d][t] *= latentMask[b][0][t];
+                }
+            }
+        }
+        
+        return { xt, latentMask };
+    }
+
+    lengthToMask(lengths, maxLen = null) {
+        const actualMaxLen = maxLen || Math.max(...lengths);
+        return lengths.map(len => {
+            const row = new Array(actualMaxLen).fill(0.0);
+            for (let j = 0; j < Math.min(len, actualMaxLen); j++) {
+                row[j] = 1.0;
+            }
+            return [row];
+        });
+    }
+}
+
+/**
+ * Load voice style from JSON files
+ */
+async function loadVoiceStyle(voiceStylePaths, verbose = false) {
+    const bsz = voiceStylePaths.length;
+    
+    // Read first file to get dimensions
+    const firstResponse = await fetch(voiceStylePaths[0]);
+    const firstStyle = await firstResponse.json();
+    
+    const ttlDims = firstStyle.style_ttl.dims;
+    const dpDims = firstStyle.style_dp.dims;
+    
+    const ttlDim1 = ttlDims[1];
+    const ttlDim2 = ttlDims[2];
+    const dpDim1 = dpDims[1];
+    const dpDim2 = dpDims[2];
+    
+    // Pre-allocate arrays with full batch size
+    const ttlSize = bsz * ttlDim1 * ttlDim2;
+    const dpSize = bsz * dpDim1 * dpDim2;
+    const ttlFlat = new Float32Array(ttlSize);
+    const dpFlat = new Float32Array(dpSize);
+    
+    // Fill in the data
+    for (let i = 0; i < bsz; i++) {
+        const response = await fetch(voiceStylePaths[i]);
+        const voiceStyle = await response.json();
+        
+        // Flatten TTL data
+        const ttlData = voiceStyle.style_ttl.data.flat(Infinity);
+        const ttlOffset = i * ttlDim1 * ttlDim2;
+        ttlFlat.set(ttlData, ttlOffset);
+        
+        // Flatten DP data
+        const dpData = voiceStyle.style_dp.data.flat(Infinity);
+        const dpOffset = i * dpDim1 * dpDim2;
+        dpFlat.set(dpData, dpOffset);
+    }
+    
+    const ttlShape = [bsz, ttlDim1, ttlDim2];
+    const dpShape = [bsz, dpDim1, dpDim2];
+    
+    const ttlTensor = new ort.Tensor('float32', ttlFlat, ttlShape);
+    const dpTensor = new ort.Tensor('float32', dpFlat, dpShape);
+    
+    if (verbose) {
+        console.log(`Loaded ${bsz} voice styles`);
+    }
+    
+    return new Style(ttlTensor, dpTensor);
+}
+
+/**
+ * Load configuration from JSON
+ */
+async function loadCfgs(onnxDir) {
+    const response = await fetch(`${onnxDir}/tts.json`);
+    const cfgs = await response.json();
+    return cfgs;
+}
+
+/**
+ * Load text processor
+ */
+async function loadTextProcessor(onnxDir) {
+    const response = await fetch(`${onnxDir}/unicode_indexer.json`);
+    const indexer = await response.json();
+    return new UnicodeProcessor(indexer);
+}
+
+/**
+ * Load ONNX model
+ */
+async function loadOnnx(onnxPath, options) {
+    const session = await ort.InferenceSession.create(onnxPath, options);
+    return session;
+}
+
+/**
+ * Load all TTS components
+ */
+async function loadTextToSpeech(onnxDir, sessionOptions = {}, progressCallback = null) {
+    console.log('Using WebAssembly/WebGPU for inference');
+    
+    const cfgs = await loadCfgs(onnxDir);
+    
+    const dpPath = `${onnxDir}/duration_predictor.onnx`;
+    const textEncPath = `${onnxDir}/text_encoder.onnx`;
+    const vectorEstPath = `${onnxDir}/vector_estimator.onnx`;
+    const vocoderPath = `${onnxDir}/vocoder.onnx`;
+    
+    const modelPaths = [
+        { name: 'Duration Predictor', path: dpPath },
+        { name: 'Text Encoder', path: textEncPath },
+        { name: 'Vector Estimator', path: vectorEstPath },
+        { name: 'Vocoder', path: vocoderPath }
+    ];
+    
+    const sessions = [];
+    for (let i = 0; i < modelPaths.length; i++) {
+        if (progressCallback) {
+            progressCallback(modelPaths[i].name, i + 1, modelPaths.length);
+        }
+        const session = await loadOnnx(modelPaths[i].path, sessionOptions);
+        sessions.push(session);
+    }
+    
+    const [dpOrt, textEncOrt, vectorEstOrt, vocoderOrt] = sessions;
+    
+    const textProcessor = await loadTextProcessor(onnxDir);
+    const textToSpeech = new TextToSpeech(cfgs, textProcessor, dpOrt, textEncOrt, vectorEstOrt, vocoderOrt);
+    
+    return { textToSpeech, cfgs };
+}
+
+/**
+ * Chunk text into manageable segments
+ */
+function chunkText(text, maxLen = 300) {
+    if (typeof text !== 'string') {
+        throw new Error(`chunkText expects a string, got ${typeof text}`);
+    }
+    
+    // Split by paragraph (two or more newlines)
+    const paragraphs = text.trim().split(/\n\s*\n+/).filter(p => p.trim());
+    
+    const chunks = [];
+    
+    for (let paragraph of paragraphs) {
+        paragraph = paragraph.trim();
+        if (!paragraph) continue;
+        
+        // Split by sentence boundaries (period, question mark, exclamation mark followed by space)
+        // But exclude common abbreviations like Mr., Mrs., Dr., etc. and single capital letters like F.
+        const sentences = paragraph.split(/(?<!Mr\.|Mrs\.|Ms\.|Dr\.|Prof\.|Sr\.|Jr\.|Ph\.D\.|etc\.|e\.g\.|i\.e\.|vs\.|Inc\.|Ltd\.|Co\.|Corp\.|St\.|Ave\.|Blvd\.)(?<!\b[A-Z]\.)(?<=[.!?])\s+/);
+        
+        let currentChunk = "";
+        
+        for (let sentence of sentences) {
+            if (currentChunk.length + sentence.length + 1 <= maxLen) {
+                currentChunk += (currentChunk ? " " : "") + sentence;
+            } else {
+                if (currentChunk) {
+                    chunks.push(currentChunk.trim());
+                }
+                currentChunk = sentence;
+            }
+        }
+        
+        if (currentChunk) {
+            chunks.push(currentChunk.trim());
+        }
+    }
+    
+    return chunks;
+}
+
+/**
+ * Write WAV file to ArrayBuffer
+ */
+function writeWavFile(audioData, sampleRate) {
+    const numChannels = 1;
+    const bitsPerSample = 16;
+    const byteRate = sampleRate * numChannels * bitsPerSample / 8;
+    const blockAlign = numChannels * bitsPerSample / 8;
+    const dataSize = audioData.length * 2;
+    
+    // Create ArrayBuffer
+    const buffer = new ArrayBuffer(44 + dataSize);
+    const view = new DataView(buffer);
+    
+    // Write WAV header
+    const writeString = (offset, string) => {
+        for (let i = 0; i < string.length; i++) {
+            view.setUint8(offset + i, string.charCodeAt(i));
+        }
+    };
+    
+    writeString(0, 'RIFF');
+    view.setUint32(4, 36 + dataSize, true);
+    writeString(8, 'WAVE');
+    writeString(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true); // PCM
+    view.setUint16(22, numChannels, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, byteRate, true);
+    view.setUint16(32, blockAlign, true);
+    view.setUint16(34, bitsPerSample, true);
+    writeString(36, 'data');
+    view.setUint32(40, dataSize, true);
+    
+    // Write audio data
+    const int16Data = new Int16Array(audioData.length);
+    for (let i = 0; i < audioData.length; i++) {
+        const clamped = Math.max(-1.0, Math.min(1.0, audioData[i]));
+        int16Data[i] = Math.floor(clamped * 32767);
+    }
+    
+    const dataView = new Uint8Array(buffer, 44);
+    dataView.set(new Uint8Array(int16Data.buffer));
+    
+    return buffer;
+}
+
+    const runtime='https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/';
+    const model='https://huggingface.co/supertone-oss-archive/supertonic-3/resolve/aafc6e32416a594460b32413efc49d7fe4ce6d46/';
+    let engine,style,cache;
+    const report=label=>self.postMessage({type:'progress',label});
+    async function asset(path,label){
+      const url=model+path;
+      let cached;try{cached=await cache?.match(url);}catch{}
+      if(cached){report(`${label} · 보관된 모델 여는 중…`);return cached.arrayBuffer();}
+      const response=await fetch(url,{signal:AbortSignal.timeout(600000)});
+      if(!response.ok)throw new Error(`${label} 다운로드 실패 (${response.status})`);
+      const reader=response.body.getReader(),chunks=[];let size=0,last=0;
+      while(true){
+        const {done,value}=await reader.read();if(done)break;chunks.push(value);size+=value.length;
+        if(Date.now()-last>400){last=Date.now();report(`${label} 내려받는 중 · ${(size/1000000).toFixed(1)} MB`);}
+      }
+      const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}chunks.length=0;
+      try{await cache?.put(url,new Response(bytes,{headers:{'Content-Type':'application/octet-stream'}}));}catch{/* Cache quota/private mode must not prevent speech generation. */}
+      return bytes.buffer;
+    }
+    const json=async(path,label)=>JSON.parse(new TextDecoder().decode(await asset(path,label)));
+    async function initialize(voice){
+      report('영상용 TTS 준비 중 · 처음에는 약 400MB를 내려받아요…');
+      importScripts(runtime+'ort.wasm.min.js');
+      ort.env.wasm.wasmPaths=runtime;ort.env.wasm.numThreads=1;ort.env.logLevel='error';
+      try{cache=await caches.open('storybook-supertonic-3-aafc6e3');}catch{}
+      const cfg=await json('onnx/tts.json','TTS 설정'),indexer=await json('onnx/unicode_indexer.json','TTS 글자 사전');
+      const sessions=[];
+      for(const [file,label] of [['duration_predictor','음성 길이 모델 (1/4)'],['text_encoder','글 읽기 모델 (2/4)'],['vector_estimator','목소리 모델 (3/4)'],['vocoder','소리 모델 (4/4)']]){
+        const bytes=await asset(`onnx/${file}.onnx`,label);report(`${label} 준비 중…`);
+        sessions.push(await ort.InferenceSession.create(bytes,{executionProviders:['wasm'],graphOptimizationLevel:'all'}));
+      }
+      engine=new TextToSpeech(cfg,new UnicodeProcessor(indexer),...sessions);
+      const data=await json(`voice_styles/${voice==='M1'?'M1':'F1'}.json`,'TTS 목소리');
+      style=new Style(new ort.Tensor('float32',Float32Array.from(data.style_ttl.data.flat(Infinity)),data.style_ttl.dims),new ort.Tensor('float32',Float32Array.from(data.style_dp.data.flat(Infinity)),data.style_dp.dims));
+    }
+    // Hard limits also handle long Korean paragraphs with no spaces or punctuation.
+    function segments(text){
+      const result=[];let rest=text.trim();
+      while(rest){
+        let end=Math.min(rest.length,110);
+        if(end<rest.length){const head=rest.slice(0,end);const sentence=[...head.matchAll(/[.!?。！？]\s|\n/g)].at(-1);const space=head.lastIndexOf(' ');if(sentence && sentence.index>30)end=sentence.index+sentence[0].length;else if(space>30)end=space+1;}
+        result.push(rest.slice(0,end).trim());rest=rest.slice(end).trim();
+      }
+      return result.filter(Boolean);
+    }
+    self.onmessage=async({data})=>{
+      try{
+        await initialize(data.voice);
+        for(let p=0;p<data.pages.length;p++){
+          const page=data.pages[p],chunks=segments(page.text),waves=[];let length=0;
+          for(let i=0;i<chunks.length;i++){
+            report(`${page.index+1}번째 장 TTS 만드는 중 · 문장 ${i+1}/${chunks.length}`);
+            const {wav,duration}=await engine.call(chunks[i],'ko',style,5,data.rate);
+            if(!Number.isFinite(duration[0]) || duration[0]<=0 || duration[0]>120)throw new Error('TTS 음성 길이가 올바르지 않아요. 본문을 짧게 나누어 주세요.');
+            const wave=Float32Array.from(wav.slice(0,Math.ceil(duration[0]*engine.sampleRate)));
+            waves.push(wave);length+=wave.length;
+            if(i<chunks.length-1){const silence=new Float32Array(Math.round(engine.sampleRate*.25));waves.push(silence);length+=silence.length;}
+          }
+          const joined=new Float32Array(length);let offset=0;for(const wave of waves){joined.set(wave,offset);offset+=wave.length;}
+          const wav=writeWavFile(joined,engine.sampleRate);
+          self.postMessage({type:'audio',index:page.index,wav,duration:length/engine.sampleRate,completed:p+1,total:data.pages.length},[wav]);
+        }
+        self.postMessage({type:'done'});
+      }catch(error){self.postMessage({type:'error',message:error.message || String(error)});}
+    };
+  }
+  async function prepare(book,{signal,onProgress=()=>{},voice='F1',rate=.9}={}){
+    const pages=book.pages.map((page,index)=>({page,index})).filter(({page})=>!page.audio && page.text.trim()).map(({page,index})=>({index,text:page.text}));
+    if(signal?.aborted)throw signal.reason;
+    if(!pages.length)return {book,dispose(){}};
+    if(typeof Worker==='undefined' || typeof WebAssembly==='undefined')throw new Error('영상용 TTS는 WebAssembly를 지원하는 Chrome 또는 Edge에서 이용해 주세요.');
+    const copy={...book,pages:book.pages.map(page=>({...page}))},urls=[];
+    const dispose=()=>{urls.forEach(url=>URL.revokeObjectURL(url));urls.length=0;};
+    const url=URL.createObjectURL(new Blob([`(${workerMain.toString()})();`],{type:'text/javascript'}));
+    let worker;
+    try{
+      worker=new Worker(url);URL.revokeObjectURL(url);
+      await new Promise((resolve,reject)=>{
+        let done=false;
+        const finish=error=>{if(done)return;done=true;signal?.removeEventListener('abort',cancel);error?reject(error):resolve();};
+        const cancel=()=>finish(signal.reason || new DOMException('취소했어요.','AbortError'));
+        signal?.addEventListener('abort',cancel,{once:true});
+        worker.onerror=event=>{event.preventDefault();finish(new Error('영상용 TTS를 시작하지 못했어요. 인터넷 연결을 확인하고 최신 Chrome 또는 Edge에서 다시 시도해 주세요.'));};
+        worker.onmessage=({data})=>{
+          if(done)return;
+          if(data.type==='progress')onProgress({value:0,label:data.label});
+          else if(data.type==='audio'){
+            const audioURL=URL.createObjectURL(new Blob([data.wav],{type:'audio/wav'}));urls.push(audioURL);
+            copy.pages[data.index].audio={data:audioURL,duration:data.duration};
+            onProgress({value:data.completed/data.total,label:`본문 ${data.completed}/${data.total}장 TTS 준비 완료`});
+          }else if(data.type==='done')finish();
+          else if(data.type==='error')finish(new Error(`영상용 TTS를 만들지 못했어요. ${data.message} 인터넷 연결과 기기의 여유 메모리를 확인해 주세요.`));
+        };
+        worker.postMessage({pages,voice,rate:Math.max(.5,Math.min(1.3,rate))});
+      });
+      return {book:copy,dispose};
+    }catch(error){dispose();throw error;}
+    finally{worker?.terminate();URL.revokeObjectURL(url);}
+  }
+  return {prepare};
 })();
 </script>
   <script>'use strict';
@@ -813,6 +1518,10 @@ const StoryRecorder=(()=>{
     $('play-pages-view').style.setProperty('--reader-image-height-factor',String(g[3]/g[2]));
     const a=StoryCore.appearance('page',current().appearance);
     $('play-text').style.setProperty('--page-font-scale',String(a.fontSize/26));$('play-text').style.color=a.color;
+    const recordCard=$('record-story-card'),ra=StoryCore.appearance(sceneKind(recordScene),recordItem().appearance);
+    recordCard.dataset.scene=recordScene<0?'cover':'page';
+    recordCard.style.setProperty('--reader-image-ratio',`${g[2]} / ${g[3]}`);
+    $('record-text').style.setProperty('--page-font-scale',String(ra.fontSize/26));$('record-text').style.color=ra.color;
     for(const [id,target] of [['edit-output',scene],['record-output',recordScene],['play-cover-output',-1],['play-back-output',-2],['cover-thumb-canvas',-1],['back-thumb-canvas',-2]])paintOutput($(id),target);
     thumbnailCanvases.forEach((canvas,target)=>{if(allThumbnails || target===index)paintOutput(canvas,target);});
   }
@@ -829,6 +1538,7 @@ const StoryRecorder=(()=>{
     const [size,color]=styleKeys();$('style-font-size').value=a[size];$('style-font-color').value=a[color];
     $('style-font-size').min=size==='creditSize'?12:14;$('style-font-size').max=size==='fontSize'?96:size==='creditSize'?64:72;
     $('cover-box-controls').hidden=kind==='page';
+    $('cover-box-panel').hidden=kind==='page';
     for(const key of ['x','y','width','height','opacity']){const value=key==='opacity'?a.box.opacity*100:a.box[key];$('box-'+key).value=value;$('box-'+key+'-value').textContent=Number(value.toFixed(1))+'%';}
     $('box-x').max=100-a.box.width;$('box-y').max=100-a.box.height;$('box-color').value=a.box.color;
   }
@@ -996,6 +1706,15 @@ const StoryRecorder=(()=>{
 
   function renderDots(target) {
     target.replaceChildren();
+    const recording=target.id==='record-dots';
+    function coverDot(scene,text,label) {
+      const button=document.createElement('button'),item=sceneItem(scene);
+      button.textContent=text;button.className=item.audio?'recorded':'';
+      button.setAttribute('aria-label',`${label}${item.audio?', 녹음 완료':''}`);
+      button.setAttribute('aria-current',String(recordScene===scene));button.disabled=locked();
+      button.onclick=()=>selectRecordScene(scene);target.append(button);
+    }
+    if(recording)coverDot(-1,'P','표지');
     const start = Math.max(0,Math.min(index - 2,book.pages.length - 5));
     if (start > 0) { const range = document.createElement('span'); range.textContent = '…'; range.className = 'dots-range'; target.append(range); }
     for (let i = start; i < Math.min(start+5,book.pages.length); i++) {
@@ -1006,6 +1725,7 @@ const StoryRecorder=(()=>{
       target.append(button);
     }
     if (start+5 < book.pages.length) { const range = document.createElement('span'); range.textContent = '…'; range.className = 'dots-range'; target.append(range); }
+    if(recording)coverDot(-2,'L','뒷표지');
   }
 
   function render() {
@@ -1063,6 +1783,7 @@ const StoryRecorder=(()=>{
   function label(id,text) { $(id).querySelector('.action-label').textContent = text; }
   function updateControls() {
     const busy = locked();
+    $('box-center-x').disabled=busy;$('box-center-y').disabled=busy;
     for(const id of ['editor-layout','record-scene-select','style-text-part','style-font-size','style-font-color','box-x','box-y','box-width','box-height','box-color','box-opacity','back-audio-button'])$(id).disabled=busy;
     for(const id of ['edit-back-cover','back-cover-enabled','back-cover-title','back-cover-text','show-back-cover','back-restart'])$(id).disabled=busy;
     for (const element of all('[data-tab],[data-action],.page-thumb,.page-dots button')) element.disabled = busy;
@@ -1349,12 +2070,6 @@ const StoryRecorder=(()=>{
   }
   async function startStory() {
     if (locked()) return;
-    const missing = StoryCore.missing(book,index);
-    if (missing.length) {
-      const answer = await ask('아직 목소리를 기다려요 🎙️',`${missing.map(i => i+1).slice(0,12).join(', ')}번째 장${missing.length>12 ? ' 외' : ''}에 녹음이 없어요.\n목소리를 담으면 끝까지 이어서 들을 수 있어요.`,[{label:'나중에',value:false},{label:'녹음하러 가기',value:true,primary:true}]);
-      if (answer) { index = missing[0];playCover=false;playBack=false;switchTab('record'); }
-      return;
-    }
     const fromCover=playCover && book.cover.enabled;
     stopMedia(); completed = false;playBack=false; $('finish-card').hidden = true;
     audioMode = 'book'; const token = playbackToken;
@@ -1374,12 +2089,40 @@ const StoryRecorder=(()=>{
     render();
     const item=sceneItem(scene);
     const next=()=>{if(token!==playbackToken || audioMode!=='book')return;if(scene===-1)playStoryScene(token,index);else if(scene===-2)finishStory(token);else if(index+1<book.pages.length)playStoryScene(token,index+1);else if(book.backCover.enabled)playStoryScene(token,-2);else finishStory(token);};
-    if(!item.audio){next();return;}
+    if(!item.audio){
+      if(scene>=0 && item.text.trim())playStorySpeech(token,item.text,next);
+      else next();
+      return;
+    }
     player.src = item.audio.data;
     player.onerror = () => audioError(null,'book',token);
     player.onended=next;
     $('play-status').textContent = `🎧 ${scene===-1?'표지':scene===-2?'뒷표지':`${index+1}번째 이야기`}를 듣고 있어요. 끝나면 다음 장으로 넘어가요.`;
     player.play().catch(error => audioError(error,'book',token));
+  }
+  function playStorySpeech(token,text,next) {
+    const chunks=StoryCore.splitText(text),speechId=++speechToken;
+    const selected=filteredVoices().find(v=>voiceKey(v)===$('voice').value);
+    const valid=()=>token===playbackToken && speechId===speechToken && audioMode==='book';
+    function fail(){
+      if(!valid())return;stopMedia();
+      $('play-status').textContent='TTS 음성을 재생하지 못했어요. 목소리 담기의 음성 설정을 확인하거나 녹음해 주세요.';
+    }
+    if(!synth){fail();return;}
+    // A previously selected engine can disappear after moving the book to another device.
+    const voice=selected || voices.find(v=>/^ko\b/i.test(v.lang));
+    function speak(i){
+      if(!valid())return;
+      if(i===chunks.length){utterance=null;next();return;}
+      const speech=new SpeechSynthesisUtterance(chunks[i]);utterance=speech;
+      speech.lang=voice?.lang || 'ko-KR';if(voice)speech.voice=voice;
+      speech.rate=Number($('rate').value) || .9;
+      speech.onend=()=>speak(i+1);speech.onerror=fail;
+      $('play-status').textContent=`🔊 ${index+1}번째 이야기를 TTS로 읽고 있어요. 다 읽으면 다음 장으로 넘어가요.`;
+      updateControls();
+      try{synth.speak(speech);}catch{fail();}
+    }
+    synth.resume();speak(0);
   }
   function toggleStory() {
     if (locked()) return;
@@ -1387,8 +2130,8 @@ const StoryRecorder=(()=>{
     if (audioPaused) {
       const token = playbackToken; audioPaused = false;
       $('play-status').textContent = `🎧 ${index+1}번째 이야기를 듣고 있어요.`;
-      player.play().catch(error => audioError(error,'book',token));
-    } else { player.pause(); audioPaused = true; $('play-status').textContent = '잠깐 쉬어 가요. ▶ 누르면 이어서 들어요.'; }
+      if(utterance)synth.resume();else player.play().catch(error => audioError(error,'book',token));
+    } else { if(utterance)synth.pause();else player.pause(); audioPaused = true; $('play-status').textContent = '잠깐 쉬어 가요. ▶ 누르면 이어서 들어요.'; }
     updateControls();
   }
 
@@ -1437,7 +2180,7 @@ const StoryRecorder=(()=>{
   }
   function videoControls() {
     const running=!!videoJob;
-    for(const id of ['video-layout','video-font','video-scene','video-close','video-caption-prev','video-caption-next','music-pick','music-remove','music-enabled','music-volume','video-link-images'])$(id).disabled=running || ioBusy;
+    for(const id of ['video-layout','video-font','video-scene','video-close','video-caption-prev','video-caption-next','music-pick','music-remove','music-enabled','music-volume','video-link-images','video-tts-voice'])$(id).disabled=running || ioBusy;
     $('video-font').disabled=running || ioBusy || Number($('video-scene').value)<0;
     const missing=videoMissingImages();
     $('video-local-images').hidden=missing.length===0;
@@ -1513,8 +2256,9 @@ const StoryRecorder=(()=>{
     book.pages.forEach((page,i)=>$('video-scene').add(new Option(`${i+1}번째 장${page.audio?' · 녹음 있음':''}`,String(i))));
     if(book.backCover.enabled)$('video-scene').add(new Option(`뒷표지${book.backCover.audio?' · 녹음 있음':''}`,'-2'));
     $('video-scene').value=book.cover.enabled?'-1':'0';
-    const missing=StoryCore.missing(book).length;
-    $('video-note').textContent=`표지·뒷표지를 포함해 녹음한 목소리가 끝나면 다음 장으로 넘어가요. 녹음 없는 표지는 4초, 뒷표지는 6초예요. ${missing?`녹음이 없는 본문 ${missing}장은 글 길이에 맞춰 보여 줘요. `:''}TTS 읽기 음성은 포함되지 않아요.`;
+    const missing=book.pages.filter(page=>!page.audio && page.text.trim()).length;
+    $('video-tts-settings').hidden=!missing;
+    $('video-note').textContent=`표지·뒷표지를 포함해 녹음한 목소리가 끝나면 다음 장으로 넘어가요. 녹음 없는 표지는 4초, 뒷표지는 6초예요. ${missing?`녹음이 없는 본문 ${missing}장은 TTS 음성을 생성해 영상에 넣어요.`:''}`;
     syncMusic();$('video-dialog').showModal();previewVideo();
   }
   async function createVideo() {
@@ -1523,8 +2267,11 @@ const StoryRecorder=(()=>{
     stopMedia();clearVideoResult();++videoPreviewToken;
     const job=new AbortController();videoJob=job;ioBusy=true;updateControls();videoControls();
     $('video-progress').value=0;$('video-progress').hidden=false;
+    let narration;
     try {
-      const blob=await StoryVideo.record({canvas:$('video-canvas'),book,layout:$('video-layout').value,fontSize:Number($('video-font').value),resolveImage:resolveVideoImage,signal:job.signal,
+      narration=await StoryTTS.prepare(book,{signal:job.signal,voice:$('video-tts-voice').value,rate:Number($('rate').value),
+        onProgress:({value,label})=>{$('video-progress').value=value*.2;$('video-status').textContent=label;}});
+      const blob=await StoryVideo.record({canvas:$('video-canvas'),book:narration.book,layout:$('video-layout').value,fontSize:Number($('video-font').value),resolveImage:resolveVideoImage,signal:job.signal,
         onProgress:({value,label})=>{$('video-progress').value=value;$('video-status').textContent=label;}});
       videoURL=URL.createObjectURL(blob);
       $('video-result').src=videoURL;$('video-result').hidden=false;$('video-canvas').hidden=true;
@@ -1537,6 +2284,7 @@ const StoryRecorder=(()=>{
       $('video-progress').hidden=true;
       $('video-status').textContent=error.name==='AbortError'?'영상 만들기를 취소했어요. 다시 만들 수 있어요.':error.message || '영상을 만들지 못했어요. 다시 시도해 주세요.';
     } finally {
+      narration?.dispose();
       videoJob=null;ioBusy=false;updateControls();videoControls();
     }
   }
@@ -1608,6 +2356,11 @@ const StoryRecorder=(()=>{
   for(const key of ['x','y','width','height','opacity','color'])$('box-'+key).oninput=event=>{
     if(locked())return;const item=editing();item.appearance.box[key]=key==='color'?event.target.value:Number(event.target.value)/(key==='opacity'?100:1);
     item.appearance=StoryCore.appearance(sceneKind(editScene()),item.appearance);changed(true);syncAppearance();refreshOutputs();
+  };
+  for(const [axis,size] of [['x','width'],['y','height']])$('box-center-'+axis).onclick=()=>{
+    if(locked() || editScene()>=0)return;
+    editing().appearance.box[axis]=(100-editing().appearance.box[size])/2;
+    changed(true);syncAppearance();refreshOutputs();
   };
   $('record-scene-select').onchange=event=>selectRecordScene(Number(event.target.value));
   $('video-caption-prev').onclick=()=>{if(videoPart>0){videoPart--;previewVideo(false);}};
@@ -1766,7 +2519,7 @@ const StoryRecorder=(()=>{
     if(videoJob)videoJob.abort(new Error('화면을 벗어나 영상 만들기를 중단했어요. 이 창을 열어 둔 채 다시 만들어 주세요.'));
     if (recordingState==='requesting') { permissionToken++; recordingState='idle'; $('record-status').textContent='녹음 준비를 취소했어요.'; updateControls(); }
     if (recordingState==='recording') finishRecording();
-    if (audioMode==='book') { player.pause(); audioPaused=true; $('play-status').textContent='▶ 이어 듣기를 눌러 주세요.'; updateControls(); }
+    if (audioMode==='book') { if(utterance)synth.pause();else player.pause(); audioPaused=true; $('play-status').textContent='▶ 이어 듣기를 눌러 주세요.'; updateControls(); }
     else if (audioMode==='preview' || utterance) stopMedia();
     persistDraft();
   });
