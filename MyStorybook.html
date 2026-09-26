@@ -231,7 +231,7 @@ body.reader-focused{overflow:hidden;overscroll-behavior:none}
         <div class="reader-tools"><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
         <div id="record-story-card" class="story-card record-output" data-scene="page"><canvas id="record-output" width="1280" height="720" aria-label="녹음할 장면"></canvas><div class="scene-wrap"><div id="record-scene" class="scene large"></div><span class="page-ribbon" id="record-page"></span></div><div id="record-text" class="story-text"></div></div>
         <div class="record-actions"><button id="tts-button" class="big-action listen"><span class="action-icon" aria-hidden="true">🔊</span><span class="action-label">들어 보기</span></button><button id="record-button" class="big-action record"><span class="action-icon" aria-hidden="true">🎙️</span><span class="action-label">녹음하기</span></button><button id="preview-button" class="big-action preview"><span class="action-icon" aria-hidden="true">🎧</span><span class="action-label">내 목소리</span></button></div>
-        <div class="record-feedback"><span id="record-status" role="status" aria-live="polite">듣고, 내 목소리로 읽어 보세요.</span><span id="record-clock" hidden>00:00</span><button class="link-button" id="undo-recording" hidden>↶ 이전 목소리</button></div>
+        <div class="record-feedback"><span id="record-status" role="status" aria-live="polite">듣고, 내 목소리로 읽어 보세요.</span><span id="record-clock" hidden>00:00</span><button class="link-button" id="undo-recording" hidden>↶ 이전 목소리</button><button class="link-button" id="delete-recording" hidden>🗑 녹음 삭제</button></div>
         <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="record-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
         <div class="voice-shortcuts" aria-label="읽어 주는 목소리"><button id="voice-female" class="button" aria-pressed="false">👩 여자 목소리</button><button id="voice-male" class="button" aria-pressed="false">👨 남자 목소리</button><button id="voice-default" class="button" aria-pressed="false">🔊 기기 기본</button></div>
         <div class="record-footer"><details id="voice-settings" class="voice-settings"><summary>🐢 읽기 속도 · 목소리 설정</summary><div class="voice-fields"><label>음성 종류<select id="voice-engine"><option value="all">사용 가능한 모든 음성</option><option value="samsung">삼성 TTS</option></select></label><label>목소리<select id="voice"><option value="">한국어 기본 목소리</option></select></label><label>속도 <output id="rate-label">0.9배</output><input id="rate" type="range" min="0.5" max="1.3" step="0.1" value="0.9"></label><button id="voice-test" class="button small">🔊 미리 듣기</button><label>👩 여자 버튼에 연결<select id="female-voice"></select></label><label>👨 남자 버튼에 연결<select id="male-voice"></select></label><p class="voice-note">성별이 표시되지 않는 음성은 미리 듣고 버튼에 연결해 주세요.</p><p id="voice-availability" class="voice-note" role="status"></p><div class="voice-help-actions"><button id="refresh-voices" class="button small">↻ 음성 다시 찾기</button><button id="samsung-help" class="button small">삼성 TTS 설정 안내</button></div></div></details><button class="button primary" id="go-play">내 동화 듣기 📖</button></div>
@@ -1870,6 +1870,7 @@ const StoryRecorder=(()=>{
     $('play-pages-view').dataset.layout=$('video-layout').value;
     $('narrator').textContent = book.author ? `${book.author}의 목소리로 들려주는 이야기` : '내 목소리로 들려주는 이야기';
     $('undo-recording').hidden = !recordItem().previousAudio;
+    $('delete-recording').hidden = !recordItem().audio && !recordItem().previousAudio;
     $('finish-card').hidden = !completed;
     $('show-cover').setAttribute('aria-pressed',String(playCover));
     $('show-back-cover').setAttribute('aria-pressed',String(playBack));
@@ -1900,6 +1901,7 @@ const StoryRecorder=(()=>{
     all('[data-next]').forEach(b => { b.disabled = busy || (tab==='record'?recordScene===-2:index===book.pages.length-1); });
     $('tts-button').disabled = busy || recordScene<0 || !recordItem().text?.trim() || !synth;
     $('preview-button').disabled = busy || !recordItem().audio;
+    $('delete-recording').disabled = busy || (!recordItem().audio && !recordItem().previousAudio);
     $('record-button').disabled = ioBusy || recordingState === 'saving';
     $('record-button').classList.toggle('active',recordingState==='recording');
     $('tts-button').classList.toggle('active',!!utterance);
@@ -2527,6 +2529,20 @@ const StoryRecorder=(()=>{
     stopMedia(); book=StoryCore.blank(); index=0; editingCover=true; editingBack=false; playCover=false; playBack=false; changed(); render(); $('book-title').focus();
   };
   $('tts-button').onclick = readAloud; $('record-button').onclick = recordClick; $('preview-button').onclick = previewRecording;
+  $('delete-recording').onclick = async () => {
+    if(locked())return;
+    const item=recordItem(),scene=recordScene;
+    if(!item.audio && !item.previousAudio)return;
+    const name=scene===-1?'표지':scene===-2?'뒷표지':`${scene+1}번째 장`;
+    stopMedia();
+    const answer=await ask(`${name}의 녹음을 삭제할까요?`,
+      '이 장의 현재 녹음과 이전 녹음이 함께 삭제돼요. 그림과 글은 그대로 남아요.\n'+(scene<0?'녹음 없이 표지로 사용할 수 있어요.':'동화 듣기와 영상 만들기에서는 TTS로 읽어요.'),
+      [{label:'취소',value:false},{label:'녹음 삭제',value:true}]);
+    if(!answer || locked() || recordItem()!==item)return;
+    stopMedia();item.audio=null;item.previousAudio=null;changed();render();
+    $('record-status').textContent=scene<0?'녹음을 삭제했어요. 목소리 없이 표지로 사용해요.':'녹음을 삭제했어요. 동화 듣기와 영상 만들기에서는 TTS로 읽어요.';
+    $('record-button').focus({preventScroll:true});
+  };
   $('undo-recording').onclick = () => {
     if (locked() || !recordItem().previousAudio) return;
     stopMedia(); const p=recordItem(); [p.audio,p.previousAudio]=[p.previousAudio,p.audio]; changed(); render();
