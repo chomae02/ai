@@ -95,33 +95,17 @@
 #play-pages-view[data-layout=bottom] .scene-wrap{left:0;top:0;width:100%;height:100%;border-radius:0}
 #play-pages-view[data-layout=bottom] #play-text{left:3.28125%;top:70%;width:93.4375%;height:26.1111%;padding:1.875cqw 2.34375cqw 3.59375cqw;border-radius:2.1875cqw;background:rgba(255,255,255,.94)}
 #play-pages-view[data-layout=bottom] #play-page{top:auto;right:5.46875%;bottom:9.1667%;font-size:1.5625cqw}
-/* The reader adapts to the device; the exported movie keeps its 16:9 layout. */
-@media(max-width:1099px){
+/* Only portrait phones stack the picture above the caption. */
+.reader-caption{display:contents}
+@media(max-width:699px) and (orientation:portrait){
   #play-pages-view{overflow-x:visible}
-  #play-pages-view .story-card{width:100%;height:auto;min-width:0;min-height:0;aspect-ratio:auto;overflow:visible;background:transparent}
-  #play-pages-view #play-video-title{position:static;display:none}
-  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{position:relative;left:auto;top:auto;width:100%;height:auto;aspect-ratio:816/592;border-radius:18px}
-  #play-pages-view[data-layout=bottom] .scene-wrap{aspect-ratio:16/9}
+  #play-pages-view .story-card{display:flex;flex-direction:column;gap:10px;width:100%;height:auto;min-width:0;min-height:0;aspect-ratio:auto;overflow:visible;background:transparent}
+  #play-pages-view #play-video-title{display:none}
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{position:relative;left:auto;top:auto;width:100%;height:auto;aspect-ratio:var(--reader-image-ratio,816 / 592);border-radius:16px}
   #play-pages-view #play-scene{position:absolute;inset:0;width:100%;height:100%}
-  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{position:relative;left:auto;top:auto;width:100%;height:auto;min-height:150px;max-height:none;margin:0;padding:20px 20px 43px;border-radius:18px;background:#fff;font-size:clamp(16px,2.5vw,22px);line-height:1.6;overflow:visible}
-  #play-pages-view #play-text.placeholder{font-size:clamp(16px,2.5vw,22px)}
-  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{position:absolute;top:auto;left:auto;right:19px;bottom:17px;font-size:14px;line-height:1.2}
-}
-@media(min-width:700px) and (max-width:1099px) and (orientation:landscape){
-  #play-pages-view .story-card{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:12px;min-height:380px;padding:18px;border:1px solid var(--line);border-radius:22px;background:#f7f7ef}
-  #play-pages-view #play-video-title{display:block;grid-column:1/-1;max-width:none;font-size:22px;line-height:1.3;white-space:normal}
-  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{grid-column:1;grid-row:2;height:100%;min-height:310px;aspect-ratio:auto}
-  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{grid-column:2;grid-row:2;height:100%;min-height:310px;padding:22px 20px 44px;font-size:clamp(17px,1.9vw,21px);overflow:auto}
-  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{right:38px;bottom:35px}
-}
-@media(max-width:699px), (min-width:700px) and (max-width:1099px) and (orientation:portrait){
-  #play-pages-view .story-card{display:flex;flex-direction:column;gap:10px}
-}
-@media(max-width:699px){
-  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{border-radius:16px}
-  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{min-height:132px;padding:16px 17px 41px;border-radius:16px;font-size:clamp(15px,4vw,18px)}
-  #play-pages-view #play-text.placeholder{font-size:clamp(15px,4vw,18px)}
-  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{right:17px;bottom:13px;font-size:13px}
+  #play-pages-view .reader-caption{display:block;position:relative;width:100%}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{position:relative;left:auto;top:auto;width:100%;height:auto;min-height:132px;max-height:none;margin:0;padding:16px 17px 41px;border-radius:16px;background:#fff;line-height:1.6;overflow:visible}
+  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{position:absolute;top:auto;left:auto;right:17px;bottom:13px;font-size:13px;line-height:1.2}
 }
 
 /* One movie frame is also the editing, thumbnail and cover-reading preview. */
@@ -152,20 +136,10 @@
 .appearance-grid output{font-weight:400;font-variant-numeric:tabular-nums}.video-options input{display:block;width:100%;min-height:46px;margin-top:7px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:14px}
 #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text,#play-pages-view #play-text.placeholder{font-size:calc(2.03125cqw * var(--page-font-scale,1))}
 #play-text strong{font-weight:700}
-@media(max-width:1099px){
-  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{aspect-ratio:var(--reader-image-ratio,816 / 592)}
-  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text,#play-pages-view #play-text.placeholder{font-size:calc(clamp(16px,2.5vw,22px) * var(--page-font-scale,1))}
-}
-@media(min-width:700px) and (max-width:1099px) and (orientation:landscape){
-  #play-pages-view .story-card{min-height:0;grid-template-rows:auto calc((100cqw - 50px) * .5918367347 * var(--reader-image-height-factor,.7254901961))}
-  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{height:100%;min-height:0}
-  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{min-height:0;font-size:calc(clamp(17px,1.9vw,21px) * var(--page-font-scale,1))}
-}
 @media(max-width:699px){
   .appearance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .page-sidebar .cover-thumb{flex-direction:row;justify-content:flex-start;min-height:54px}
   .page-sidebar .cover-thumb canvas{width:96px;flex:0 0 96px}
-  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text,#play-pages-view #play-text.placeholder{font-size:calc(clamp(15px,4vw,18px) * var(--page-font-scale,1))}
 }
 /* The recording script stays readable on phones and portrait tablets. */
 @media(max-width:699px), (min-width:700px) and (max-width:1099px) and (orientation:portrait){
@@ -178,6 +152,30 @@
   .record-output[data-scene=page] #record-scene.builtin:before,.record-output[data-scene=page] .scene-star,.record-output[data-scene=page] .scene-flower{display:none}
   .record-output[data-scene=page]>#record-text{display:block;width:100%;height:auto;min-height:132px;max-height:none;margin:0;padding:16px 17px;border:1px solid #deded8;border-radius:16px;background:white;text-align:left;font-size:calc(clamp(15px,4vw,22px) * var(--page-font-scale,1));line-height:1.6;overflow-wrap:anywhere;overflow:visible}
 }
+
+@media(max-width:699px) and (orientation:portrait){
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text,#play-pages-view #play-text.placeholder{font-size:calc(clamp(15px,4vw,18px) * var(--page-font-scale,1))}
+}
+/* A modal keeps the surrounding app dimmed and out of the keyboard/touch path. */
+body.reader-focused{overflow:hidden;overscroll-behavior:none}
+#reader-dialog{position:fixed;inset:0;margin:0;width:100%;max-width:none;height:100dvh;max-height:none;padding:0;border:0;border-radius:0;overflow:hidden;background:transparent;box-shadow:none;outline:none}
+#reader-dialog::backdrop{background:rgba(6,10,9,.96);backdrop-filter:blur(8px)}
+#reader-focus-content{position:absolute;inset:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));display:grid;grid-template-rows:minmax(0,1fr);place-items:center;overflow:hidden}
+#reader-dialog #reader-stage{width:min(100%,calc((100dvh - max(12px,env(safe-area-inset-top)) - max(12px,env(safe-area-inset-bottom))) * 16 / 9));min-width:0;min-height:0}
+#reader-dialog .cover-card{width:100%;margin:0;box-shadow:none;border-radius:2.03125% / 3.611111%}
+#reader-dialog .play-controls,#reader-dialog .page-navigation{display:none}
+#reader-dialog .play-message{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;padding:0}
+#reader-dialog[data-mode=phone] #reader-stage,#reader-dialog[data-mode=phone] #play-pages-view{width:100%;height:100%}
+#reader-dialog[data-mode=phone] #book-cover-view,#reader-dialog[data-mode=phone] #book-back-view{display:grid;place-items:center;height:100%}
+#reader-dialog[data-mode=phone] #play-pages-view .story-card{height:100%;justify-content:flex-start;overflow:hidden}
+#reader-dialog[data-mode=phone] #play-pages-view .scene-wrap{flex:0 0 auto}
+#reader-dialog[data-mode=phone] #play-pages-view .reader-caption{display:flex;flex-direction:column;flex:0 1 auto;min-height:0}
+#reader-dialog[data-mode=phone] #play-text{flex:0 1 auto;min-height:min(132px,25dvh);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.reader-focus-controls{position:absolute;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:6px;width:max-content;max-width:calc(100% - 20px);padding:8px;border-radius:16px;background:#15211ff2;box-shadow:0 4px 30px #0005;opacity:0;pointer-events:none;transition:opacity .2s}
+.reader-focus-controls button{min-height:44px;border:1px solid #ffffff38;border-radius:10px;padding:8px 12px;background:#ffffff15;color:#fff;font-size:14px;white-space:nowrap}
+#reader-focus-play{background:#55775b;font-weight:700;min-width:88px}
+#reader-dialog[data-controls=visible] .reader-focus-controls,.reader-focus-controls:focus-within{opacity:1;pointer-events:auto}
+@media(prefers-reduced-motion:reduce){.reader-focus-controls{transition:none}}
 </style>
 </head>
 <body>
@@ -230,14 +228,17 @@
       <section id="panel-play" role="tabpanel" aria-labelledby="tab-play" hidden>
         <div class="reader-heading"><div><span class="eyebrow" id="narrator"></span><h2 id="play-title"></h2></div><span class="pill" id="play-progress"></span></div>
         <div class="reader-tools"><button id="show-cover" class="button small">📕 표지 보기</button><button id="show-back-cover" class="button small">🌙 뒷표지 보기</button><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
+        <div id="reader-stage-home"><div id="reader-stage">
         <div id="book-cover-view" hidden><div class="story-card cover-card"><canvas id="play-cover-output" width="1280" height="720" aria-label="표지"></canvas><div class="scene-wrap"><div id="play-cover-scene" class="scene large"></div><div class="cover-overlay"><h2 id="cover-book-title"></h2><p id="cover-book-author"></p></div></div></div><div class="play-controls"><button id="open-cover" class="button primary play-button">▶ 책 펼치기</button></div></div>
         <div id="book-back-view" hidden><div class="story-card cover-card"><canvas id="play-back-output" width="1280" height="720" aria-label="뒷표지"></canvas><div class="scene-wrap"><div id="play-back-scene" class="scene large"></div><div class="back-overlay"><h2 id="back-book-title"></h2><p id="back-book-message"></p><small id="back-book-author"></small></div></div></div><div class="play-controls"><button id="back-audio-button" class="button primary">▶ 뒷표지 목소리</button><button id="back-restart" class="button primary">↻ 처음부터 다시 듣기</button></div></div>
         <div id="play-pages-view">
-        <div class="story-card"><div id="play-video-title"></div><div class="scene-wrap"><div id="play-scene" class="scene large"></div></div><div id="play-text" class="story-text"></div><span class="page-ribbon" id="play-page"></span></div>
+        <div class="story-card"><div id="play-video-title"></div><div class="scene-wrap"><div id="play-scene" class="scene large"></div></div><div class="reader-caption"><div id="play-text" class="story-text"></div><span class="page-ribbon" id="play-page"></span></div></div>
         <div class="play-controls"><button id="play-button" class="button primary play-button"><span aria-hidden="true">▶</span> 동화 시작</button><button id="restart-button" class="button">↻ 처음부터</button></div>
         <div class="play-message" id="play-status" role="status" aria-live="polite">내 목소리로 페이지가 하나씩 넘어가요.</div>
         <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="play-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
         </div>
+        </div></div>
+        <button id="reader-focus-open" class="button small" hidden>⛶ 동화에 집중하기</button>
         <div class="finish-card" id="finish-card" hidden><img data-art="bear" alt="축하하는 곰돌이"><div><span class="eyebrow">짝짝짝! 끝까지 들었어요</span><h2>내 목소리 동화책, 완성!</h2><p id="finish-copy"></p><div class="finish-actions"><button class="button primary" id="play-again">↻ 한 번 더</button><button class="button save" data-action="save">💾 기기에 저장</button></div></div></div>
         <div class="bottom-files"><button class="button small" data-action="open">📂 불러오기</button><button class="button small save" data-action="save">💾 기기에 저장</button><button class="button small video-button" data-action="video">🎬 WebM 만들기</button></div>
       </section>
@@ -251,6 +252,13 @@
   <audio id="audio-player" preload="auto" playsinline></audio>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <dialog id="dialog"><div id="dialog-content"></div><div class="dialog-actions" id="dialog-actions"></div></dialog>
+  <dialog id="reader-dialog" aria-label="동화 보기. 화면을 누르면 재생 버튼이 나타납니다." tabindex="-1">
+    <div id="reader-focus-content"></div>
+    <div id="reader-focus-controls" class="reader-focus-controls" aria-label="동화 재생">
+      <button id="reader-focus-prev" type="button" aria-label="이전 장">← 이전</button><button id="reader-focus-play" type="button">▶ 재생</button><button id="reader-focus-next" type="button" aria-label="다음 장">다음 →</button><button id="reader-focus-close" type="button" aria-label="집중 보기 닫기">닫기 ✕</button>
+    </div>
+    <span id="reader-focus-status" class="sr-only" role="status" aria-live="polite"></span>
+  </dialog>
   <dialog id="video-dialog" aria-labelledby="video-heading">
     <div class="video-heading"><div><span class="eyebrow">내 이야기를 한 편의 영상으로</span><h2 id="video-heading">WebM 동화 만들기</h2></div><button id="video-close" class="button small" aria-label="영상 창 닫기">닫기</button></div>
     <div class="video-options">
@@ -1495,6 +1503,55 @@ const StoryRecorder=(()=>{
   const recordItem=()=>sceneItem(recordScene) || current();
   const sceneKind=scene=>scene===-1?'cover':scene===-2?'back':'page';
   const readingScene=()=>playCover?-1:playBack?-2:index;
+  const readerMedia=matchMedia('(max-width:1099px), (pointer:coarse)'),phonePortrait=matchMedia('(max-width:699px) and (orientation:portrait)');
+  let readerDismissed=false,readerControlsTimer=null,readerLastScene='',readerPointer=null;
+
+  function readerScenes(){const scenes=book.pages.map((_,i)=>i);if(book.cover.enabled)scenes.unshift(-1);if(book.backCover.enabled)scenes.push(-2);return scenes;}
+  function updateReaderControls(){
+    const scenes=readerScenes(),position=scenes.indexOf(readingScene()),busy=locked();
+    $('reader-focus-prev').disabled=busy || position<=0;
+    $('reader-focus-next').disabled=busy || position===scenes.length-1;
+    $('reader-focus-play').disabled=busy;
+    $('reader-focus-play').textContent=audioMode==='book'?(audioPaused?'▶ 이어 듣기':'Ⅱ 멈춤'):playBack && !book.backCover.audio || completed?'↻ 다시 듣기':'▶ 재생';
+    $('reader-focus-status').textContent=playCover?'표지':playBack?'뒷표지':`${index+1} / ${book.pages.length}번째 장`;
+  }
+  function showReaderControls(){
+    clearTimeout(readerControlsTimer);$('reader-dialog').dataset.controls='visible';
+    readerControlsTimer=setTimeout(()=>{$('reader-dialog').dataset.controls='hidden';},2800);
+  }
+  function closeReaderFocus(dismiss=false){
+    const dialog=$('reader-dialog');clearTimeout(readerControlsTimer);
+    if(dismiss){readerDismissed=true;stopMedia();}
+    if(dialog.open)dialog.close();
+    if($('reader-stage').parentElement===$('reader-focus-content'))$('reader-stage-home').append($('reader-stage'));
+    document.body.classList.remove('reader-focused');
+    $('reader-focus-open').hidden=tab!=='play' || !readerMedia.matches;
+    if(dismiss)$('reader-focus-open').focus({preventScroll:true});
+  }
+  function syncReaderFocus(){
+    const dialog=$('reader-dialog'),enabled=tab==='play' && readerMedia.matches && !readerDismissed;
+    if(!enabled){if(dialog.open)closeReaderFocus();$('reader-focus-open').hidden=tab!=='play' || !readerMedia.matches;return;}
+    dialog.dataset.mode=phonePortrait.matches?'phone':'movie';
+    if(!dialog.open){
+      $('reader-focus-content').append($('reader-stage'));dialog.showModal();dialog.focus({preventScroll:true});
+      document.body.classList.add('reader-focused');showReaderControls();
+    }
+    $('reader-focus-open').hidden=true;
+    const scene=readingScene()+':'+sceneItem(readingScene()).id;
+    if(scene!==readerLastScene){$('play-text').scrollTop=0;readerLastScene=scene;}
+    updateReaderControls();
+  }
+  function stepReader(direction){
+    if(locked())return;
+    const scenes=readerScenes(),scene=scenes[scenes.indexOf(readingScene())+direction];if(scene===undefined)return;
+    stopMedia();completed=false;playCover=scene===-1;playBack=scene===-2;if(scene>=0)index=scene;render();
+  }
+  function toggleReaderPlayback(){
+    if(playCover)$('open-cover').click();
+    else if(playBack)$(book.backCover.audio && !completed?'back-audio-button':'back-restart').click();
+    else toggleStory();
+    updateReaderControls();
+  }
 
   async function paintOutput(canvas,scene) {
     if(!canvas?.getContext)return;
@@ -1777,7 +1834,7 @@ const StoryRecorder=(()=>{
     $('book-cover-view').hidden=!playCover; $('play-pages-view').hidden=playCover || playBack;
     drawScene($('play-cover-scene'),book.cover.image,book.cover.decorated,book.cover.frame);
     drawScene($('play-back-scene'),book.backCover.image,book.backCover.decorated,book.backCover.frame);
-    renderPages();syncAppearance();refreshOutputs(true);updateControls();
+    renderPages();syncAppearance();refreshOutputs(true);updateControls();syncReaderFocus();
   }
 
   function label(id,text) { $(id).querySelector('.action-label').textContent = text; }
@@ -1815,7 +1872,7 @@ const StoryRecorder=(()=>{
     $('back-audio-button').textContent=audioMode==='book' && playBack?(audioPaused?'▶ 이어 듣기':'Ⅱ 잠깐 멈춤'):'▶ 뒷표지 목소리';
     for(const id of ['image-zoom','image-contain','image-fill','image-reset'])$(id).disabled=busy || !editing().image;
     $('voice-test').disabled=busy || !synth;
-    updateFrameControls(); applyFontSize();
+    updateFrameControls(); applyFontSize();updateReaderControls();
   }
 
   function updateTextCount() { $('text-count').textContent = `${current().text.length.toLocaleString('ko-KR')} / 5,000`; }
@@ -1881,13 +1938,14 @@ const StoryRecorder=(()=>{
   }
   function switchTab(next) {
     if (locked()) return;
+    readerDismissed=false;
     if(next==='record')recordScene=tab==='edit'?editScene():tab==='play'?readingScene():recordScene;
     if(next==='edit' && tab==='record'){editingCover=recordScene===-1;editingBack=recordScene===-2;if(recordScene>=0)index=recordScene;}
     stopMedia(); tab = next; completed = false; playBack=false; playCover=next==='play' && book.cover.enabled;
     $('record-status').textContent = recordItem().audio ? '★ 내 목소리가 담겨 있어요.' : recordScene<0?'자유롭게 표지의 목소리를 녹음해 주세요.':'듣고, 내 목소리로 읽어 보세요.';
     $('play-status').textContent = '내 목소리로 페이지가 하나씩 넘어가요.';
     render();
-    $('tab-'+next).focus({preventScroll:true});
+    if(!$('reader-dialog').open)$('tab-'+next).focus({preventScroll:true});
   }
   function selectRecordScene(scene) {
     if(locked())return;stopMedia();recordScene=scene;
@@ -2081,7 +2139,7 @@ const StoryRecorder=(()=>{
     $('play-status').textContent='🌟 마지막 장까지 모두 들었어요!';
     $('finish-copy').textContent=`${book.author || '나'}의 소중한 목소리를 파일로 간직해요.`;
     $('finish-card').hidden=false;$('finish-card').classList.add('celebrate');updateControls();
-    $('finish-card').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'});
+    if(!$('reader-dialog').open)$('finish-card').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'});
   }
   function playStoryScene(token,scene) {
     if (token !== playbackToken || audioMode !== 'book') return;
@@ -2509,6 +2567,27 @@ const StoryRecorder=(()=>{
   );
   $('play-button').onclick=toggleStory;
   $('fullscreen-button').onclick=toggleFullscreen;
+  $('reader-focus-open').onclick=()=>{readerDismissed=false;syncReaderFocus();};
+  $('reader-focus-close').onclick=()=>closeReaderFocus(true);
+  for(const [id,action] of [['reader-focus-prev',()=>stepReader(-1)],['reader-focus-next',()=>stepReader(1)],['reader-focus-play',toggleReaderPlayback]])$(id).onclick=event=>{
+    action();showReaderControls();if(event.detail)$('reader-dialog').focus({preventScroll:true});
+  };
+  $('reader-dialog').addEventListener('cancel',event=>{event.preventDefault();closeReaderFocus(true);});
+  $('reader-dialog').addEventListener('keydown',event=>{
+    if(event.key==='Tab'){showReaderControls();return;}
+    if(event.target.tagName==='BUTTON')return;
+    if(event.key===' '){event.preventDefault();toggleReaderPlayback();showReaderControls();}
+    else if(event.key==='ArrowLeft' || event.key==='ArrowRight'){event.preventDefault();stepReader(event.key==='ArrowLeft'?-1:1);showReaderControls();}
+  });
+  $('reader-focus-content').addEventListener('pointerdown',event=>{readerPointer={x:event.clientX,y:event.clientY};});
+  $('reader-focus-content').addEventListener('pointercancel',()=>{readerPointer=null;});
+  $('reader-focus-content').addEventListener('pointerup',event=>{
+    const point=readerPointer;readerPointer=null;
+    if(!point || Math.hypot(event.clientX-point.x,event.clientY-point.y)>12)return;
+    if($('reader-dialog').dataset.controls==='visible'){clearTimeout(readerControlsTimer);$('reader-dialog').dataset.controls='hidden';$('reader-dialog').focus({preventScroll:true});}
+    else showReaderControls();
+  });
+  readerMedia.addEventListener?.('change',syncReaderFocus);phonePortrait.addEventListener?.('change',syncReaderFocus);
   document.addEventListener('fullscreenchange',syncFullscreenButton);
   $('restart-button').onclick=$('play-again').onclick=() => { if(locked())return; stopMedia(); index=0; completed=false;playCover=book.cover.enabled; render(); startStory(); };
   $('help-button').onclick = () => ask('보호자 안내',
