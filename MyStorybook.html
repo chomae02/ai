@@ -161,6 +161,8 @@
 body.reader-focused{overflow:hidden;overscroll-behavior:none}
 #reader-dialog{position:fixed;inset:0;margin:0;width:100%;max-width:none;height:100dvh;max-height:none;padding:0;border:0;border-radius:0;overflow:hidden;background:transparent;box-shadow:none;outline:none}
 #reader-dialog::backdrop{background:rgba(6,10,9,.96);backdrop-filter:blur(8px)}
+#reader-fullscreen-surface{position:relative;width:100%;height:100%;overflow:hidden;outline:none}
+#reader-fullscreen-surface:fullscreen{width:100%;height:100dvh;background:#0e1410}
 #reader-focus-content{position:absolute;inset:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));display:grid;grid-template-rows:minmax(0,1fr);place-items:center;overflow:hidden}
 #reader-dialog #reader-stage{width:min(100%,calc((100dvh - max(12px,env(safe-area-inset-top)) - max(12px,env(safe-area-inset-bottom))) * 16 / 9));min-width:0;min-height:0}
 #reader-dialog .cover-card{width:100%;margin:0;box-shadow:none;border-radius:2.03125% / 3.611111%}
@@ -185,7 +187,7 @@ body.reader-focused{overflow:hidden;overscroll-behavior:none}
   <div class="app">
     <header class="header">
       <div class="brand"><img data-art="rabbit" alt="" class="brand-friend"><div><span class="eyebrow">작은 이야기, 소중한 목소리</span><h1>나의 목소리 동화책<span class="brand-star">✦</span></h1></div></div>
-      <div class="file-actions"><button class="button small" data-action="open"><span aria-hidden="true">📂</span> 불러오기</button><button class="button small save" data-action="save"><span aria-hidden="true">💾</span> 기기에 저장</button><button class="button small video-button" data-action="video">🎬 WebM 만들기</button><button id="fullscreen-button" class="button small fullscreen-icon" aria-label="전체화면 켜기" title="전체화면 켜기" aria-pressed="false">⛶</button></div>
+      <div class="file-actions"><button class="button small" data-action="open"><span aria-hidden="true">📂</span> 불러오기</button><button class="button small save" data-action="save"><span aria-hidden="true">💾</span> 기기에 저장</button><button class="button small video-button" data-action="video">🎬 WebM 만들기</button><button id="fullscreen-button" class="button small fullscreen-icon" aria-label="전체화면 켜기" aria-pressed="false">⛶</button></div>
     </header>
     <nav class="tabs" role="tablist" aria-label="동화책 놀이">
       <button id="tab-edit" role="tab" aria-selected="true" aria-controls="panel-edit" data-tab="edit"><span class="tab-icon" aria-hidden="true">🎨</span><span><small>하나</small>책 만들기</span></button>
@@ -230,7 +232,7 @@ body.reader-focused{overflow:hidden;overscroll-behavior:none}
       </section>
       <section id="panel-play" role="tabpanel" aria-labelledby="tab-play" hidden>
         <div class="reader-heading"><div><span class="eyebrow" id="narrator"></span><h2 id="play-title"></h2></div><span class="pill" id="play-progress"></span></div>
-        <div class="reader-tools"><button id="reader-fullscreen-button" class="button small fullscreen-icon" aria-label="전체화면 켜기" title="전체화면 켜기" aria-pressed="false">⛶</button><button id="show-cover" class="button small">📕 표지 보기</button><button id="show-back-cover" class="button small">🌙 뒷표지 보기</button><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
+        <div class="reader-tools"><button id="reader-fullscreen-button" class="button small fullscreen-icon" aria-label="전체화면 켜기" aria-pressed="false">⛶</button><button id="show-cover" class="button small">📕 표지 보기</button><button id="show-back-cover" class="button small">🌙 뒷표지 보기</button><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
         <div id="reader-stage-home"><div id="reader-stage">
         <div id="book-cover-view" hidden><div class="story-card cover-card"><canvas id="play-cover-output" width="1280" height="720" aria-label="표지"></canvas><div class="scene-wrap"><div id="play-cover-scene" class="scene large"></div><div class="cover-overlay"><h2 id="cover-book-title"></h2><p id="cover-book-author"></p></div></div></div><div class="play-controls"><button id="open-cover" class="button primary play-button">▶ 책 펼치기</button></div></div>
         <div id="book-back-view" hidden><div class="story-card cover-card"><canvas id="play-back-output" width="1280" height="720" aria-label="뒷표지"></canvas><div class="scene-wrap"><div id="play-back-scene" class="scene large"></div><div class="back-overlay"><h2 id="back-book-title"></h2><p id="back-book-message"></p><small id="back-book-author"></small></div></div></div><div class="play-controls"><button id="back-audio-button" class="button primary">▶ 뒷표지 목소리</button><button id="back-restart" class="button primary">↻ 처음부터 다시 듣기</button></div></div>
@@ -256,11 +258,13 @@ body.reader-focused{overflow:hidden;overscroll-behavior:none}
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <dialog id="dialog"><div id="dialog-content"></div><div class="dialog-actions" id="dialog-actions"></div></dialog>
   <dialog id="reader-dialog" aria-label="동화 보기. 화면을 누르면 재생 버튼이 나타납니다." tabindex="-1">
+    <div id="reader-fullscreen-surface" tabindex="-1">
     <div id="reader-focus-content"></div>
     <div id="reader-focus-controls" class="reader-focus-controls" aria-label="동화 재생">
-      <button id="reader-focus-prev" type="button" aria-label="이전 장">← 이전</button><button id="reader-focus-play" type="button">▶ 재생</button><button id="reader-focus-next" type="button" aria-label="다음 장">다음 →</button><button id="reader-focus-fullscreen" type="button" aria-label="전체화면 켜기" title="전체화면 켜기" aria-pressed="false">⛶</button><button id="reader-focus-close" type="button" aria-label="집중 보기 닫기">닫기 ✕</button>
+      <button id="reader-focus-prev" type="button" aria-label="이전 장">← 이전</button><button id="reader-focus-play" type="button">▶ 재생</button><button id="reader-focus-next" type="button" aria-label="다음 장">다음 →</button><button id="reader-focus-fullscreen" type="button" aria-label="전체화면 켜기" aria-pressed="false">⛶</button><button id="reader-focus-close" type="button" aria-label="집중 보기 닫기">닫기 ✕</button>
     </div>
     <span id="reader-focus-status" class="sr-only" role="status" aria-live="polite"></span>
+    </div>
   </dialog>
   <dialog id="video-dialog" aria-labelledby="video-heading">
     <div class="video-heading"><div><span class="eyebrow">내 이야기를 한 편의 영상으로</span><h2 id="video-heading">WebM 동화 만들기</h2></div><button id="video-close" class="button small" aria-label="영상 창 닫기">닫기</button></div>
@@ -1507,7 +1511,10 @@ const StoryRecorder=(()=>{
   const sceneKind=scene=>scene===-1?'cover':scene===-2?'back':'page';
   const readingScene=()=>playCover?-1:playBack?-2:index;
   const readerMedia=matchMedia('(max-width:1099px), (pointer:coarse)'),phonePortrait=matchMedia('(max-width:699px) and (orientation:portrait)');
-  let readerDismissed=false,readerForced=false,readerControlsTimer=null,readerLastScene='',readerPointer=null;
+  let readerDismissed=false,readerForced=false,readerClosing=false,readerControlsTimer=null,readerLastScene='',readerPointer=null;
+  let readerWasFullscreen=false,lastReaderFullscreenExit=-Infinity;
+  const readerIsFullscreen=()=>document.fullscreenElement===$('reader-fullscreen-surface');
+  const focusReader=()=>$(readerIsFullscreen()?'reader-fullscreen-surface':'reader-dialog').focus({preventScroll:true});
 
   function readerScenes(){const scenes=book.pages.map((_,i)=>i);if(book.cover.enabled)scenes.unshift(-1);if(book.backCover.enabled)scenes.push(-2);return scenes;}
   function updateReaderControls(){
@@ -1522,22 +1529,29 @@ const StoryRecorder=(()=>{
     clearTimeout(readerControlsTimer);$('reader-dialog').dataset.controls='visible';
     readerControlsTimer=setTimeout(()=>{$('reader-dialog').dataset.controls='hidden';},2800);
   }
-  function closeReaderFocus(dismiss=false){
+  async function closeReaderFocus(dismiss=false){
+    if(readerClosing || fullscreenPending)return;
+    // Leave the fullscreen surface before hiding/reparenting its contents.
+    if(readerIsFullscreen()){
+      readerClosing=true;syncFullscreenButton();
+      try{await document.exitFullscreen();}catch{return;}
+      finally{readerClosing=false;syncFullscreenButton();}
+    }
     const dialog=$('reader-dialog');clearTimeout(readerControlsTimer);
     if(dismiss){readerDismissed=true;readerForced=false;stopMedia();}
     if(dialog.open)dialog.close();
     if($('reader-stage').parentElement===$('reader-focus-content'))$('reader-stage-home').append($('reader-stage'));
-    if($('toast').parentElement===dialog)document.body.append($('toast'));
     document.body.classList.remove('reader-focused');
     $('reader-focus-open').hidden=tab!=='play' || !readerMedia.matches;
     if(dismiss)$(readerMedia.matches?'reader-focus-open':'tab-play').focus({preventScroll:true});
   }
   function syncReaderFocus(){
+    if(readerClosing)return;
     const dialog=$('reader-dialog'),enabled=tab==='play' && (readerMedia.matches || readerForced) && !readerDismissed;
     if(!enabled){if(dialog.open)closeReaderFocus();$('reader-focus-open').hidden=tab!=='play' || !readerMedia.matches;return;}
     dialog.dataset.mode=phonePortrait.matches?'phone':'movie';
     if(!dialog.open){
-      $('reader-focus-content').append($('reader-stage'));dialog.showModal();dialog.focus({preventScroll:true});
+      $('reader-focus-content').append($('reader-stage'));dialog.showModal();focusReader();
       document.body.classList.add('reader-focused');showReaderControls();
     }
     $('reader-focus-open').hidden=true;
@@ -1624,34 +1638,43 @@ const StoryRecorder=(()=>{
   }
 
   function syncFullscreenButton() {
-    const active = !!document.fullscreenElement;
     for(const id of ['fullscreen-button','reader-fullscreen-button','reader-focus-fullscreen']){
+      const active=id==='fullscreen-button'?!!document.fullscreenElement:readerIsFullscreen();
       const button=$(id),label=active?'전체화면 끄기':'전체화면 켜기';
       button.textContent=active?'↙':'⛶';
-      button.setAttribute('aria-label',label);button.setAttribute('title',label);
-      button.setAttribute('aria-pressed',String(active));button.disabled=fullscreenPending;
+      button.setAttribute('aria-label',label);
+      button.setAttribute('aria-pressed',String(active));button.disabled=fullscreenPending || readerClosing;
     }
+    $('reader-focus-close').disabled=fullscreenPending || readerClosing;
   }
 
   async function toggleFullscreen(forReader=false) {
-    if (fullscreenPending) return;
+    if (fullscreenPending || readerClosing) return;
+    clearTimeout(toastTimer);$('toast').hidden=true;
     if(forReader && tab==='play'){
       readerForced=true;readerDismissed=false;syncReaderFocus();
-      $('reader-dialog').append($('toast'));
     }
-    if (!document.fullscreenElement && (!document.documentElement.requestFullscreen || document.fullscreenEnabled === false)) {
-      toast('이 브라우저에서는 전체화면을 열 수 없어요. Chrome이나 Edge에서 직접 열어 주세요.');
-      return;
-    }
+    const target=forReader?$('reader-fullscreen-surface'):document.documentElement;
+    const exiting=forReader?readerIsFullscreen():!!document.fullscreenElement;
+    if(!exiting && (!target.requestFullscreen || document.fullscreenEnabled===false))return;
     fullscreenPending = true; syncFullscreenButton();
     try {
-      if (document.fullscreenElement) await document.exitFullscreen();
-      else await document.documentElement.requestFullscreen({navigationUI:'hide'});
-    } catch {
-      toast('전체화면을 바꾸지 못했어요. 잠시 후 버튼을 다시 눌러 주세요.');
-    } finally {
+      if(exiting)await document.exitFullscreen();
+      else await target.requestFullscreen({navigationUI:'hide'});
+      if(forReader && $('reader-dialog').open)focusReader();
+    } catch {/* Keep the current view when fullscreen is unsupported or declined. */}
+    finally {
       fullscreenPending = false; syncFullscreenButton();
     }
+  }
+
+  function fullscreenChanged(){
+    const active=readerIsFullscreen();
+    if(readerWasFullscreen && !active){
+      lastReaderFullscreenExit=performance.now();
+      if($('reader-dialog').open && !readerClosing)focusReader();
+    }
+    readerWasFullscreen=active;syncFullscreenButton();
   }
 
   function ask(title, message, choices = [{label:'알겠어요',value:true,primary:true}]) {
@@ -2578,15 +2601,19 @@ const StoryRecorder=(()=>{
   $('fullscreen-button').onclick=()=>toggleFullscreen();
   for(const id of ['reader-fullscreen-button','reader-focus-fullscreen'])$(id).onclick=async event=>{
     const pending=toggleFullscreen(true);
-    if(event.detail && $('reader-dialog').open)$('reader-dialog').focus({preventScroll:true});
+    if(event.detail && $('reader-dialog').open)focusReader();
     await pending;showReaderControls();
   };
   $('reader-focus-open').onclick=()=>{readerDismissed=false;syncReaderFocus();};
   $('reader-focus-close').onclick=()=>closeReaderFocus(true);
   for(const [id,action] of [['reader-focus-prev',()=>stepReader(-1)],['reader-focus-next',()=>stepReader(1)],['reader-focus-play',toggleReaderPlayback]])$(id).onclick=event=>{
-    action();showReaderControls();if(event.detail)$('reader-dialog').focus({preventScroll:true});
+    action();showReaderControls();if(event.detail)focusReader();
   };
-  $('reader-dialog').addEventListener('cancel',event=>{event.preventDefault();closeReaderFocus(true);});
+  $('reader-dialog').addEventListener('cancel',event=>{
+    event.preventDefault();
+    if(readerIsFullscreen())toggleFullscreen(true);
+    else if(performance.now()-lastReaderFullscreenExit>250)closeReaderFocus(true);
+  });
   $('reader-dialog').addEventListener('keydown',event=>{
     if(event.key==='Tab'){showReaderControls();return;}
     if(event.target.tagName==='BUTTON')return;
@@ -2598,11 +2625,11 @@ const StoryRecorder=(()=>{
   $('reader-focus-content').addEventListener('pointerup',event=>{
     const point=readerPointer;readerPointer=null;
     if(!point || Math.hypot(event.clientX-point.x,event.clientY-point.y)>12)return;
-    if($('reader-dialog').dataset.controls==='visible'){clearTimeout(readerControlsTimer);$('reader-dialog').dataset.controls='hidden';$('reader-dialog').focus({preventScroll:true});}
+    if($('reader-dialog').dataset.controls==='visible'){clearTimeout(readerControlsTimer);$('reader-dialog').dataset.controls='hidden';focusReader();}
     else showReaderControls();
   });
   readerMedia.addEventListener?.('change',syncReaderFocus);phonePortrait.addEventListener?.('change',syncReaderFocus);
-  document.addEventListener('fullscreenchange',syncFullscreenButton);
+  document.addEventListener('fullscreenchange',fullscreenChanged);
   $('restart-button').onclick=$('play-again').onclick=() => { if(locked())return; stopMedia(); index=0; completed=false;playCover=book.cover.enabled; render(); startStory(); };
   $('help-button').onclick = () => ask('보호자 안내',
     '① 책 만들기: 그림을 고르고 글을 써 주세요.\n② 목소리 담기: TTS를 들은 뒤 아이의 목소리를 녹음해요.\n③ 동화 듣기: 녹음이 끝나면 다음 장으로 넘어가요.\n\n💾 기기에 저장: 그림·글·녹음을 한 개의 .story.json 파일로 내려받아요. 불러오기에서 이 파일을 선택하면 복원돼요. 태블릿·휴대폰에서는 파일 앱이나 다운로드 폴더를 확인해 주세요. 저장 창이나 미리보기가 열리면 기기의 파일 저장 메뉴를 이용해 주세요.\n\n작업은 이 브라우저에도 임시 보관하지만, 오래 간직할 책은 꼭 파일로 저장해 주세요. 비공개 모드나 사이트 데이터 삭제 시 임시 작업은 사라질 수 있어요. 서버에는 그림과 녹음을 업로드하지 않아요.\n\n🎙️ 서버는 HTTPS로 열고 마이크 사용을 허용해 주세요. 녹음은 한 장에 최대 5분이며, 화면을 벗어나면 진행 중인 녹음을 마무리해요. 한 책은 최대 100장, 작업 파일은 200MB까지예요. 사진은 긴 쪽 1,600픽셀로 줄여 담아요.\n\n🔊 TTS 목소리는 기기마다 다르며 일부는 인터넷을 사용해요. 내장 목소리가 없으면 기기의 한국어 음성을 설치해 주세요. 다른 기기로 옮긴 녹음은 브라우저의 오디오 형식 지원에 따라 재생이 달라질 수 있어요.'
