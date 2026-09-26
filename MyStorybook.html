@@ -78,6 +78,91 @@
 #edit-back-copy{bottom:60px;padding:14px 20px}#edit-back-copy h2{font-size:24px}#edit-back-copy p{font-size:15px}#play-back-scene{height:auto;aspect-ratio:16/9}
 .story-text strong{font-weight:800}.video-music{background:#f5f3e9;border:1px solid var(--line);padding:14px;border-radius:16px;margin-bottom:14px}.music-buttons,.music-settings{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.music-buttons>span{font-size:13px;overflow-wrap:anywhere;flex:1;min-width:100px}.music-settings{margin-top:12px;font-size:13px}.music-settings audio{width:min(100%,320px);height:36px}.music-settings input[type=range]{width:130px;accent-color:var(--green)}.video-local-images{background:#fff1d6;border:1px solid #e7ce9b;border-radius:14px;padding:14px;margin-bottom:14px}#video-dialog .video-local-images p{font-size:13px;line-height:1.7;white-space:normal;margin-bottom:10px}
 @media(max-width:580px){.page-sidebar .cover-thumb{grid-column:1/-1}.back-overlay{padding:14px 16px}.back-overlay h2{font-size:20px}.back-overlay small{margin-top:8px;font-size:11px}.music-settings audio{width:100%}}
+
+/* Match the 1280 × 720 movie's picture, caption and heading coordinates. */
+#play-pages-view{container-type:inline-size;overflow-x:auto}
+#play-pages-view .story-card{display:block;position:relative;width:100%;aspect-ratio:16/9;min-height:0;padding:0;border:0;border-radius:0;background:#f7f7ef;box-shadow:none;overflow:hidden}
+#play-pages-view #play-video-title{position:absolute;left:3.125%;top:5.28%;max-width:80%;font-size:2.1875cqw;line-height:1.2;font-weight:700;color:#454a43;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#play-pages-view .scene-wrap{position:absolute;left:2.5%;top:13.3333%;width:63.75%;height:82.2222%;border-radius:2.03125cqw;overflow:hidden}
+#play-pages-view #play-scene{width:100%;height:100%;min-height:0;max-height:none;aspect-ratio:auto;background:#f5f4ec;border-radius:0}
+#play-pages-view #play-scene.builtin{background:#f2efdf}
+#play-pages-view #play-scene.builtin:before,#play-pages-view #play-scene .scene-star,#play-pages-view #play-scene .scene-flower{display:none}
+#play-pages-view #play-scene.builtin img{inset:0;width:100%;height:100%;filter:none}
+#play-pages-view #play-text{position:absolute;left:68.125%;top:13.3333%;width:29.375%;height:82.2222%;min-height:0;max-height:none;margin:0;padding:2.8125cqw 2.5cqw 4.6875cqw;border:1px solid #deded8;border-radius:2.1875cqw;background:#fff;color:#303330;text-align:left;font-size:calc(2.03125cqw * var(--reader-font-scale,1));line-height:1.5;letter-spacing:0;overflow:auto;scrollbar-width:thin}
+#play-pages-view #play-text.placeholder{font-size:calc(2.03125cqw * var(--reader-font-scale,1))}
+#play-pages-view #play-page{position:absolute;top:5.56%;right:3.125%;left:auto;bottom:auto;padding:0;border-radius:0;background:transparent;box-shadow:none;color:#82877d;font-size:1.875cqw;font-weight:400;line-height:1.2}
+#play-pages-view[data-layout=bottom] #play-video-title{display:none}
+#play-pages-view[data-layout=bottom] .scene-wrap{left:0;top:0;width:100%;height:100%;border-radius:0}
+#play-pages-view[data-layout=bottom] #play-text{left:3.28125%;top:70%;width:93.4375%;height:26.1111%;padding:1.875cqw 2.34375cqw 3.59375cqw;border-radius:2.1875cqw;background:rgba(255,255,255,.94)}
+#play-pages-view[data-layout=bottom] #play-page{top:auto;right:5.46875%;bottom:9.1667%;font-size:1.5625cqw}
+/* The reader adapts to the device; the exported movie keeps its 16:9 layout. */
+@media(max-width:1099px){
+  #play-pages-view{overflow-x:visible}
+  #play-pages-view .story-card{width:100%;height:auto;min-width:0;min-height:0;aspect-ratio:auto;overflow:visible;background:transparent}
+  #play-pages-view #play-video-title{position:static;display:none}
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{position:relative;left:auto;top:auto;width:100%;height:auto;aspect-ratio:816/592;border-radius:18px}
+  #play-pages-view[data-layout=bottom] .scene-wrap{aspect-ratio:16/9}
+  #play-pages-view #play-scene{position:absolute;inset:0;width:100%;height:100%}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{position:relative;left:auto;top:auto;width:100%;height:auto;min-height:150px;max-height:none;margin:0;padding:20px 20px 43px;border-radius:18px;background:#fff;font-size:clamp(16px,2.5vw,22px);line-height:1.6;overflow:visible}
+  #play-pages-view #play-text.placeholder{font-size:clamp(16px,2.5vw,22px)}
+  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{position:absolute;top:auto;left:auto;right:19px;bottom:17px;font-size:14px;line-height:1.2}
+}
+@media(min-width:700px) and (max-width:1099px) and (orientation:landscape){
+  #play-pages-view .story-card{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:12px;min-height:380px;padding:18px;border:1px solid var(--line);border-radius:22px;background:#f7f7ef}
+  #play-pages-view #play-video-title{display:block;grid-column:1/-1;max-width:none;font-size:22px;line-height:1.3;white-space:normal}
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{grid-column:1;grid-row:2;height:100%;min-height:310px;aspect-ratio:auto}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{grid-column:2;grid-row:2;height:100%;min-height:310px;padding:22px 20px 44px;font-size:clamp(17px,1.9vw,21px);overflow:auto}
+  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{right:38px;bottom:35px}
+}
+@media(max-width:699px), (min-width:700px) and (max-width:1099px) and (orientation:portrait){
+  #play-pages-view .story-card{display:flex;flex-direction:column;gap:10px}
+}
+@media(max-width:699px){
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{border-radius:16px}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{min-height:132px;padding:16px 17px 41px;border-radius:16px;font-size:clamp(15px,4vw,18px)}
+  #play-pages-view #play-text.placeholder{font-size:clamp(15px,4vw,18px)}
+  #play-pages-view #play-page,#play-pages-view[data-layout=bottom] #play-page{right:17px;bottom:13px;font-size:13px}
+}
+
+/* One movie frame is also the editing, thumbnail and cover-reading preview. */
+.output-editor{position:relative;aspect-ratio:16/9;border:0;border-radius:0;background:#f7f7ef}
+.output-editor canvas,.record-output canvas,.cover-card>canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
+.output-editor #edit-scene{position:absolute;inset:auto;aspect-ratio:auto;min-height:0;opacity:0;z-index:2}
+.output-editor:focus-within{outline:3px solid #55765a;outline-offset:3px}
+.output-editor #edit-scene:focus-visible{opacity:0;outline:none}
+.output-editor #edit-cover-copy,.output-editor #edit-back-copy{display:none!important}
+.editor-pick-image{margin-top:10px}.output-hint{font-size:12px;color:var(--muted);line-height:1.6;margin-top:9px}
+.output-layout-label,.record-scene-label{display:flex;align-items:center;gap:12px;font-size:13px;margin-bottom:14px}
+.output-layout-label select,.record-scene-label select{flex:1;min-height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:8px 12px}
+.page-sidebar .thumb-art{height:auto;aspect-ratio:16/9}.thumb-art canvas{display:block;width:100%;height:100%}
+.page-sidebar .cover-thumb{display:flex;flex-direction:column;padding:0;gap:0;overflow:hidden}
+.cover-thumb canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}.cover-thumb span{padding:9px}
+.cover-card{max-width:none;padding:0;border:0;border-radius:0;overflow:hidden}.cover-card>.scene-wrap{display:none}
+.record-output{padding:0;border:0;border-radius:0}.record-output>.scene-wrap,.record-output>.story-text{display:none}
+.appearance-panel{margin:0 0 20px;border:1px solid var(--line);border-radius:14px;padding:0 14px 12px;background:#fffdfa}
+.appearance-panel summary{font-size:14px;font-weight:700}.appearance-panel p{font-size:12px;line-height:1.6;color:var(--muted);margin-top:12px}
+.appearance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:8px}
+.appearance-grid label{display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:700;min-width:0}
+.appearance-grid input,.appearance-grid select{width:100%;min-height:38px;border:1px solid var(--line);border-radius:9px;padding:6px;background:white}
+.appearance-grid input[type=range]{padding:0;accent-color:var(--green)}.appearance-grid input[type=color]{padding:3px}
+.appearance-grid output{font-weight:400;font-variant-numeric:tabular-nums}.video-options input{display:block;width:100%;min-height:46px;margin-top:7px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:14px}
+#play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text,#play-pages-view #play-text.placeholder{font-size:calc(2.03125cqw * var(--page-font-scale,1))}
+#play-text strong{font-weight:700}
+@media(max-width:1099px){
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{aspect-ratio:var(--reader-image-ratio,816 / 592)}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text,#play-pages-view #play-text.placeholder{font-size:calc(clamp(16px,2.5vw,22px) * var(--page-font-scale,1))}
+}
+@media(min-width:700px) and (max-width:1099px) and (orientation:landscape){
+  #play-pages-view .story-card{min-height:0;grid-template-rows:auto calc((100cqw - 50px) * .5918367347 * var(--reader-image-height-factor,.7254901961))}
+  #play-pages-view .scene-wrap,#play-pages-view[data-layout=bottom] .scene-wrap{height:100%;min-height:0}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text{min-height:0;font-size:calc(clamp(17px,1.9vw,21px) * var(--page-font-scale,1))}
+}
+@media(max-width:699px){
+  .appearance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .page-sidebar .cover-thumb{flex-direction:row;justify-content:flex-start;min-height:54px}
+  .page-sidebar .cover-thumb canvas{width:96px;flex:0 0 96px}
+  #play-pages-view #play-text,#play-pages-view[data-layout=bottom] #play-text,#play-pages-view #play-text.placeholder{font-size:calc(clamp(15px,4vw,18px) * var(--page-font-scale,1))}
+}
 </style>
 </head>
 <body>
@@ -96,26 +181,30 @@
       <section id="panel-edit" role="tabpanel" aria-labelledby="tab-edit">
         <div class="editor-heading"><div><span class="eyebrow">내가 만드는 작은 세상</span><h2>어떤 이야기를 만들까?</h2></div><button class="button small" id="new-book">＋ 새 책</button></div>
         <div class="book-fields"><label>책 이름<input id="book-title" maxlength="100" placeholder="나의 동화책" autocomplete="off"></label><label>읽어 주는 사람<input id="book-author" maxlength="40" placeholder="내 이름" autocomplete="off"></label></div>
-        <div class="book-appearance"><label for="font-size">가 글자 크기</label><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><input id="font-size" type="range" min="18" max="48" step="2" value="28"><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button><output id="font-size-label" for="font-size">28</output></div>
+        <div class="book-appearance"><label for="font-size">현재 영역 글자 크기</label><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><input id="font-size" type="range" min="14" max="96" step="2" value="28"><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button><output id="font-size-label" for="font-size">28</output></div>
         <div class="editor-layout">
-          <aside class="page-sidebar" aria-label="동화 페이지"><div class="sidebar-heading"><strong>나의 페이지</strong><span id="page-total"></span></div><button id="edit-cover" class="cover-thumb"><span aria-hidden="true">📕</span><span>표지 만들기</span></button><button id="edit-back-cover" class="cover-thumb"><span aria-hidden="true">🌙</span><span>뒷표지 만들기</span></button><div id="page-list" class="page-list"></div><button class="add-page" id="add-page"><span aria-hidden="true">＋</span> 한 장 더</button></aside>
+          <aside class="page-sidebar" aria-label="동화 페이지"><div class="sidebar-heading"><strong>나의 페이지</strong><span id="page-total"></span></div><button id="edit-cover" class="cover-thumb"><canvas id="cover-thumb-canvas" width="320" height="180" aria-hidden="true"></canvas><span>표지 만들기</span></button><button id="edit-back-cover" class="cover-thumb"><canvas id="back-thumb-canvas" width="320" height="180" aria-hidden="true"></canvas><span>뒷표지 만들기</span></button><div id="page-list" class="page-list"></div><button class="add-page" id="add-page"><span aria-hidden="true">＋</span> 한 장 더</button></aside>
           <div class="editor-card">
             <div class="section-line"><h3 id="editor-page-title">1번째 이야기</h3><span id="edit-recorded" class="pill"></span></div>
             <label id="cover-toggle-row" class="cover-toggle" hidden><input id="cover-enabled" type="checkbox"> 이 표지로 책 시작하기</label>
             <label id="back-cover-toggle-row" class="cover-toggle" hidden><input id="back-cover-enabled" type="checkbox"> 이 뒷표지로 책 마무리하기</label>
-            <div class="image-picker"><div id="edit-scene" class="scene editable-scene" tabindex="0" role="group" aria-label="그림 위치 조정. 손가락으로 움직이거나 방향키를 누르세요."></div><div id="edit-cover-copy" class="cover-overlay" hidden><h2 id="edit-cover-title"></h2><p id="edit-cover-author"></p></div><div id="edit-back-copy" class="back-overlay" hidden><h2 id="edit-back-title"></h2><p id="edit-back-message"></p><small id="edit-back-author"></small></div><button id="pick-image" class="image-pick-label" aria-label="그림 고르기">🖼️ 그림 고르기</button></div>
+            <label class="output-layout-label">본문 배치<select id="editor-layout"><option value="side">왼쪽 그림 · 오른쪽 글</option><option value="bottom">큰 그림 · 하단 말풍선</option></select></label>
+            <div class="image-picker output-editor"><canvas id="edit-output" width="1280" height="720" aria-label="WebM과 동일한 편집 미리보기"></canvas><div id="edit-scene" class="scene editable-scene" tabindex="0" role="group" aria-label="미리보기의 그림 위치 조정. 손가락으로 움직이거나 방향키를 누르세요."></div><div id="edit-cover-copy" class="cover-overlay" hidden><h2 id="edit-cover-title"></h2><p id="edit-cover-author"></p></div><div id="edit-back-copy" class="back-overlay" hidden><h2 id="edit-back-title"></h2><p id="edit-back-message"></p><small id="edit-back-author"></small></div></div><button id="pick-image" class="button small editor-pick-image" aria-label="그림 고르기">🖼️ 그림 고르기</button>
+            <p class="output-hint">영상과 같은 화면이에요. 그림 부분을 움직여 위치를 맞춰 주세요.</p>
             <div class="image-adjust"><div class="zoom-row"><button id="zoom-out" class="button small" aria-label="그림 축소">−</button><label for="image-zoom" class="sr-only">그림 크기</label><input id="image-zoom" type="range" min="50" max="300" step="5" value="100"><button id="zoom-in" class="button small" aria-label="그림 확대">＋</button><output id="image-zoom-label" for="image-zoom">100%</output></div><div class="image-adjust-bottom"><span>👆 그림을 움직여 맞춰요</span><div><button id="image-contain" class="button small">전체 보기</button><button id="image-fill" class="button small">가득 채우기</button><button id="image-reset" class="button small" aria-label="그림 위치와 크기 초기화">↺</button></div></div></div>
             <div class="friend-row"><span>친구 그림</span><div id="friend-choices" class="friend-choices"></div></div>
-            <div id="back-cover-writing" class="back-cover-writing" hidden><label>마무리 제목<input id="back-cover-title" maxlength="80" placeholder="함께해 줘서 고마워요"></label><label>마지막 인사<textarea id="back-cover-text" maxlength="300" rows="3" placeholder="우리의 이야기는 내일도 계속돼요."></textarea></label><p>마지막 그림과 인사를 영상 끝에 6초 동안 보여 줘요.</p></div>
+            <details id="appearance-panel" class="appearance-panel" open><summary>글자 · 표지 상자 꾸미기</summary><div class="appearance-grid"><label>글자 영역<select id="style-text-part"><option value="title">본문</option></select></label><label>글자 크기<input id="style-font-size" type="number" min="14" max="96" value="26"></label><label>글자 색<input id="style-font-color" type="color" value="#303330"></label></div><div id="cover-box-controls" class="appearance-grid" hidden><label>상자 가로 위치 (%)<input id="box-x" type="range" min="0" max="100" step="0.5"><output id="box-x-value"></output></label><label>상자 세로 위치 (%)<input id="box-y" type="range" min="0" max="100" step="0.5"><output id="box-y-value"></output></label><label>상자 너비 (%)<input id="box-width" type="range" min="20" max="100" step="0.5"><output id="box-width-value"></output></label><label>상자 높이 (%)<input id="box-height" type="range" min="15" max="100" step="0.5"><output id="box-height-value"></output></label><label>상자 배경색<input id="box-color" type="color"></label><label>배경 불투명도 (%)<input id="box-opacity" type="range" min="0" max="100"><output id="box-opacity-value"></output></label></div><p>선택한 표지·뒷표지·페이지만 바뀌어요. 화면이 작아지면 같은 비율로 표시해요.</p></details>
+            <div id="back-cover-writing" class="back-cover-writing" hidden><label>마무리 제목<input id="back-cover-title" maxlength="80" placeholder="함께해 줘서 고마워요"></label><label>마지막 인사<textarea id="back-cover-text" maxlength="300" rows="3" placeholder="우리의 이야기는 내일도 계속돼요."></textarea></label><p>녹음이 있으면 목소리가 끝날 때까지, 없으면 6초 동안 보여 줘요.</p></div>
             <div id="page-writing"><label class="text-label" for="page-text">✏️ 여기에 이야기를 써요 <span id="text-count">0 / 5,000</span></label><textarea id="page-text" maxlength="5000" rows="4" placeholder="옛날 옛날, 작은 숲에…"></textarea></div>
             <div class="editor-bottom"><details id="page-organize"><summary>⚙️ 페이지 정리</summary><div class="organize"><button class="button small" id="move-left">← 앞으로</button><button class="button small" id="move-right">뒤로 →</button><button class="button small danger" id="delete-page">🗑️ 이 장 지우기</button></div></details><button class="button primary" id="go-record">목소리 담으러 가기 <span aria-hidden="true">→</span></button></div>
           </div>
         </div>
       </section>
       <section id="panel-record" role="tabpanel" aria-labelledby="tab-record" hidden>
+        <label class="record-scene-label">목소리를 담을 곳<select id="record-scene-select"></select></label>
         <div class="reader-heading"><div><span class="eyebrow">들어 보고, 내 목소리로!</span><h2>이야기에 목소리를 담아요</h2></div><span id="record-progress" class="pill pink"></span></div>
         <div class="reader-tools"><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
-        <div class="story-card"><div class="scene-wrap"><div id="record-scene" class="scene large"></div><span class="page-ribbon" id="record-page"></span></div><div id="record-text" class="story-text"></div></div>
+        <div class="story-card record-output"><canvas id="record-output" width="1280" height="720" aria-label="녹음할 장면"></canvas><div class="scene-wrap"><div id="record-scene" class="scene large"></div><span class="page-ribbon" id="record-page"></span></div><div id="record-text" class="story-text"></div></div>
         <div class="record-actions"><button id="tts-button" class="big-action listen"><span class="action-icon" aria-hidden="true">🔊</span><span class="action-label">들어 보기</span></button><button id="record-button" class="big-action record"><span class="action-icon" aria-hidden="true">🎙️</span><span class="action-label">녹음하기</span></button><button id="preview-button" class="big-action preview"><span class="action-icon" aria-hidden="true">🎧</span><span class="action-label">내 목소리</span></button></div>
         <div class="record-feedback"><span id="record-status" role="status" aria-live="polite">듣고, 내 목소리로 읽어 보세요.</span><span id="record-clock" hidden>00:00</span><button class="link-button" id="undo-recording" hidden>↶ 이전 목소리</button></div>
         <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="record-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
@@ -125,10 +214,10 @@
       <section id="panel-play" role="tabpanel" aria-labelledby="tab-play" hidden>
         <div class="reader-heading"><div><span class="eyebrow" id="narrator"></span><h2 id="play-title"></h2></div><span class="pill" id="play-progress"></span></div>
         <div class="reader-tools"><button id="show-cover" class="button small">📕 표지 보기</button><button id="show-back-cover" class="button small">🌙 뒷표지 보기</button><span>글자 크기</span><button class="button small" data-font-step="-2" aria-label="글자 작게">가 −</button><button class="button small" data-font-step="2" aria-label="글자 크게">가 ＋</button></div>
-        <div id="book-cover-view" hidden><div class="story-card cover-card"><div class="scene-wrap"><div id="play-cover-scene" class="scene large"></div><div class="cover-overlay"><h2 id="cover-book-title"></h2><p id="cover-book-author"></p></div></div></div><div class="play-controls"><button id="open-cover" class="button primary play-button">▶ 책 펼치기</button></div></div>
-        <div id="book-back-view" hidden><div class="story-card cover-card"><div class="scene-wrap"><div id="play-back-scene" class="scene large"></div><div class="back-overlay"><h2 id="back-book-title"></h2><p id="back-book-message"></p><small id="back-book-author"></small></div></div></div><div class="play-controls"><button id="back-restart" class="button primary">↻ 처음부터 다시 듣기</button></div></div>
+        <div id="book-cover-view" hidden><div class="story-card cover-card"><canvas id="play-cover-output" width="1280" height="720" aria-label="표지"></canvas><div class="scene-wrap"><div id="play-cover-scene" class="scene large"></div><div class="cover-overlay"><h2 id="cover-book-title"></h2><p id="cover-book-author"></p></div></div></div><div class="play-controls"><button id="open-cover" class="button primary play-button">▶ 책 펼치기</button></div></div>
+        <div id="book-back-view" hidden><div class="story-card cover-card"><canvas id="play-back-output" width="1280" height="720" aria-label="뒷표지"></canvas><div class="scene-wrap"><div id="play-back-scene" class="scene large"></div><div class="back-overlay"><h2 id="back-book-title"></h2><p id="back-book-message"></p><small id="back-book-author"></small></div></div></div><div class="play-controls"><button id="back-audio-button" class="button primary">▶ 뒷표지 목소리</button><button id="back-restart" class="button primary">↻ 처음부터 다시 듣기</button></div></div>
         <div id="play-pages-view">
-        <div class="story-card"><div class="scene-wrap"><div id="play-scene" class="scene large"></div><span class="page-ribbon" id="play-page"></span></div><div id="play-text" class="story-text"></div></div>
+        <div class="story-card"><div id="play-video-title"></div><div class="scene-wrap"><div id="play-scene" class="scene large"></div></div><div id="play-text" class="story-text"></div><span class="page-ribbon" id="play-page"></span></div>
         <div class="play-controls"><button id="play-button" class="button primary play-button"><span aria-hidden="true">▶</span> 동화 시작</button><button id="restart-button" class="button">↻ 처음부터</button></div>
         <div class="play-message" id="play-status" role="status" aria-live="polite">내 목소리로 페이지가 하나씩 넘어가요.</div>
         <div class="page-navigation"><button class="button nav-button" data-prev aria-label="이전 페이지">← 이전</button><div id="play-dots" class="page-dots" aria-label="페이지 선택"></div><button class="button nav-button" data-next aria-label="다음 페이지">다음 →</button></div>
@@ -150,7 +239,7 @@
     <div class="video-heading"><div><span class="eyebrow">내 이야기를 한 편의 영상으로</span><h2 id="video-heading">WebM 동화 만들기</h2></div><button id="video-close" class="button small" aria-label="영상 창 닫기">닫기</button></div>
     <div class="video-options">
       <label for="video-layout">본문 배치<select id="video-layout"><option value="side" selected>상단 제목·페이지 + 왼쪽 그림·오른쪽 글</option><option value="bottom">큰 이미지 + 하단 말풍선</option></select></label>
-      <label for="video-font">본문 글자 크기<select id="video-font"><option value="22">작게</option><option value="26" selected>기본 · 작은 글씨</option><option value="30">조금 크게</option></select></label>
+      <label for="video-font">이 장 본문 글자 크기<input id="video-font" type="number" min="14" max="96" value="26"></label>
       <label for="video-scene">미리 볼 페이지<select id="video-scene"></select></label>
     </div>
     <div class="video-music"><div class="music-buttons"><button id="music-pick" class="button small">♫ 배경음악 첨부</button><span id="music-name">음악 없음</span><button id="music-remove" class="button small" hidden>음악 제거</button></div><div id="music-settings" class="music-settings" hidden><label><input id="music-enabled" type="checkbox" checked> 영상에 음악 넣기</label><label for="music-volume">음악 크기 <output id="music-volume-label">15%</output></label><input id="music-volume" type="range" min="0" max="50" value="15"><audio id="music-preview" controls preload="metadata"></audio></div><p class="video-note">작은 소리로 반복 재생하고 끝에서 서서히 줄여요. 음악과 설정은 동화 작업 파일에 함께 저장돼요.</p></div>
@@ -164,8 +253,6 @@
     <div class="video-actions"><button id="video-create" class="button primary">🎬 영상 만들기</button><button id="video-cancel" class="button danger" hidden>만들기 취소</button><a id="video-download" class="button save" hidden>↓ WebM 저장</a></div>
   </dialog>
   <noscript>동화책을 사용하려면 브라우저의 JavaScript를 켜 주세요.</noscript>
-  <!-- WebM 재생 시간 보정 라이브러리 -->
-  <script src="https://cdn.jsdelivr.net/npm/fix-webm-duration@1.0.5/fix-webm-duration.js"></script>
   <script>const ART = {"rabbit":"./rabbit.png","bear":"./bear.png","cat":"./cat.png","penguin":"./penguin.png"};</script>
   <script>'use strict';
 const StoryCore = (() => {
@@ -173,15 +260,25 @@ const StoryCore = (() => {
   const uid = () => globalThis.crypto?.randomUUID?.() || 'p-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
   const clamp = (value,min,max) => Math.min(max,Math.max(min,value));
   const frame = (value = {}) => ({zoom:clamp(Number.isFinite(value?.zoom)?value.zoom:1,.5,3),x:clamp(Number.isFinite(value?.x)?value.x:0,-100,100),y:clamp(Number.isFinite(value?.y)?value.y:0,-100,100),fit:value?.fit==='cover'?'cover':'contain'});
-  const page = (image = '', text = '') => ({id:uid(),image,text,decorated:image.startsWith('art:'),frame:frame(),audio:null,previousAudio:null});
-  const cover = (enabled = false) => ({enabled,image:'art:rabbit',decorated:true,frame:frame()});
-  const backCover = (enabled=false) => ({enabled,image:'',decorated:false,frame:frame(),title:'함께해 줘서 고마워요',text:'우리의 이야기는 내일도 계속돼요.'});
-  function blank() { return {title:'나의 동화책',author:'',fontSize:28,cover:cover(true),backCover:backCover(),music:null,pages:[page()]}; }
+  const color=(value,fallback)=>/^#[0-9a-f]{6}$/i.test(value || '')?value:fallback;
+  function appearance(kind='page',value={}) {
+    value=value || {};const back=kind==='back',isPage=kind==='page';
+    const rect=back?[110/12.8,365/7.2,1060/12.8,305/7.2]:[132/12.8,200/7.2,1016/12.8,328/7.2];
+    const number=(n,f,min,max)=>clamp(Number.isFinite(n)?n:f,min,max),b=value.box || {};
+    const width=number(b.width,rect[2],20,100),height=number(b.height,rect[3],15,100);
+    return {fontSize:number(value.fontSize,isPage?26:back?48:68,14,96),color:color(value.color,isPage?'#303330':'#ffffff'),messageSize:number(value.messageSize,28,14,72),messageColor:color(value.messageColor,'#ffffff'),creditSize:number(value.creditSize,back?22:32,12,64),creditColor:color(value.creditColor,back?'#e7e8dc':'#f3f0ed'),box:{x:number(b.x,rect[0],0,100-width),y:number(b.y,rect[1],0,100-height),width,height,color:color(b.color,back?'#14201c':'#141414'),opacity:number(b.opacity,back?.68:.63,0,1)}};
+  }
+  const page = (image = '', text = '') => ({id:uid(),image,text,decorated:image.startsWith('art:'),frame:frame(),appearance:appearance(),audio:null,previousAudio:null});
+  const cover = (enabled = false) => ({enabled,image:'art:rabbit',decorated:true,frame:frame(),appearance:appearance('cover'),audio:null,previousAudio:null});
+  const backCover = (enabled=false) => ({enabled,image:'',decorated:false,frame:frame(),appearance:appearance('back'),audio:null,previousAudio:null,title:'함께해 줘서 고마워요',text:'우리의 이야기는 내일도 계속돼요.'});
+  function blank() { return {title:'나의 동화책',author:'',fontSize:28,layout:'side',cover:cover(true),backCover:backCover(),music:null,pages:[page()]}; }
   function normalizeBook(book) {
     book.fontSize=clamp(Number.isFinite(book.fontSize)?book.fontSize:28,18,48);
     book.cover=book.cover || cover(); book.cover.frame=frame(book.cover.frame);
     book.backCover=book.backCover || backCover();book.backCover.frame=frame(book.backCover.frame);
     book.music=book.music || null;
+    book.layout=book.layout==='bottom'?'bottom':'side';
+    for(const [item,kind] of [[book.cover,'cover'],[book.backCover,'back'],...book.pages.map(p=>[p,'page'])]){item.appearance=appearance(kind,item.appearance);item.audio=item.audio || null;item.previousAudio=item.previousAudio || null;}
     book.pages.forEach(p=>{p.frame=frame(p.frame);}); return book;
   }
   function voiceGender(voice) {
@@ -244,38 +341,38 @@ const StoryCore = (() => {
     let bookCover=cover();
     if (raw.cover != null) {
       if (typeof raw.cover.enabled!=='boolean' || !validMedia(raw.cover.image,'image',assets)) throw new Error('표지 그림 정보가 올바르지 않아요.');
-      bookCover={enabled:raw.cover.enabled,image:raw.cover.image,decorated:raw.cover.decorated===true || raw.cover.image.startsWith('art:'),frame:frame(raw.cover.frame)};
+      bookCover={enabled:raw.cover.enabled,image:raw.cover.image,decorated:raw.cover.decorated===true || raw.cover.image.startsWith('art:'),frame:frame(raw.cover.frame),appearance:appearance('cover',raw.cover.appearance),audio:audio(raw.cover.audio),previousAudio:audio(raw.cover.previousAudio)};
     }
     let ending=backCover(),music=null;
     if(raw.backCover!=null){
       const b=raw.backCover;
       if(typeof b.enabled!=='boolean' || !validMedia(b.image,'image',assets) || typeof b.title!=='string' || b.title.length>80 || typeof b.text!=='string' || b.text.length>300)throw new Error('뒷표지 정보를 확인해 주세요.');
-      ending={enabled:b.enabled,image:b.image,decorated:b.decorated===true || b.image.startsWith('art:'),frame:frame(b.frame),title:b.title,text:b.text};
+      ending={enabled:b.enabled,image:b.image,decorated:b.decorated===true || b.image.startsWith('art:'),frame:frame(b.frame),title:b.title,text:b.text,appearance:appearance('back',b.appearance),audio:audio(b.audio),previousAudio:audio(b.previousAudio)};
     }
     if(raw.music!=null){
       const m=raw.music;
       if(typeof m.name!=='string' || m.name.length>255 || !validMedia(m.data,'audio',assets) || m.data.length>42*1024*1024 || !Number.isFinite(m.volume) || typeof m.enabled!=='boolean')throw new Error('배경음악 정보를 확인해 주세요.');
       music={name:m.name,data:m.data,volume:clamp(m.volume,0,.5),enabled:m.enabled};
     }
-    return normalizeBook({title:raw.title,author:raw.author,cover:bookCover,backCover:ending,music,fontSize:raw.fontSize,pages:raw.pages.map(p => {
+    return normalizeBook({title:raw.title,author:raw.author,cover:bookCover,backCover:ending,music,fontSize:raw.fontSize,layout:raw.layout,pages:raw.pages.map(p => {
       if (!p || typeof p.text !== 'string' || p.text.length > 5000 || !validMedia(p.image,'image',assets)) throw new Error('페이지의 그림이나 글 정보가 올바르지 않아요.');
-      return {...page(p.image,p.text),frame:frame(p.frame),decorated:p.decorated===true || p.image.startsWith('art:'),audio:audio(p.audio),previousAudio:audio(p.previousAudio)};
+      return {...page(p.image,p.text),frame:frame(p.frame),appearance:appearance('page',p.appearance),decorated:p.decorated===true || p.image.startsWith('art:'),audio:audio(p.audio),previousAudio:audio(p.previousAudio)};
     })});
   }
   function pack(book, assets = {}, portable = true) {
     const image = source => portable && source.startsWith('art:') && assets[source.slice(4)]?.startsWith('data:') ? assets[source.slice(4)] : source;
     const bookCover=book.cover || cover();
     const ending=book.backCover || backCover();
-    return {format:'little-storybook',version:3,savedAt:new Date().toISOString(),title:book.title,author:book.author,fontSize:book.fontSize || 28,
+    return {format:'little-storybook',version:3,savedAt:new Date().toISOString(),title:book.title,author:book.author,fontSize:book.fontSize || 28,layout:book.layout || 'side',
     backCover:{...ending,image:image(ending.image),frame:frame(ending.frame)},music:book.music || null,
     cover:{...bookCover,image:bookCover.enabled?image(bookCover.image):'',frame:frame(bookCover.frame)},pages:book.pages.map(p => ({
       image:image(p.image),
-      text:p.text,frame:frame(p.frame),decorated:p.decorated===true || p.image.startsWith('art:'),audio:p.audio,previousAudio:p.previousAudio || null
+      text:p.text,frame:frame(p.frame),appearance:appearance('page',p.appearance),decorated:p.decorated===true || p.image.startsWith('art:'),audio:p.audio,previousAudio:p.previousAudio || null
     }))};
   }
   function missing(book, start = 0) { return book.pages.slice(start).map((p,i) => p.audio ? null : start+i).filter(i => i !== null); }
   function filename(title) { return (title.trim().replace(/[<>:"/\\|?*\u0000-\u001f]/g,'_').replace(/[. ]+$/g,'').slice(0,70) || '나의 동화책') + '.story.json'; }
-  return {MAX_PAGES,uid,page,blank,cover,backCover,frame,clamp,normalizeBook,voiceGender,samsungVoice,splitText,richText,validate,pack,missing,filename};
+  return {MAX_PAGES,uid,page,blank,cover,backCover,frame,appearance,clamp,normalizeBook,voiceGender,samsungVoice,splitText,richText,validate,pack,missing,filename};
 })();
 </script>
   <script>'use strict';
@@ -308,13 +405,9 @@ const StoryVideo = (() => {
   }
   function captions(ctx,text,layout,fontSize=26) {
     const box=geometry(layout).text;
-    let size=StoryCore.clamp(fontSize,22,32), lines;
-    do {
-      ctx.font=`400 ${size}px ${FONT}`;
-      lines=wrapRich(ctx,text,box[2],size);
-      if(lines.length*Math.round(size*1.5)<=box[3] || size<=22)break;
-      size-=2;
-    } while(true);
+    const size=Math.min(StoryCore.clamp(fontSize,14,96),Math.floor(box[3]/1.5));
+    ctx.font=`400 ${size}px ${FONT}`;
+    const lines=wrapRich(ctx,text,box[2],size);
     const per=Math.max(1,Math.floor(box[3]/Math.round(size*1.5))), parts=[];
     for(let i=0;i<lines.length;i+=per)parts.push(lines.slice(i,i+per));
     return {size,lineHeight:Math.round(size*1.5),parts};
@@ -349,41 +442,30 @@ const StoryVideo = (() => {
     }
     ctx.restore();
   }
+  function drawCover(ctx,book,scene,img) {
+    const back=scene===-2,item=back?book.backCover:book.cover,a=StoryCore.appearance(back?'back':'cover',item.appearance),b=a.box;
+    picture(ctx,img,item,[0,0,WIDTH,HEIGHT]);
+    const rect=[b.x*12.8,b.y*7.2,b.width*12.8,b.height*7.2];
+    const red=parseInt(b.color.slice(1,3),16),green=parseInt(b.color.slice(3,5),16),blue=parseInt(b.color.slice(5,7),16);
+    rounded(ctx,rect,Math.min(36,rect[3]/6),`rgba(${red},${green},${blue},${b.opacity})`);
+    const groups=[{text:back?item.title:book.title || '나의 동화책',size:a.fontSize,color:a.color,weight:700}];
+    if(back)groups.push({text:item.text,size:a.messageSize,color:a.messageColor,weight:400});
+    groups.push({text:book.author?`글 · 목소리 ${book.author}`:back?book.title:'나의 목소리 동화책',size:a.creditSize,color:a.creditColor,weight:400});
+    const padding=Math.min(36,rect[2]*.06,rect[3]*.1),width=rect[2]-2*padding,available=rect[3]-2*padding;
+    let scale=1,total,prepared;
+    do{
+      prepared=groups.map(group=>{const size=group.size*scale;ctx.font=`${group.weight} ${size}px ${FONT}`;return {...group,size,lines:wrap(ctx,group.text,width)};});
+      total=prepared.reduce((sum,group)=>sum+group.lines.length*group.size*1.35,0)+(groups.length-1)*20*scale;
+      if(total<=available)break;scale*=.94;
+    }while(scale>.06);
+    ctx.save();ctx.beginPath();ctx.rect(...rect);ctx.clip();ctx.textAlign='center';let y=rect[1]+(rect[3]-total)/2;
+    for(const group of prepared){ctx.font=`${group.weight} ${group.size}px ${FONT}`;ctx.fillStyle=group.color;for(const line of group.lines){ctx.fillText(line,rect[0]+rect[2]/2,y);y+=group.size*1.35;}y+=20*scale;}
+    ctx.restore();ctx.textAlign='left';return {parts:[[]],size:a.fontSize,lineHeight:0};
+  }
   function draw(ctx,book,scene,img,layout,fontSize=26,part=0) {
     ctx.clearRect(0,0,WIDTH,HEIGHT);ctx.fillStyle='#f7f7ef';ctx.fillRect(0,0,WIDTH,HEIGHT);
     ctx.textBaseline='top';ctx.textAlign='left';
-    if(scene===-2) {
-      const ending=book.backCover;
-      picture(ctx,img,ending,[0,0,WIDTH,HEIGHT]);
-      const gradient=ctx.createLinearGradient(0,260,0,720);gradient.addColorStop(0,'rgba(15,24,22,0)');gradient.addColorStop(1,'rgba(15,24,22,.88)');
-      ctx.fillStyle=gradient;ctx.fillRect(0,260,WIDTH,460);
-      rounded(ctx,[110,365,1060,305],30,'rgba(20,32,28,.68)');
-      let size=48,titleLines;
-      do{ctx.font=`700 ${size}px ${FONT}`;titleLines=wrap(ctx,ending.title,960);if(titleLines.length*size*1.25<=122)break;size-=2;}while(size>22);
-      ctx.textAlign='center';ctx.fillStyle='#fff';
-      const y=387+(122-titleLines.length*size*1.25)/2;
-      titleLines.forEach((line,i)=>ctx.fillText(line,640,y+i*size*1.25));
-      let small=28,lines;
-      do{ctx.font=`400 ${small}px ${FONT}`;lines=wrap(ctx,ending.text,960);if(lines.length*small*1.5<=96)break;small--;}while(small>14);
-      lines.forEach((line,i)=>ctx.fillText(line,640,516+i*small*1.5));
-      const credit=book.author?`글 · 목소리 ${book.author}`:book.title;
-      ctx.font=`400 22px ${FONT}`;ctx.fillStyle='#e7e8dc';ctx.fillText(credit,640,632,960);ctx.textAlign='left';
-      return {parts:[[]],size,lineHeight:0};
-    }
-    if(scene===-1) {
-      picture(ctx,img,book.cover,[0,0,WIDTH,HEIGHT]);
-      rounded(ctx,[132,200,1016,328],36,'rgba(20,20,20,.63)');
-      let size=68,lines;
-      do {ctx.font=`700 ${size}px ${FONT}`;lines=wrap(ctx,book.title || '나의 동화책',912);if(lines.length*size*1.22<=206)break;size-=2;}while(size>24);
-      const credit=book.author?`글 · 목소리 ${book.author}`:'나의 목소리 동화책';
-      let creditSize=32;
-      do{ctx.font=`400 ${creditSize}px ${FONT}`;if(ctx.measureText(credit).width<=900)break;creditSize--;}while(creditSize>16);
-      const titleHeight=lines.length*size*1.22,top=364-(titleHeight+40+creditSize*1.25)/2;
-      ctx.font=`700 ${size}px ${FONT}`;ctx.fillStyle='#fff';ctx.textAlign='center';
-      lines.forEach((line,i)=>ctx.fillText(line,640,top+i*size*1.22));
-      ctx.font=`400 ${creditSize}px ${FONT}`;ctx.fillStyle='#f3f0ed';ctx.fillText(credit,640,top+titleHeight+40);ctx.textAlign='left';
-      return {parts:[[]],size,lineHeight:0};
-    }
+    if(scene<0)return drawCover(ctx,book,scene,img);
     const page=book.pages[scene],g=geometry(layout);
     if(layout==='side'){
       ctx.fillStyle='#454a43';ctx.font=`700 28px ${FONT}`;ctx.fillText(book.title || '나의 동화책',40,38,1020);
@@ -391,8 +473,9 @@ const StoryVideo = (() => {
     }
     picture(ctx,img,page,g.image,layout==='side'?26:0);
     rounded(ctx,g.bubble,28,layout==='side'?'#ffffff':'rgba(255,255,255,.94)','#deded8');
-    const copy=captions(ctx,page.text,layout,fontSize);
-    ctx.font=`400 ${copy.size}px ${FONT}`;ctx.fillStyle='#303330';
+    const appearance=StoryCore.appearance('page',page.appearance);
+    const copy=captions(ctx,page.text,layout,page.appearance?appearance.fontSize:fontSize);
+    ctx.font=`400 ${copy.size}px ${FONT}`;ctx.fillStyle=appearance.color;
     copy.parts[Math.min(part,copy.parts.length-1)].forEach((line,i)=>drawRichLine(ctx,line,g.text[0],g.text[1]+i*copy.lineHeight,copy.size));
     ctx.font=`400 20px ${FONT}`;ctx.fillStyle='#80847d';ctx.textAlign='right';
     const continued=copy.parts.length>1?`글 ${part+1}/${copy.parts.length}`:'';
@@ -419,7 +502,7 @@ const StoryVideo = (() => {
   }
   function mimeType() {
     if(!globalThis.MediaRecorder)return '';
-    return ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(type=>MediaRecorder.isTypeSupported(type)) || '';
+    return ['video/webm;codecs=vp8,opus','video/webm;codecs=vp9,opus','video/webm'].find(type=>MediaRecorder.isTypeSupported(type)) || '';
   }
   function supported(canvas) { return !!(mimeType() && canvas.captureStream && (globalThis.AudioContext || globalThis.webkitAudioContext)); }
   function duration(page,copy,audioDuration=0) {
@@ -427,6 +510,114 @@ const StoryVideo = (() => {
     return Math.max(5,Array.from(page.text.replace(/\s/g,'')).length/7,copy.parts.length*4);
   }
   return {WIDTH,HEIGHT,geometry,wrap,captions,draw,loadImage,mimeType,supported,duration,record:options=>StoryRecorder.record(options)};
+})();
+</script>
+  <script>'use strict';
+// Add Duration, SeekHead and video Cues to Chromium's streaming MediaRecorder WebM.
+// The recorder emits unknown-sized Segment/Cluster elements without an index.
+const SeekableWebM=(()=>{
+  const id=hex=>Uint8Array.from(hex.match(/../g).map(part=>parseInt(part,16)));
+  const join=(...parts)=>{const size=parts.reduce((sum,p)=>sum+p.length,0),out=new Uint8Array(size);let at=0;for(const p of parts){out.set(p,at);at+=p.length;}return out;};
+  function vint(bytes,at,identifier=false){
+    if(at>=bytes.length)throw new Error('잘린 WebM 데이터예요.');
+    let length=1;while(length<=8 && !(bytes[at]&(0x80>>(length-1))))length++;
+    if(length>8 || at+length>bytes.length)throw new Error('WebM 요소 길이가 올바르지 않아요.');
+    let value=BigInt(identifier?bytes[at]:bytes[at]&(0xff>>length));
+    for(let i=1;i<length;i++)value=value*256n+BigInt(bytes[at+i]);
+    return {length,value,unknown:!identifier && value===(1n<<BigInt(length*7))-1n};
+  }
+  function elementAt(bytes,at){
+    const tag=vint(bytes,at,true),size=vint(bytes,at+tag.length),data=at+tag.length+size.length;
+    const end=size.unknown?bytes.length:data+Number(size.value);
+    if(end>bytes.length)throw new Error('WebM 요소가 파일 범위를 넘었어요.');
+    return {at,id:Number(tag.value),data,end,unknown:size.unknown,header:data-at};
+  }
+  function children(bytes,start,end,visit){
+    for(let at=start;at<end;){const item=elementAt(bytes,at);if(item.unknown || item.end>end)throw new Error('WebM 메타데이터를 읽지 못했어요.');visit(item);at=item.end;}
+  }
+  function uint(bytes,start,end){let value=0n;for(let i=start;i<end;i++)value=value*256n+BigInt(bytes[i]);return value;}
+  function uintBytes(value,width=0){
+    value=BigInt(value);let count=width||1;if(!width)while(value>=1n<<BigInt(count*8))count++;
+    const out=new Uint8Array(count);for(let i=count-1;i>=0;i--){out[i]=Number(value&255n);value>>=8n;}
+    return out;
+  }
+  function sizeBytes(value,width=0){
+    value=BigInt(value);let count=width||1;while(!width && count<8 && value>=(1n<<BigInt(count*7))-1n)count++;
+    if(value>=(1n<<BigInt(count*7))-1n)throw new Error('WebM 파일이 너무 커요.');
+    return uintBytes((1n<<BigInt(count*7))|value,count);
+  }
+  const element=(tag,payload)=>join(id(tag),sizeBytes(payload.length),payload);
+  const number=(tag,value,width=0)=>element(tag,uintBytes(value,width));
+  function repair(buffer,durationMs){
+    const bytes=new Uint8Array(buffer);
+    const ebml=elementAt(bytes,0),segment=elementAt(bytes,ebml.end);
+    if(ebml.id!==0x1a45dfa3 || segment.id!==0x18538067 || !segment.unknown)throw new Error('이 브라우저의 WebM 형식을 보정할 수 없어요.');
+    const segmentStart=segment.data;
+    let info,tracks,firstCluster,scale=1000000n,videoTrack=null;
+    for(let at=segmentStart;at<bytes.length;){
+      const item=elementAt(bytes,at);
+      if(item.id===0x1549a966){info=item;children(bytes,item.data,item.end,child=>{if(child.id===0x2ad7b1)scale=uint(bytes,child.data,child.end);});}
+      if(item.id===0x1654ae6b){tracks=item;children(bytes,item.data,item.end,entry=>{
+        if(entry.id!==0xae)return;
+        let type,number;
+        children(bytes,entry.data,entry.end,field=>{if(field.id===0x83)type=Number(uint(bytes,field.data,field.end));if(field.id===0xd7)number=Number(uint(bytes,field.data,field.end));});
+        if(type===1)videoTrack=number;
+      });}
+      if(item.id===0x1f43b675){firstCluster=at;break;}
+      if(item.unknown)throw new Error('WebM 메타데이터가 끝나지 않았어요.');
+      at=item.end;
+    }
+    if(!info || !tracks || firstCluster==null || videoTrack==null || scale<=0n)throw new Error('WebM 영상 트랙과 시간을 찾지 못했어요.');
+    const clusters=[];
+    for(let at=firstCluster;at<bytes.length;){
+      const cluster=elementAt(bytes,at);if(cluster.id!==0x1f43b675)throw new Error('WebM 영상 블록이 올바르지 않아요.');
+      let time=0n,key=false,next=cluster.end;
+      for(let cursor=cluster.data;cursor<cluster.end;){
+        const child=elementAt(bytes,cursor);
+        if(child.id===0x1f43b675){next=cursor;break;}
+        if(child.unknown)throw new Error('WebM 블록 길이가 올바르지 않아요.');
+        if(child.id===0xe7)time=uint(bytes,child.data,child.end);
+        if(child.id===0xa3 && child.end-child.data>=4){
+          const track=vint(bytes,child.data);
+          const flags=bytes[child.data+track.length+2];
+          if(Number(track.value)===videoTrack && flags&0x80)key=true;
+        }
+        if(child.id===0xa0){
+          let block=null,reference=false;
+          children(bytes,child.data,child.end,field=>{
+            if(field.id===0xa1)block=field;
+            if(field.id===0xfb)reference=true;
+          });
+          if(block && !reference && Number(vint(bytes,block.data).value)===videoTrack)key=true;
+        }
+        cursor=child.end;
+      }
+      clusters.push({at,data:cluster.data,time,key});
+      if(next<=at)throw new Error('WebM 블록 순서가 올바르지 않아요.');at=next;
+    }
+    if(!clusters.length)throw new Error('WebM 영상 프레임이 없어요.');
+    const durationTicks=Math.max(Number(BigInt(Math.ceil(durationMs))*1000000n/scale),Number(clusters.at(-1).time)+50);
+    const durationData=new Uint8Array(8);new DataView(durationData.buffer).setFloat64(0,durationTicks,false);
+    const newInfo=element('1549a966',join(bytes.subarray(info.data,info.end),element('4489',durationData)));
+    // Use an eight-byte SeekPosition so SeekHead's size is stable before Cues is built.
+    const seekHeadPlaceholder=element('114d9b74',element('4dbb',join(element('53ab',id('1c53bb6b')),number('53ac',0,8))));
+    const shift=seekHeadPlaceholder.length+newInfo.length-(info.end-info.at);
+    const points=clusters.filter(cluster=>cluster.key);
+    if(!points.length)throw new Error('WebM에서 탐색할 키프레임을 찾지 못했어요.');
+    const cues=element('1c53bb6b',join(...points.map(cluster=>element('bb',join(
+      number('b3',cluster.time),element('b7',join(number('f7',videoTrack),number('f1',cluster.at-segmentStart+shift)))
+    )))));
+    const cuePosition=bytes.length-segmentStart+shift;
+    const seekHead=element('114d9b74',element('4dbb',join(element('53ab',id('1c53bb6b')),number('53ac',cuePosition,8))));
+    const output=join(bytes.subarray(0,segmentStart),seekHead,bytes.subarray(segmentStart,info.at),newInfo,bytes.subarray(info.end),cues);
+    output.set(sizeBytes(output.length-segmentStart,8),segment.at+4);
+    clusters.forEach((cluster,index)=>{
+      const next=index+1<clusters.length?clusters[index+1].at:bytes.length;
+      output.set(sizeBytes(next-cluster.data,8),cluster.at+shift+4);
+    });
+    return new Blob([output],{type:'video/webm'});
+  }
+  return {repair};
 })();
 </script>
   <script>'use strict';
@@ -458,7 +649,7 @@ const StoryRecorder=(()=>{
     const cancel=()=>control.abort(signal.reason || new DOMException('취소했어요.','AbortError'));
     signal.addEventListener('abort',cancel,{once:true});
     const narration=new Audio(),music=new Audio();narration.preload=music.preload='auto';music.loop=true;
-    let stream,recorder,timer,tone,wakeLock,stopped,musicNode,voiceNode,bytes=0,finished=0,started=false;
+    let stream,recorder,timer,tone,wakeLock,stopped,musicNode,voiceNode,bytes=0,finished=0,started=false,recordStartedAt=0;
     const chunks=[],still=document.createElement('canvas');still.width=1280;still.height=720;
     // Clearing dimensions also clears any origin-taint from a file:// preview.
     canvas.width=1280;canvas.height=720;
@@ -500,10 +691,11 @@ const StoryRecorder=(()=>{
         const label=scene===-1?'표지':scene===-2?'뒷표지':`${scene+1} / ${book.pages.length}장`;
         report(`${label} 준비 중…`);
         const img=await StoryVideo.loadImage(item,resolveImage,active);
-        const hasVoice=scene>=0 && !!item.audio;
-        if(hasVoice)await prepareAudio(narration,item.audio.data,active,`${scene+1}번째 장의 녹음`);
+        const hasVoice=!!item.audio;
+        if(hasVoice)await prepareAudio(narration,item.audio.data,active,`${label} 녹음`);
         const copy=StoryVideo.draw(imageContext,book,scene,img,layout,fontSize);
-        const seconds=scene===-1?4:scene===-2?6:StoryVideo.duration(item,copy,hasVoice?(Number.isFinite(narration.duration)?narration.duration:item.audio.duration):0);
+        const voiceSeconds=hasVoice?(Number.isFinite(narration.duration) && narration.duration>0?narration.duration:item.audio.duration || 4):0;
+        const seconds=hasVoice?Math.max(voiceSeconds+.35,copy.parts.length*3):scene===-1?4:scene===-2?6:StoryVideo.duration(item,copy);
         current={scene,img,label,copy,seconds,hasVoice,part:0,start:context.currentTime,lastTick:-1};
         ctx.drawImage(still,0,0);
         if(!started){
@@ -512,7 +704,7 @@ const StoryRecorder=(()=>{
           stopped=new Promise(resolve=>{recorder.onstop=resolve;});
           recorder.ondataavailable=event=>{if(!event.data.size)return;bytes+=event.data.size;if(bytes>400*1024*1024){control.abort(new Error('영상이 400MB를 넘었어요. 책을 나누어 만들어 주세요.'));return;}chunks.push(event.data);};
           recorder.onerror=event=>control.abort(event.error || new Error('영상 기록을 마치지 못했어요.'));
-          recorder.start(1000);started=true;timer=setInterval(paint,33);
+          recorder.start(1000);recordStartedAt=performance.now();started=true;timer=setInterval(paint,33);
           if(hasMusic){await music.play();musicGain.gain.setValueAtTime(0,context.currentTime);musicGain.gain.linearRampToValueAtTime(book.music.volume,context.currentTime+1);}
           await wait(120,active);
         }
@@ -521,7 +713,7 @@ const StoryRecorder=(()=>{
           // Exactly like story playback: only the real ended event advances the page.
           // duration metadata and saved recording duration never stop narration.
           await new Promise((resolve,reject)=>{
-            const stop=()=>done(active.reason),end=()=>done(),fail=()=>done(new Error(`${scene+1}번째 장의 녹음 재생이 중단됐어요.`));
+            const stop=()=>done(active.reason),end=()=>done(),fail=()=>done(new Error(`${label} 녹음 재생이 중단됐어요.`));
             function done(error){active.removeEventListener('abort',stop);narration.removeEventListener('ended',end);narration.removeEventListener('error',fail);error?reject(error):resolve();}
             active.addEventListener('abort',stop,{once:true});narration.addEventListener('ended',end,{once:true});narration.addEventListener('error',fail,{once:true});
             narration.play().catch(done);
@@ -536,14 +728,17 @@ const StoryRecorder=(()=>{
         }
         finished++;
       }
-      if(book.music?.enabled && !book.backCover?.enabled){musicNode && report('음악을 마무리하고 있어요…');
+      if(hasMusic && (!book.backCover?.enabled || book.backCover.audio)){musicNode && report('음악을 마무리하고 있어요…');
         // Fade without cutting off the last page or its narration.
         musicGain.gain.cancelScheduledValues(context.currentTime);musicGain.gain.setValueAtTime(musicGain.gain.value,context.currentTime);musicGain.gain.linearRampToValueAtTime(0,context.currentTime+1.2);await wait(1200,active);
       }
       abort(active);clearInterval(timer);paint();recorder.stop();
       await Promise.race([stopped,wait(10000,active).then(()=>{throw new Error('영상 저장을 마치지 못했어요.');})]);abort(active);
       const blob=new Blob(chunks,{type:recorder.mimeType});if(!blob.size)throw new Error('영상 파일을 만들지 못했어요.');
-      report('영상 완성! WebM 파일을 저장해 주세요.',1);return blob;
+      report('재생 시간과 탐색 정보 작성 중…',.99);
+      const recordedBytes=await blob.arrayBuffer();abort(active);
+      const playable=SeekableWebM.repair(recordedBytes,performance.now()-recordStartedAt);abort(active);
+      report('영상 완성! WebM 파일을 저장해 주세요.',1);return playable;
     }catch(error){
       if(error.name==='SecurityError')throw new Error('영상 창에서 기본 그림 PNG 파일을 연결한 뒤 다시 만들어 주세요.');
       throw error;
@@ -572,6 +767,8 @@ const StoryRecorder=(()=>{
   let audioMode = 'none', audioPaused = false, playbackToken = 0, speechToken = 0, utterance = null;
   let voices = [], voiceChosen = false, toastTimer = null, completed = false;
   let editingCover = false, playCover = false, editingBack = false, playBack = false;
+  let recordScene=0;
+  const thumbnailCanvases=new Map(),outputTokens=new WeakMap(),outputImages=new Map();
   const videoImageURLs = new Map();
   let fullscreenPending = false;
   let videoJob = null, videoURL = '', videoPreviewToken = 0, videoPart = 0, videoParts = 1, videoPreviewBusy = false;
@@ -588,6 +785,57 @@ const StoryRecorder=(()=>{
   const editing = () => editingBack ? book.backCover : editingCover ? book.cover : current();
   const resolveImage = source => source.startsWith('art:') ? ART[source.slice(4)] : source;
   const resolveVideoImage = source => videoImageURLs.get(source) || resolveImage(source);
+  const sceneItem=scene=>scene===-1?book.cover:scene===-2?book.backCover:book.pages[scene];
+  const editScene=()=>editingBack?-2:editingCover?-1:index;
+  const recordItem=()=>sceneItem(recordScene) || current();
+  const sceneKind=scene=>scene===-1?'cover':scene===-2?'back':'page';
+  const readingScene=()=>playCover?-1:playBack?-2:index;
+
+  async function paintOutput(canvas,scene) {
+    if(!canvas?.getContext)return;
+    const token=(outputTokens.get(canvas)||0)+1;outputTokens.set(canvas,token);
+    const item=sceneItem(scene);if(!item)return;
+    try{
+      const source=item.image?resolveImage(item.image):'';
+      if(source && !outputImages.has(source)){outputImages.set(source,StoryVideo.loadImage(item,resolveImage).catch(error=>{outputImages.delete(source);throw error;}));if(outputImages.size>24)outputImages.delete(outputImages.keys().next().value);}
+      const img=source?await outputImages.get(source):null;
+      if(outputTokens.get(canvas)!==token)return;
+      const ctx=canvas.getContext('2d');ctx.setTransform(canvas.width/1280,0,0,canvas.height/720,0,0);
+      StoryVideo.draw(ctx,book,scene,img,book.layout || 'side');
+      canvas.setAttribute('aria-label',scene===-1?`표지: ${book.title}`:scene===-2?`뒷표지: ${item.title}. ${item.text}`:`${scene+1}번째 장: ${item.text}`);
+    }catch{canvas.setAttribute('aria-label','그림 파일을 확인해 주세요.');}
+  }
+  function refreshOutputs(allThumbnails=false) {
+    const layout=book.layout || 'side',scene=editScene(),g=StoryVideo.geometry(layout).image,rect=scene<0?[0,0,1280,720]:g;
+    for(const [name,value] of Object.entries({left:rect[0]/12.8+'%',top:rect[1]/7.2+'%',width:rect[2]/12.8+'%',height:rect[3]/7.2+'%'}))$('edit-scene').style[name]=value;
+    $('play-pages-view').dataset.layout=layout;
+    $('play-pages-view').style.setProperty('--reader-image-ratio',`${g[2]} / ${g[3]}`);
+    $('play-pages-view').style.setProperty('--reader-image-height-factor',String(g[3]/g[2]));
+    const a=StoryCore.appearance('page',current().appearance);
+    $('play-text').style.setProperty('--page-font-scale',String(a.fontSize/26));$('play-text').style.color=a.color;
+    for(const [id,target] of [['edit-output',scene],['record-output',recordScene],['play-cover-output',-1],['play-back-output',-2],['cover-thumb-canvas',-1],['back-thumb-canvas',-2]])paintOutput($(id),target);
+    thumbnailCanvases.forEach((canvas,target)=>{if(allThumbnails || target===index)paintOutput(canvas,target);});
+  }
+  function styleTarget() { return tab==='record'?recordItem():tab==='play'?sceneItem(readingScene()):editing(); }
+  function styleKeys() { const part=$('style-text-part').value;return part==='message'?['messageSize','messageColor']:part==='credit'?['creditSize','creditColor']:['fontSize','color']; }
+  function syncAppearance(reset=false) {
+    const kind=sceneKind(editScene()),a=editing().appearance;
+    if(reset || $('style-text-part').dataset.kind!==kind){
+      $('style-text-part').dataset.kind=kind;$('style-text-part').replaceChildren(new Option(kind==='page'?'본문':'제목','title'));
+      if(kind==='back')$('style-text-part').add(new Option('마지막 인사','message'));
+      if(kind!=='page')$('style-text-part').add(new Option('만든 사람','credit'));
+      $('style-text-part').value='title';
+    }
+    const [size,color]=styleKeys();$('style-font-size').value=a[size];$('style-font-color').value=a[color];
+    $('style-font-size').min=size==='creditSize'?12:14;$('style-font-size').max=size==='fontSize'?96:size==='creditSize'?64:72;
+    $('cover-box-controls').hidden=kind==='page';
+    for(const key of ['x','y','width','height','opacity']){const value=key==='opacity'?a.box.opacity*100:a.box[key];$('box-'+key).value=value;$('box-'+key+'-value').textContent=Number(value.toFixed(1))+'%';}
+    $('box-x').max=100-a.box.width;$('box-y').max=100-a.box.height;$('box-color').value=a.box.color;
+  }
+  function setLayout(value) {
+    if(locked())return;book.layout=value==='bottom'?'bottom':'side';$('editor-layout').value=book.layout;$('video-layout').value=book.layout;
+    changed(true);refreshOutputs(true);if($('video-dialog').open)previewVideo();
+  }
 
   function sampleBook() {
     return StoryCore.normalizeBook({title:'작은 숲의 선물',author:'',cover:StoryCore.cover(true),pages:[
@@ -703,11 +951,12 @@ const StoryRecorder=(()=>{
     }
   }
   function applyFontSize() {
-    document.documentElement.style.setProperty('--story-font-size',`${book.fontSize}px`);
-    $('font-size').value=book.fontSize; $('font-size-label').textContent=book.fontSize;
-    all('[data-font-step]').forEach(b=>{b.disabled=locked() || (Number(b.dataset.fontStep)<0?book.fontSize<=18:book.fontSize>=48);});
+    const size=styleTarget().appearance.fontSize;
+    document.documentElement.style.setProperty('--story-font-size',`${size}px`);
+    $('font-size').value=size; $('font-size-label').textContent=size;
+    all('[data-font-step]').forEach(b=>{b.disabled=locked() || (Number(b.dataset.fontStep)<0?size<=14:size>=96);});
   }
-  function setFontSize(value) { if(locked())return; book.fontSize=StoryCore.clamp(value,18,48); changed(true); applyFontSize(); }
+  function setFontSize(value) { if(locked())return; styleTarget().appearance.fontSize=StoryCore.clamp(value,14,96);changed(true);applyFontSize();syncAppearance();refreshOutputs(); }
   function updateFrameControls() {
     const frame=editing().frame;
     $('image-zoom').value=Math.round(frame.zoom*100); $('image-zoom-label').textContent=`${Math.round(frame.zoom*100)}%`;
@@ -719,11 +968,12 @@ const StoryRecorder=(()=>{
   function setFrame(patch) {
     if(locked() || !editing().image)return;
     editing().frame=StoryCore.frame({...editing().frame,...patch});
-    applyFrame($('edit-scene'),editing().frame); updateFrameControls(); changed();
+    applyFrame($('edit-scene'),editing().frame); updateFrameControls(); changed();refreshOutputs();
   }
 
   function renderPages() {
     $('page-list').replaceChildren();
+    thumbnailCanvases.clear();
     book.pages.forEach((page,i) => {
       const button = document.createElement('button');
       button.className = 'page-thumb';
@@ -731,8 +981,7 @@ const StoryRecorder=(()=>{
       button.setAttribute('aria-label',`${i+1}번째 페이지${page.audio ? ', 녹음 완료' : ''}`);
       button.disabled = locked();
       const art = document.createElement('div'); art.className = 'thumb-art';
-      if (page.image) { const img = document.createElement('img'); img.src = resolveImage(page.image); img.alt = ''; img.loading = 'lazy'; art.append(img); }
-      else { const icon = document.createElement('span'); icon.className = 'empty-icon'; icon.textContent = '🖼️'; art.append(icon); }
+      const preview=document.createElement('canvas');preview.width=320;preview.height=180;preview.setAttribute('aria-hidden','true');art.append(preview);thumbnailCanvases.set(i,preview);
       const caption = document.createElement('div'); caption.className = 'thumb-caption';
       const label = document.createElement('span'); label.textContent = `${i+1}번째 장`;
       const stamp = document.createElement('span'); stamp.textContent = page.audio ? '★' : '☆'; stamp.setAttribute('aria-hidden','true');
@@ -753,13 +1002,14 @@ const StoryRecorder=(()=>{
       const button = document.createElement('button'); button.textContent = String(i+1);
       button.className = book.pages[i].audio ? 'recorded' : '';
       button.setAttribute('aria-label',`${i+1}번째 페이지${book.pages[i].audio ? ', 녹음 완료' : ''}`);
-      button.setAttribute('aria-current',String(i===index)); button.disabled = locked(); button.onclick = () => goPage(i);
+      button.setAttribute('aria-current',String(i===(target.id==='record-dots'?recordScene:index))); button.disabled = locked(); button.onclick = () => goPage(i);
       target.append(button);
     }
     if (start+5 < book.pages.length) { const range = document.createElement('span'); range.textContent = '…'; range.className = 'dots-range'; target.append(range); }
   }
 
   function render() {
+    if(recordScene>=book.pages.length)recordScene=book.pages.length-1;
     const p = current();
     const edit=editing();
     const count = book.pages.filter(p => p.audio).length;
@@ -772,7 +1022,8 @@ const StoryRecorder=(()=>{
     $('book-label').textContent = `📚 ${book.title || '나의 동화책'} · ${book.pages.length}장`;
     $('book-title').value = book.title; $('book-author').value = book.author;
     $('editor-page-title').textContent = editingBack ? '이야기를 마무리하는 뒷표지' : editingCover ? '나만의 책 표지' : `${index+1}번째 이야기`;
-    $('edit-recorded').textContent = editingBack ? '🌙 뒷표지' : editingCover ? '📕 표지' : p.audio ? '★ 목소리를 담았어요' : '☆ 목소리를 기다려요';
+    $('edit-recorded').textContent = edit.audio ? '★ 목소리를 담았어요' : editingBack ? '🌙 뒷표지 · 녹음 가능' : editingCover ? '📕 표지 · 녹음 가능' : '☆ 목소리를 기다려요';
+    $('editor-layout').value=book.layout || 'side';$('video-layout').value=book.layout || 'side';
     $('cover-toggle-row').hidden=!editingCover; $('cover-enabled').checked=book.cover.enabled;
     $('edit-cover-copy').hidden=!editingCover; $('page-writing').hidden=editingCover || editingBack; $('page-organize').hidden=editingCover || editingBack;
     $('back-cover-toggle-row').hidden=!editingBack;$('back-cover-enabled').checked=book.backCover.enabled;
@@ -782,17 +1033,23 @@ const StoryRecorder=(()=>{
     $('page-text').value = p.text; updateTextCount();
     drawScene($('edit-scene'),edit.image,edit.decorated,edit.frame);
     for (const prefix of ['record','play']) {
-      drawScene($(prefix+'-scene'),p.image,p.decorated,p.frame);
-      $(prefix+'-page').textContent = `${index+1} / ${book.pages.length}`;
-      storyText($(prefix+'-text'),p.text || '여기에 나만의 이야기를 담아 주세요.');
-      $(prefix+'-text').classList.toggle('placeholder',!p.text);
+      const item=prefix==='record'?recordItem():p;
+      drawScene($(prefix+'-scene'),item.image,item.decorated,item.frame);
+      $(prefix+'-page').textContent = prefix==='record' && recordScene<0?(recordScene===-1?'표지':'뒷표지'):`${index+1} / ${book.pages.length}`;
+      storyText($(prefix+'-text'),item.text || '여기에 나만의 이야기를 담아 주세요.');
+      $(prefix+'-text').classList.toggle('placeholder',!item.text);
       renderDots($(prefix+'-dots'));
     }
+    $('record-scene-select').replaceChildren(new Option(`표지${book.cover.audio?' · 녹음 있음':''}`,'-1'));
+    book.pages.forEach((item,i)=>$('record-scene-select').add(new Option(`${i+1}번째 장${item.audio?' · 녹음 있음':''}`,String(i))));
+    $('record-scene-select').add(new Option(`뒷표지${book.backCover.audio?' · 녹음 있음':''}`,'-2'));$('record-scene-select').value=String(recordScene);
     $('record-progress').textContent = `★ ${count} / ${book.pages.length}장`;
     $('play-progress').textContent = `🎙️ ${count} / ${book.pages.length}장`;
     $('play-title').textContent = book.title || '나의 동화책';
+    $('play-video-title').textContent = book.title || '나의 동화책';
+    $('play-pages-view').dataset.layout=$('video-layout').value;
     $('narrator').textContent = book.author ? `${book.author}의 목소리로 들려주는 이야기` : '내 목소리로 들려주는 이야기';
-    $('undo-recording').hidden = !p.previousAudio;
+    $('undo-recording').hidden = !recordItem().previousAudio;
     $('finish-card').hidden = !completed;
     $('show-cover').hidden=!book.cover.enabled || playCover;
     $('show-back-cover').hidden=!book.backCover.enabled || playBack;
@@ -800,12 +1057,13 @@ const StoryRecorder=(()=>{
     $('book-cover-view').hidden=!playCover; $('play-pages-view').hidden=playCover || playBack;
     drawScene($('play-cover-scene'),book.cover.image,book.cover.decorated,book.cover.frame);
     drawScene($('play-back-scene'),book.backCover.image,book.backCover.decorated,book.backCover.frame);
-    renderPages(); updateControls();
+    renderPages();syncAppearance();refreshOutputs(true);updateControls();
   }
 
   function label(id,text) { $(id).querySelector('.action-label').textContent = text; }
   function updateControls() {
     const busy = locked();
+    for(const id of ['editor-layout','record-scene-select','style-text-part','style-font-size','style-font-color','box-x','box-y','box-width','box-height','box-color','box-opacity','back-audio-button'])$(id).disabled=busy;
     for(const id of ['edit-back-cover','back-cover-enabled','back-cover-title','back-cover-text','show-back-cover','back-restart'])$(id).disabled=busy;
     for (const element of all('[data-tab],[data-action],.page-thumb,.page-dots button')) element.disabled = busy;
     for (const id of ['new-book','add-page','pick-image','page-text','book-title','book-author','move-left','move-right','delete-page','go-record','go-play','undo-recording','voice','rate','help-button']) $(id).disabled = busy;
@@ -815,10 +1073,10 @@ const StoryRecorder=(()=>{
     $('move-left').disabled = busy || index === 0;
     $('move-right').disabled = busy || index === book.pages.length-1;
     $('delete-page').disabled = busy || book.pages.length === 1;
-    all('[data-prev]').forEach(b => { b.disabled = busy || index===0; });
-    all('[data-next]').forEach(b => { b.disabled = busy || index===book.pages.length-1; });
-    $('tts-button').disabled = busy || !current().text.trim() || !synth;
-    $('preview-button').disabled = busy || !current().audio;
+    all('[data-prev]').forEach(b => { b.disabled = busy || (tab==='record'?recordScene===-1:index===0); });
+    all('[data-next]').forEach(b => { b.disabled = busy || (tab==='record'?recordScene===-2:index===book.pages.length-1); });
+    $('tts-button').disabled = busy || recordScene<0 || !recordItem().text?.trim() || !synth;
+    $('preview-button').disabled = busy || !recordItem().audio;
     $('record-button').disabled = ioBusy || recordingState === 'saving';
     $('record-button').classList.toggle('active',recordingState==='recording');
     $('tts-button').classList.toggle('active',!!utterance);
@@ -831,6 +1089,9 @@ const StoryRecorder=(()=>{
     $('restart-button').disabled = busy;
     $('play-again').disabled = busy;
     $('play-button').textContent = audioMode === 'book' ? (audioPaused ? '▶ 이어 듣기' : 'Ⅱ 잠깐 멈춤') : (completed ? '↻ 한 번 더 듣기' : index === 0 ? '▶ 동화 시작' : '▶ 여기부터 듣기');
+    $('open-cover').textContent=audioMode==='book' && playCover?(audioPaused?'▶ 이어 듣기':'Ⅱ 잠깐 멈춤'):'▶ 책 펼치기';
+    $('back-audio-button').hidden=!book.backCover.audio;
+    $('back-audio-button').textContent=audioMode==='book' && playBack?(audioPaused?'▶ 이어 듣기':'Ⅱ 잠깐 멈춤'):'▶ 뒷표지 목소리';
     for(const id of ['image-zoom','image-contain','image-fill','image-reset'])$(id).disabled=busy || !editing().image;
     $('voice-test').disabled=busy || !synth;
     updateFrameControls(); applyFontSize();
@@ -892,18 +1153,26 @@ const StoryRecorder=(()=>{
   function goPage(next) {
     if (locked() || next < 0 || next >= book.pages.length) return;
     stopMedia(); index = next; completed = false; editingCover=false; editingBack=false; playCover=false; playBack=false;
+    if(tab==='record')recordScene=next;
     $('record-status').textContent = current().audio ? '★ 내 목소리가 담겨 있어요.' : '듣고, 내 목소리로 읽어 보세요.';
     $('play-status').textContent = '내 목소리로 페이지가 하나씩 넘어가요.';
     render();
   }
   function switchTab(next) {
     if (locked()) return;
+    if(next==='record')recordScene=tab==='edit'?editScene():tab==='play'?readingScene():recordScene;
+    if(next==='edit' && tab==='record'){editingCover=recordScene===-1;editingBack=recordScene===-2;if(recordScene>=0)index=recordScene;}
     stopMedia(); tab = next; completed = false; playBack=false; playCover=next==='play' && book.cover.enabled;
-    if(next!=='edit'){editingCover=false; editingBack=false;}
-    $('record-status').textContent = current().audio ? '★ 내 목소리가 담겨 있어요.' : '듣고, 내 목소리로 읽어 보세요.';
+    $('record-status').textContent = recordItem().audio ? '★ 내 목소리가 담겨 있어요.' : recordScene<0?'자유롭게 표지의 목소리를 녹음해 주세요.':'듣고, 내 목소리로 읽어 보세요.';
     $('play-status').textContent = '내 목소리로 페이지가 하나씩 넘어가요.';
     render();
     $('tab-'+next).focus({preventScroll:true});
+  }
+  function selectRecordScene(scene) {
+    if(locked())return;stopMedia();recordScene=scene;
+    if(scene>=0)index=scene;
+    else if(!sceneItem(scene).enabled){sceneItem(scene).enabled=true;changed(true);}
+    $('record-status').textContent=recordItem().audio?'★ 내 목소리가 담겨 있어요.':'녹음하기를 눌러 목소리를 담아 주세요.';render();
   }
 
   function voiceKey(v) { return JSON.stringify([v.voiceURI,v.name,v.lang]); }
@@ -996,7 +1265,7 @@ const StoryRecorder=(()=>{
       const types = ['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'];
       const mime = types.find(type => MediaRecorder.isTypeSupported(type));
       const recorder = new MediaRecorder(stream,mime ? {mimeType:mime} : undefined);
-      const session = {recorder,stream,chunks:[],page:current(),started:performance.now(),timer:null,failed:false};
+      const session = {recorder,stream,chunks:[],page:recordItem(),started:performance.now(),timer:null,failed:false};
       recordSession = session;
       recorder.ondataavailable = event => { if (event.data.size) session.chunks.push(event.data); };
       recorder.onerror = () => {
@@ -1069,10 +1338,10 @@ const StoryRecorder=(()=>{
     toast(message,6500);
   }
   function previewRecording() {
-    if (locked() || !current().audio) return;
+    if (locked() || !recordItem().audio) return;
     if (audioMode === 'preview') { stopMedia(); $('record-status').textContent = '내 목소리 듣기를 멈췄어요.'; return; }
     stopMedia(); audioMode = 'preview'; const token = playbackToken;
-    player.src = current().audio.data;
+    player.src = recordItem().audio.data;
     player.onended = () => { if (token !== playbackToken) return; audioMode = 'none'; $('record-status').textContent = '멋진 내 목소리예요. 🌷'; updateControls(); };
     player.onerror = () => audioError(null,'preview',token);
     $('record-status').textContent = '🎧 내 목소리를 듣고 있어요.'; updateControls();
@@ -1083,36 +1352,38 @@ const StoryRecorder=(()=>{
     const missing = StoryCore.missing(book,index);
     if (missing.length) {
       const answer = await ask('아직 목소리를 기다려요 🎙️',`${missing.map(i => i+1).slice(0,12).join(', ')}번째 장${missing.length>12 ? ' 외' : ''}에 녹음이 없어요.\n목소리를 담으면 끝까지 이어서 들을 수 있어요.`,[{label:'나중에',value:false},{label:'녹음하러 가기',value:true,primary:true}]);
-      if (answer) { index = missing[0]; switchTab('record'); }
+      if (answer) { index = missing[0];playCover=false;playBack=false;switchTab('record'); }
       return;
     }
-    stopMedia(); completed = false; playCover=false; playBack=false; $('finish-card').hidden = true;
+    const fromCover=playCover && book.cover.enabled;
+    stopMedia(); completed = false;playBack=false; $('finish-card').hidden = true;
     audioMode = 'book'; const token = playbackToken;
-    playStoryPage(token);
+    playStoryScene(token,fromCover?-1:index);
   }
-  function playStoryPage(token) {
+  function finishStory(token) {
+    if(token!==playbackToken)return;
+    audioMode='none';completed=true;render();
+    $('play-status').textContent='🌟 마지막 장까지 모두 들었어요!';
+    $('finish-copy').textContent=`${book.author || '나'}의 소중한 목소리를 파일로 간직해요.`;
+    $('finish-card').hidden=false;$('finish-card').classList.add('celebrate');updateControls();
+    $('finish-card').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'});
+  }
+  function playStoryScene(token,scene) {
     if (token !== playbackToken || audioMode !== 'book') return;
-    audioPaused = false;
+    playCover=scene===-1;playBack=scene===-2;if(scene>=0)index=scene;audioPaused = false;
     render();
-    player.src = current().audio.data;
+    const item=sceneItem(scene);
+    const next=()=>{if(token!==playbackToken || audioMode!=='book')return;if(scene===-1)playStoryScene(token,index);else if(scene===-2)finishStory(token);else if(index+1<book.pages.length)playStoryScene(token,index+1);else if(book.backCover.enabled)playStoryScene(token,-2);else finishStory(token);};
+    if(!item.audio){next();return;}
+    player.src = item.audio.data;
     player.onerror = () => audioError(null,'book',token);
-    player.onended = () => {
-      if (token !== playbackToken || audioMode !== 'book') return;
-      if (index+1 < book.pages.length) { index++; playStoryPage(token); }
-      else {
-        audioMode = 'none'; completed = true; playBack=book.backCover.enabled; render();
-        $('play-status').textContent = '🌟 마지막 장까지 모두 들었어요!';
-        $('finish-copy').textContent = `${book.author || '나'}의 소중한 목소리를 파일로 간직해요.`;
-        $('finish-card').hidden = false; $('finish-card').classList.add('celebrate'); updateControls();
-        $('finish-card').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',block:'nearest'});
-      }
-    };
-    $('play-status').textContent = `🎧 ${index+1}번째 이야기를 듣고 있어요. 끝나면 다음 장으로 넘어가요.`;
+    player.onended=next;
+    $('play-status').textContent = `🎧 ${scene===-1?'표지':scene===-2?'뒷표지':`${index+1}번째 이야기`}를 듣고 있어요. 끝나면 다음 장으로 넘어가요.`;
     player.play().catch(error => audioError(error,'book',token));
   }
   function toggleStory() {
     if (locked()) return;
-    if (audioMode !== 'book') { if (completed) index = 0; startStory(); return; }
+    if (audioMode !== 'book') { if (completed) {index = 0;playCover=book.cover.enabled;} startStory(); return; }
     if (audioPaused) {
       const token = playbackToken; audioPaused = false;
       $('play-status').textContent = `🎧 ${index+1}번째 이야기를 듣고 있어요.`;
@@ -1167,6 +1438,7 @@ const StoryRecorder=(()=>{
   function videoControls() {
     const running=!!videoJob;
     for(const id of ['video-layout','video-font','video-scene','video-close','video-caption-prev','video-caption-next','music-pick','music-remove','music-enabled','music-volume','video-link-images'])$(id).disabled=running || ioBusy;
+    $('video-font').disabled=running || ioBusy || Number($('video-scene').value)<0;
     const missing=videoMissingImages();
     $('video-local-images').hidden=missing.length===0;
     $('video-local-note').textContent=`이 파일을 직접 열었을 때는 영상에 사용할 그림을 한 번 연결해 주세요: ${missing.map(key=>ART[key.slice(4)].replace('./','')).join(', ')}`;
@@ -1216,6 +1488,7 @@ const StoryRecorder=(()=>{
     $('video-progress').hidden=true;
     $('video-status').textContent='미리보기 준비 중…';
     const scene=Number($('video-scene').value),item=scene===-1?book.cover:scene===-2?book.backCover:book.pages[scene];
+    $('video-font').value=item.appearance.fontSize;
     try {
       const img=await StoryVideo.loadImage(item,resolveVideoImage);
       if(token!==videoPreviewToken)return;
@@ -1236,12 +1509,12 @@ const StoryRecorder=(()=>{
     if(locked())return;
     stopMedia();clearVideoResult();
     $('video-scene').replaceChildren();
-    if(book.cover.enabled)$('video-scene').add(new Option('표지', '-1'));
+    if(book.cover.enabled)$('video-scene').add(new Option(`표지${book.cover.audio?' · 녹음 있음':''}`, '-1'));
     book.pages.forEach((page,i)=>$('video-scene').add(new Option(`${i+1}번째 장${page.audio?' · 녹음 있음':''}`,String(i))));
-    if(book.backCover.enabled)$('video-scene').add(new Option('뒷표지','-2'));
+    if(book.backCover.enabled)$('video-scene').add(new Option(`뒷표지${book.backCover.audio?' · 녹음 있음':''}`,'-2'));
     $('video-scene').value=book.cover.enabled?'-1':'0';
     const missing=StoryCore.missing(book).length;
-    $('video-note').textContent=`${book.cover.enabled?'표지는 4초 동안 보여 줘요. ':'현재 책은 표지 없이 시작해요. '}${missing?`녹음이 없는 ${missing}장은 글 길이에 맞춰 보여 줘요. `:''}${book.backCover.enabled?'뒷표지는 6초 동안 보여 줘요. ':''}녹음한 목소리가 끝나면 다음 장으로 넘어가요. TTS 읽기 음성은 포함되지 않아요.`;
+    $('video-note').textContent=`표지·뒷표지를 포함해 녹음한 목소리가 끝나면 다음 장으로 넘어가요. 녹음 없는 표지는 4초, 뒷표지는 6초예요. ${missing?`녹음이 없는 본문 ${missing}장은 글 길이에 맞춰 보여 줘요. `:''}TTS 읽기 음성은 포함되지 않아요.`;
     syncMusic();$('video-dialog').showModal();previewVideo();
   }
   async function createVideo() {
@@ -1256,7 +1529,8 @@ const StoryRecorder=(()=>{
       videoURL=URL.createObjectURL(blob);
       $('video-result').src=videoURL;$('video-result').hidden=false;$('video-canvas').hidden=true;
       $('video-download').href=videoURL;
-      $('video-download').download=StoryCore.filename(book.title).replace(/\.story\.json$/,`-${$('video-layout').value==='side'?'오른쪽':'하단'}말풍선.webm`);
+      const now=new Date(),stamp=String(now.getFullYear())+[now.getMonth()+1,now.getDate(),now.getHours(),now.getMinutes(),now.getSeconds()].map(value=>String(value).padStart(2,'0')).join('');
+      $('video-download').download=StoryCore.filename(book.title).replace(/\.story\.json$/,'')+`_${stamp}.webm`;
       $('video-download').hidden=false;
       $('video-status').textContent=`영상 완성 (${(blob.size/1024/1024).toFixed(1)} MB)! 재생해 보고 ‘WebM 저장’을 눌러 주세요.`;
     } catch(error) {
@@ -1324,7 +1598,18 @@ const StoryRecorder=(()=>{
   all('[data-action="save"]').forEach(button => button.onclick = saveBook);
   all('[data-action="open"]').forEach(button => button.onclick = chooseBook);
   all('[data-action="video"]').forEach(button => button.onclick = openVideo);
-  for(const id of ['video-layout','video-font','video-scene'])$(id).onchange=()=>previewVideo();
+  $('editor-layout').onchange=event=>setLayout(event.target.value);
+  $('video-layout').onchange=event=>setLayout(event.target.value);
+  $('video-scene').onchange=()=>previewVideo();
+  $('video-font').onchange=event=>{if(locked())return;const scene=Number($('video-scene').value);if(scene<0)return;sceneItem(scene).appearance.fontSize=StoryCore.clamp(Number(event.target.value)||26,14,96);changed(true);refreshOutputs();syncAppearance();applyFontSize();previewVideo();};
+  $('style-text-part').onchange=()=>syncAppearance();
+  $('style-font-size').oninput=event=>{if(locked() || !event.target.value)return;const [key]=styleKeys();editing().appearance[key]=StoryCore.clamp(Number(event.target.value),key==='creditSize'?12:14,key==='fontSize'?96:key==='creditSize'?64:72);changed(true);refreshOutputs();applyFontSize();};
+  $('style-font-color').oninput=event=>{if(locked())return;const [,key]=styleKeys();editing().appearance[key]=event.target.value;changed(true);refreshOutputs();};
+  for(const key of ['x','y','width','height','opacity','color'])$('box-'+key).oninput=event=>{
+    if(locked())return;const item=editing();item.appearance.box[key]=key==='color'?event.target.value:Number(event.target.value)/(key==='opacity'?100:1);
+    item.appearance=StoryCore.appearance(sceneKind(editScene()),item.appearance);changed(true);syncAppearance();refreshOutputs();
+  };
+  $('record-scene-select').onchange=event=>selectRecordScene(Number(event.target.value));
   $('video-caption-prev').onclick=()=>{if(videoPart>0){videoPart--;previewVideo(false);}};
   $('video-caption-next').onclick=()=>{if(videoPart<videoParts-1){videoPart++;previewVideo(false);}};
   $('video-create').onclick=createVideo;
@@ -1344,18 +1629,19 @@ const StoryRecorder=(()=>{
       try{const img=new Image();img.src=url;await img.decode();if(videoImageURLs.has(key))URL.revokeObjectURL(videoImageURLs.get(key));videoImageURLs.set(key,url);matched++;}
       catch{URL.revokeObjectURL(url);}
     }
-    toast(matched?`${matched}개의 기본 그림을 영상에 연결했어요.`:'같은 폴더의 cat.png, bear.png, rabbit.png, penguin.png를 골라 주세요.');previewVideo();
+    toast(matched?`${matched}개의 기본 그림을 영상에 연결했어요.`:'같은 폴더의 고양이.png, 곰돌이.png, 토끼.png, 펭귄.png를 골라 주세요.');previewVideo();
   };
   $('video-cancel').onclick=()=>videoJob?.abort(new DOMException('취소했어요.','AbortError'));
   $('video-close').onclick=()=>{if(!videoJob && !ioBusy)$('video-dialog').close();};
   $('video-dialog').addEventListener('cancel',event=>{if(videoJob || ioBusy)event.preventDefault();});
   $('video-dialog').addEventListener('close',()=>{++videoPreviewToken;videoPreviewBusy=false;clearVideoResult();$('music-preview').pause();});
-  all('[data-prev]').forEach(button => button.onclick = () => goPage(index-1));
-  all('[data-next]').forEach(button => button.onclick = () => goPage(index+1));
+  function stepScene(delta){if(tab!=='record'){goPage(index+delta);return;}const scenes=[-1,...book.pages.map((_,i)=>i),-2],next=scenes[scenes.indexOf(recordScene)+delta];if(next!=null)selectRecordScene(next);}
+  all('[data-prev]').forEach(button => button.onclick = () => stepScene(-1));
+  all('[data-next]').forEach(button => button.onclick = () => stepScene(1));
   $('go-record').onclick = () => switchTab('record'); $('go-play').onclick = () => switchTab('play');
-  $('book-title').oninput = event => { book.title = event.target.value; changed(); syncCoverTitles(); };
-  $('book-author').oninput = event => { book.author = event.target.value; changed(); syncCoverTitles(); };
-  $('page-text').oninput = event => { current().text = event.target.value; changed(); updateTextCount(); };
+  $('book-title').oninput = event => { book.title = event.target.value; changed(); syncCoverTitles();refreshOutputs(true); };
+  $('book-author').oninput = event => { book.author = event.target.value; changed(); syncCoverTitles();refreshOutputs(); };
+  $('page-text').oninput = event => { current().text = event.target.value; changed(); updateTextCount();refreshOutputs(); };
   $('pick-image').onclick = () => { $('image-input').value = ''; $('image-input').click(); };
   $('image-input').onchange = event => uploadImage(event.target.files[0]);
   $('book-input').onchange = event => importBook(event.target.files[0]);
@@ -1386,17 +1672,17 @@ const StoryRecorder=(()=>{
   };
   $('tts-button').onclick = readAloud; $('record-button').onclick = recordClick; $('preview-button').onclick = previewRecording;
   $('undo-recording').onclick = () => {
-    if (locked() || !current().previousAudio) return;
-    stopMedia(); const p=current(); [p.audio,p.previousAudio]=[p.previousAudio,p.audio]; changed(); render();
+    if (locked() || !recordItem().previousAudio) return;
+    stopMedia(); const p=recordItem(); [p.audio,p.previousAudio]=[p.previousAudio,p.audio]; changed(); render();
     $('record-status').textContent = '이전 목소리로 바꿨어요. 🎧 눌러 들어 보세요.';
   };
   $('voice').onchange = () => { stopMedia(); voiceChosen=true; voicePrefs.mode=$('voice').value?'custom':'system'; saveVoicePrefs(); voiceButtons(); };
   $('rate').oninput = () => { $('rate-label').textContent=Number($('rate').value).toFixed(1)+'배'; saveVoicePrefs(); };
   $('font-size').oninput=event=>setFontSize(Number(event.target.value));
-  all('[data-font-step]').forEach(button=>button.onclick=()=>setFontSize(book.fontSize+Number(button.dataset.fontStep)));
+  all('[data-font-step]').forEach(button=>button.onclick=()=>setFontSize(styleTarget().appearance.fontSize+Number(button.dataset.fontStep)));
   $('edit-cover').onclick=()=>{
     if(locked())return; stopMedia(); editingCover=true; editingBack=false;
-    if(!book.cover.enabled){book.cover.enabled=true; if(!book.cover.image)book.cover=StoryCore.cover(true); changed();}
+    if(!book.cover.enabled){book.cover.enabled=true;if(!book.cover.image){book.cover.image='art:rabbit';book.cover.decorated=true;}changed();}
     render();
   };
   $('cover-enabled').onchange=event=>{book.cover.enabled=event.target.checked;changed();};
@@ -1410,12 +1696,13 @@ const StoryRecorder=(()=>{
     render();
   };
   $('back-cover-enabled').onchange=event=>{book.backCover.enabled=event.target.checked;changed();};
-  $('back-cover-title').oninput=event=>{book.backCover.title=event.target.value;changed();syncCoverTitles();};
-  $('back-cover-text').oninput=event=>{book.backCover.text=event.target.value;changed();syncCoverTitles();};
+  $('back-cover-title').oninput=event=>{book.backCover.title=event.target.value;changed();syncCoverTitles();refreshOutputs();};
+  $('back-cover-text').oninput=event=>{book.backCover.text=event.target.value;changed();syncCoverTitles();refreshOutputs();};
   $('show-back-cover').onclick=()=>{if(locked())return;stopMedia();playBack=true;playCover=false;completed=false;render();};
-  $('back-restart').onclick=()=>{if(locked())return;index=0;startStory();};
+  $('back-restart').onclick=()=>{if(locked())return;stopMedia();index=0;playCover=book.cover.enabled;startStory();};
+  $('back-audio-button').onclick=()=>{if(locked())return;if(audioMode==='book' && playBack){toggleStory();return;}stopMedia();audioMode='book';completed=false;playStoryScene(playbackToken,-2);};
   $('show-cover').onclick=()=>{if(locked())return; stopMedia(); playCover=true; playBack=false; completed=false; render();};
-  $('open-cover').onclick=()=>{if(locked())return; index=0; startStory();};
+  $('open-cover').onclick=()=>{if(locked())return;if(audioMode!=='book')index=0;toggleStory();};
   $('zoom-in').onclick=()=>setFrame({zoom:editing().frame.zoom+.1});
   $('zoom-out').onclick=()=>setFrame({zoom:editing().frame.zoom-.1});
   $('image-zoom').oninput=event=>setFrame({zoom:Number(event.target.value)/100});
@@ -1470,7 +1757,7 @@ const StoryRecorder=(()=>{
   $('play-button').onclick=toggleStory;
   $('fullscreen-button').onclick=toggleFullscreen;
   document.addEventListener('fullscreenchange',syncFullscreenButton);
-  $('restart-button').onclick=$('play-again').onclick=() => { if(locked())return; stopMedia(); index=0; completed=false; render(); startStory(); };
+  $('restart-button').onclick=$('play-again').onclick=() => { if(locked())return; stopMedia(); index=0; completed=false;playCover=book.cover.enabled; render(); startStory(); };
   $('help-button').onclick = () => ask('보호자 안내',
     '① 책 만들기: 그림을 고르고 글을 써 주세요.\n② 목소리 담기: TTS를 들은 뒤 아이의 목소리를 녹음해요.\n③ 동화 듣기: 녹음이 끝나면 다음 장으로 넘어가요.\n\n💾 기기에 저장: 그림·글·녹음을 한 개의 .story.json 파일로 내려받아요. 불러오기에서 이 파일을 선택하면 복원돼요. 태블릿·휴대폰에서는 파일 앱이나 다운로드 폴더를 확인해 주세요. 저장 창이나 미리보기가 열리면 기기의 파일 저장 메뉴를 이용해 주세요.\n\n작업은 이 브라우저에도 임시 보관하지만, 오래 간직할 책은 꼭 파일로 저장해 주세요. 비공개 모드나 사이트 데이터 삭제 시 임시 작업은 사라질 수 있어요. 서버에는 그림과 녹음을 업로드하지 않아요.\n\n🎙️ 서버는 HTTPS로 열고 마이크 사용을 허용해 주세요. 녹음은 한 장에 최대 5분이며, 화면을 벗어나면 진행 중인 녹음을 마무리해요. 한 책은 최대 100장, 작업 파일은 200MB까지예요. 사진은 긴 쪽 1,600픽셀로 줄여 담아요.\n\n🔊 TTS 목소리는 기기마다 다르며 일부는 인터넷을 사용해요. 내장 목소리가 없으면 기기의 한국어 음성을 설치해 주세요. 다른 기기로 옮긴 녹음은 브라우저의 오디오 형식 지원에 따라 재생이 달라질 수 있어요.'
   );
