@@ -1,0 +1,23 @@
+{
+  "source": "Bank of Korea",
+  "banknotes": "https://www.bok.or.kr/portal/main/contents.do?menuNo=200017",
+  "coins": "https://www.bok.or.kr/portal/main/contents.do?menuNo=200367",
+  "images": {
+    "50000-front.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_five_img06.jpg",
+    "50000-back.jpg": "https://www.bok.or.kr/static/portal/img/cts/attachs/img_200017_01.jpg",
+    "10000-front.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_img40.jpg",
+    "10000-back.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_img40-1.jpg",
+    "5000-front.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_img43.jpg",
+    "5000-back.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_img43-1.jpg",
+    "1000-front.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_img46.jpg",
+    "1000-back.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_img46-1.jpg",
+    "500-front.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/1_500.jpg",
+    "500-back.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/2_500.jpg",
+    "100-front.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/3_100.jpg",
+    "100-back.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/4_100.jpg",
+    "50-front.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/1_1983_2.jpg",
+    "50-back.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/2_1983_1.jpg",
+    "10-front.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_simg27.jpg",
+    "10-back.jpg": "https://www.bok.or.kr/static/portal/img/cts/old/money_simg27-1.jpg"
+  }
+}
