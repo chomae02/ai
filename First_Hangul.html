@@ -61,6 +61,13 @@
     .syllable[aria-pressed="true"] { background: #fff1ce; border-color: #e8ab35; box-shadow: 0 4px 0 #f2cc7b; }
     .syllable .big { display: block; font-size: clamp(30px,4vw,43px); font-weight: 900; line-height: 1.2; }
     .syllable .minor { display: block; margin-top: 3px; font-size: 16px; color: #6c7180; font-weight: 800; }
+    .read-controls { display: grid; gap: 9px; margin-top: 16px; }
+    .read-control { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 10px; border-radius: 14px; background: #f4f7ff; }
+    .read-control strong { flex: 1 1 170px; color: #3c507c; }
+    .read-control button { min-height: 39px; padding: 7px 10px; border: 1px solid #cbd8f1; border-radius: 10px; background: #fff; color: #344a86; font-weight: 800; }
+    .read-control button:hover { background: #e5eeff; }
+    .read-control .stop-reading { color: #a43c42; border-color: #e9c6c8; }
+    .read-status { margin: 2px 0 0; color: #52627e; font-size: 14px; font-weight: 700; }
     .lesson-card { background: linear-gradient(180deg,#fff 0%,#fffdf6 100%); }
     .formula { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
     .sound-part { width: 98px; min-height: 126px; display: grid; align-content: center; justify-items: center; gap: 3px; padding: 10px 5px; border-radius: 20px; background: #e6efff; border: 3px solid transparent; text-align: center; }
@@ -238,6 +245,11 @@
                 <button type="button" class="small-button" id="next-row" aria-label="다음 자음 줄">다음 줄 →</button>
               </div>
               <div class="syllables" id="basic-syllables" aria-label="기본 모음으로 만든 글자"></div>
+              <div class="read-controls">
+                <div class="read-control"><strong id="basic-row-label">ㄱ 줄 읽기</strong><button type="button" id="basic-read-row">▶ 선택한 줄 읽기</button><button type="button" class="stop-reading" id="basic-stop-row">■ 정지</button></div>
+                <div class="read-control"><strong>가부터 히까지 전체</strong><button type="button" id="basic-read-all">▶ 전체 읽기</button><button type="button" class="stop-reading" id="basic-stop-all">■ 정지</button></div>
+                <p class="read-status" id="basic-reading-status" role="status">글자 사이를 0.5초씩 띄워 읽어요.</p>
+              </div>
               <details>
                 <summary>가부터 히까지 전체 글자표 보기</summary>
                 <div class="table-wrap" id="full-table"></div>
@@ -262,6 +274,11 @@
               <div class="section-head"><h2>특별한 모음 만나기</h2><span class="step-tag">11개</span></div>
               <p class="small">ㅐ·ㅔ부터 ㅘ·ㅢ까지, 모양을 보고 소리를 들으며 익혀요.</p>
               <div class="syllables" id="special-syllables" aria-label="특별한 모음으로 만든 글자"></div>
+              <div class="read-controls">
+                <div class="read-control"><strong id="special-row-label">ㅇ 줄 읽기</strong><button type="button" id="special-read-row">▶ 선택한 줄 읽기</button><button type="button" class="stop-reading" id="special-stop-row">■ 정지</button></div>
+                <div class="read-control"><strong>애부터 희까지 전체</strong><button type="button" id="special-read-all">▶ 전체 읽기</button><button type="button" class="stop-reading" id="special-stop-all">■ 정지</button></div>
+                <p class="read-status" id="special-reading-status" role="status">글자 사이를 0.5초씩 띄워 읽어요.</p>
+              </div>
             </div>
             <div class="card">
               <h2>첫소리를 바꿔 볼까요?</h2>
@@ -1257,7 +1274,7 @@ function writeWavFile(audioData, sampleRate) {
           try {source.start(0,offset,length);} catch (error) {finish(false); reject(error);}
         });
       }
-      async function play(steps, statusId) {
+      async function play(steps, statusId, {gapMs = 0, onStep = null} = {}) {
         stopSpeech();
         const run = speechRun;
         const status = $(statusId);
@@ -1267,23 +1284,28 @@ function writeWavFile(audioData, sampleRate) {
         try {
           await readyAudio();
           let activeStep = 0;
-          const clips = steps.map((step,index) => HangulVoice.synthesize(step.text,{voice,rate,onProgress:label => {
+          const clips = gapMs ? null : steps.map((step,index) => HangulVoice.synthesize(step.text,{voice,rate,onProgress:label => {
             if (run === speechRun && index === activeStep && !currentSource) status.textContent = label;
           }}).then(blob => ({blob}),error => ({error})));
           for (let index = 0; index < steps.length; index++) {
             if (run !== speechRun) return;
             activeStep = index;
-            const step = steps[index], outcome = await clips[index];
+            const step = steps[index];
+            if (onStep) onStep(step,index);
+            const outcome = clips ? await clips[index] : await HangulVoice.synthesize(step.text,{voice,rate,onProgress:label => {
+              if (run === speechRun && !currentSource) status.textContent = `${index+1}/${steps.length} · ${label}`;
+            }}).then(blob => ({blob}),error => ({error}));
             if (outcome.error) throw outcome.error;
             if (run !== speechRun) return;
             if (step.id) $(step.id)?.classList.add('active');
-            status.textContent = `“${step.text}” 듣는 중…`;
+            status.textContent = `${steps.length > 1 ? `${index+1}/${steps.length} · ` : ''}“${step.text}” 듣는 중…`;
             const ok = await playBlob(outcome.blob,run);
             if (step.id) $(step.id)?.classList.remove('active');
             if (!ok || run !== speechRun) {
               if (run === speechRun) status.textContent = '소리를 재생하지 못했어요. 다시 눌러 주세요.';
               return;
             }
+            if (gapMs && index < steps.length - 1) await new Promise(resolve => setTimeout(resolve,gapMs));
           }
           if (run === speechRun) status.textContent = '다 들었어요. 다시 눌러서 들어 보세요.';
         } catch (error) {
@@ -1362,6 +1384,7 @@ function writeWavFile(audioData, sampleRate) {
       function renderBasic() {
         renderConsonants('basic-consonants',state.initial,initial => { stopSpeech(); state.initial = initial; state.vowel = 'ㅏ'; renderBasic(); });
         $('row-title').textContent = `${state.initial} 줄 · ${compose(state.initial,'ㅏ')}부터 ${compose(state.initial,'ㅣ')}까지`;
+        $('basic-row-label').textContent = `${state.initial} 줄 · ${compose(state.initial,'ㅏ')}부터 ${compose(state.initial,'ㅣ')}까지`;
         const target = $('basic-syllables'); target.replaceChildren();
         for (const vowel of basicVowels) {
           const b = document.createElement('button'); b.type = 'button'; b.className = 'syllable';
@@ -1375,6 +1398,7 @@ function writeWavFile(audioData, sampleRate) {
       }
       function renderSpecial() {
         renderConsonants('special-consonants',state.specialInitial,initial => {stopSpeech(); state.specialInitial = initial; renderSpecial();});
+        $('special-row-label').textContent = `${state.specialInitial} 줄 · ${compose(state.specialInitial,'ㅐ')}부터 ${compose(state.specialInitial,'ㅢ')}까지`;
         const target = $('special-syllables'); target.replaceChildren();
         for (const vowel of specialVowels) {
           const b = document.createElement('button'); b.type = 'button'; b.className = 'syllable';
@@ -1385,6 +1409,20 @@ function writeWavFile(audioData, sampleRate) {
           target.append(b);
         }
         makeLesson('special-lesson',state.specialInitial,state.specialVowel,'','special');
+      }
+      function readSyllableSeries(topic,all) {
+        const vowelSet = topic === 'basic' ? basicVowels : specialVowels;
+        const selectedInitial = topic === 'basic' ? state.initial : state.specialInitial;
+        const initialSet = all ? basicInitials : [selectedInitial];
+        const steps = initialSet.flatMap(initial => vowelSet.map(vowel => ({initial,vowel,text:compose(initial,vowel),id:`${topic}-result`})));
+        play(steps,`${topic}-reading-status`,{gapMs:500,onStep:step => {
+          if (topic === 'basic') {state.initial = step.initial; state.vowel = step.vowel; renderBasic();}
+          else {state.specialInitial = step.initial; state.specialVowel = step.vowel; renderSpecial();}
+        }});
+      }
+      function stopSeries(topic) {
+        stopSpeech();
+        $(`${topic}-reading-status`).textContent = '읽기를 멈췄어요.';
       }
       function renderFullTable() {
         const table = document.createElement('table');
@@ -1602,6 +1640,14 @@ function writeWavFile(audioData, sampleRate) {
       $('next-row').addEventListener('click',() => {
         stopSpeech(); const i = basicInitials.indexOf(state.initial); state.initial = basicInitials[(i+1)%basicInitials.length]; state.vowel = 'ㅏ'; renderBasic();
       });
+      $('basic-read-row').addEventListener('click',() => readSyllableSeries('basic',false));
+      $('basic-read-all').addEventListener('click',() => readSyllableSeries('basic',true));
+      $('basic-stop-row').addEventListener('click',() => stopSeries('basic'));
+      $('basic-stop-all').addEventListener('click',() => stopSeries('basic'));
+      $('special-read-row').addEventListener('click',() => readSyllableSeries('special',false));
+      $('special-read-all').addEventListener('click',() => readSyllableSeries('special',true));
+      $('special-stop-row').addEventListener('click',() => stopSeries('special'));
+      $('special-stop-all').addEventListener('click',() => stopSeries('special'));
       $('hear-word').addEventListener('click',() => {
         const [a,b] = [...state.word];
         const steps = [];
