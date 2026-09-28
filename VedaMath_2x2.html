@@ -194,6 +194,7 @@ main,.layout>*,.lesson-heading h2,.modal-head>div{min-width:0}
 .table-lab{padding:24px}.table-controls{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-bottom:18px}.table-control label{display:flex;align-items:center;justify-content:space-between;font-weight:750;gap:10px}.table-control input[type=number]{width:76px;border:1px solid #bccfc0;border-radius:9px;padding:8px;text-align:center}.table-control input[type=range]{width:100%;accent-color:#287add;margin:15px 0 4px;min-height:28px}.range-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.table-presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.table-presets button{font-size:13px;padding:7px 12px}.table-canvas{background:#11283a;border-radius:18px;padding:18px 10px 10px;color:#fff;text-align:center;overflow:hidden}.table-equation{font:750 clamp(24px,5vw,40px)/1.5 ui-monospace,Consolas,monospace;color:#fff}.table-canvas p{font-size:13px;color:#c1d8e6}.table-canvas svg{width:100%;height:min(68vh,700px);min-height:300px;display:block;touch-action:none;user-select:none}.table-handle{cursor:nwse-resize}.table-lab-note{font-size:13px;color:var(--muted);margin-top:12px}
 @media(max-width:680px){.tabs .tab{padding-inline:2px;font-size:11px}.tab .count{font-size:9px}.table-lab{padding:14px}.table-controls{gap:14px}.table-control label{font-size:13px}.table-control input[type=number]{width:60px}.table-canvas{padding:12px 0 5px}.table-canvas svg{height:55vh;min-height:300px}.vertical.expression{font-size:29px}.formula-stage{padding:14px 10px 36px}.square-visual{padding:5px}.review-item{flex-wrap:wrap}.speed-ready-mark{margin-bottom:15px}}
 .table-canvas svg{height:auto;min-height:0;max-height:700px;aspect-ratio:660/600}.square-visual{margin-inline:0}
+.lesson-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}.lesson-topline .eyebrow{margin-bottom:0}.lesson-topline .small-button{flex-shrink:0;min-height:44px}
 </style>
 </head>
 <body>
@@ -205,7 +206,7 @@ main,.layout>*,.lesson-heading h2,.modal-head>div{min-width:0}
   <section id="page-quiz" role="tabpanel" aria-labelledby="tab-quiz">
     <div class="layout">
       <div class="panel main-panel">
-        <div class="toolbar"><div class="field"><label for="method-select">어떤 문제를 풀까요?</label><select id="method-select"><option value="starter">🌱 첫걸음 · 쉬운 수부터</option><option value="mixed">🎨 여러 계산법 골고루</option></select><p class="beginner-note" id="level-note">작은 수로 계산 순서를 익혀요.</p></div><label class="hint-toggle"><input type="checkbox" id="hint-toggle" checked>도움말 보기</label></div>
+          <div class="toolbar"><div class="field"><label for="method-select">어떤 문제를 풀까요?</label><select id="method-select"><option value="starter">🌱 첫걸음 · 쉬운 수부터</option><option value="mixed">🎨 여러 계산법 골고루</option></select><p class="beginner-note" id="level-note">작은 수로 계산 순서를 익혀요.</p></div><label class="hint-toggle"><input type="checkbox" id="hint-toggle">도움말 보기</label></div>
         <div class="question">
           <div class="q-top"><span class="q-index" id="q-index">연습 01</span><button id="skip" class="small-button">다른 문제</button></div>
           <div class="vertical-wrap"><div class="vertical" id="problem" role="img" aria-label="곱셈 문제"></div></div>
@@ -216,7 +217,7 @@ main,.layout>*,.lesson-heading h2,.modal-head>div{min-width:0}
           <div class="helper-row" id="helper-row"><p><strong>아직 답을 모르겠나요?</strong>괜찮아요. 답은 마지막 걸음에서 만나요.</p><button class="help-button" id="help-solve" type="button">☝ 같이 풀기 시작</button></div>
         </div>
         <section class="explanation" id="explanation" aria-labelledby="lesson-title" hidden>
-          <p class="eyebrow">한 번 탭하면 한 걸음</p><div class="lesson-heading"><h2 id="lesson-title"></h2><span class="tag" id="step-counter">1 / 4</span></div>
+          <div class="lesson-topline"><p class="eyebrow">한 번 탭하면 한 걸음</p><button class="small-button" id="skip-lesson" type="button">다른 문제</button></div><div class="lesson-heading"><h2 id="lesson-title"></h2><span class="tag" id="step-counter">1 / 4</span></div>
           <p class="method-note" id="method-note"></p><div class="step-progress" id="step-progress" aria-label="풀이 단계"></div><div id="step-content"></div>
           <div class="celebration" id="celebration">참 잘했어요! 답까지 차근차근 도착했어요. 🎉</div>
           <div class="explore-actions"><button class="explore-button" id="open-other" type="button">↗ 다른 계산법</button><button class="explore-button area" id="open-area" type="button">▦ 넓이로 풀기</button></div>
@@ -518,7 +519,6 @@ function answerQuestion(index){
  $('choices').querySelectorAll('.choice').forEach((button,i)=>{button.disabled=true;const value=current.choices[i].value;if(value===problemAnswer(current)){button.classList.add('correct');button.querySelector('.choice-state').textContent='✓ 정답';}else if(i===index){button.classList.add('wrong');button.querySelector('.choice-state').textContent='내 선택';}else button.classList.add('dim');});
  renderProblem(true);$('feedback').className='feedback'+(correct?'':' missed');$('feedback').innerHTML=correct?'<strong>맞았어요! 정말 잘했어요.</strong>이제 아래에서 계산 길을 한 걸음씩 확인해 봐요.':`<strong>괜찮아요. 정답은 ${problemAnswer(current)}이에요.</strong>${selected.reason}<br>아래에서 천천히 다시 만나 봐요.`;$('feedback').hidden=false;
  openLesson(false);
- if(matchMedia('(max-width:680px)').matches)setTimeout(()=>$('feedback').scrollIntoView({behavior:motion(),block:'start'}),100);
 }
 function openLesson(asGuide){
  guided=asGuide;
@@ -939,7 +939,7 @@ $('speed-choices').addEventListener('click',e=>{const button=e.target.closest('[
 $('method-select').addEventListener('change',()=>{methodBag=[];starterBag=[];$('level-note').textContent=$('method-select').value==='starter'?'작은 수로 계산 순서를 익혀요.':'고른 계산법으로 새 문제를 만나요.';newQuestion();});$('hint-toggle').addEventListener('change',()=>$('hint').hidden=!$('hint-toggle').checked);
 $('choices').addEventListener('click',e=>{const button=e.target.closest('[data-choice]');if(button)answerQuestion(Number(button.dataset.choice));});
 $('help-solve').addEventListener('click',()=>openLesson(true));
-$('skip').addEventListener('click',advanceQuestion);$('next-question').addEventListener('click',advanceQuestion);
+ $('skip').addEventListener('click',advanceQuestion);$('skip-lesson').addEventListener('click',advanceQuestion);$('next-question').addEventListener('click',advanceQuestion);
 $('step-prev').addEventListener('click',()=>moveToStep(stepIndex-1,{direction:'prev'}));
 $('step-next').addEventListener('click',()=>{if(allSteps||stepIndex===lesson.steps.length-1){advanceQuestion();}else moveToStep(stepIndex+1,{direction:'next'});});
 $('step-progress').addEventListener('click',e=>{const button=e.target.closest('[data-step]');if(button)moveToStep(Number(button.dataset.step),{direction:Number(button.dataset.step)>stepIndex?'next':Number(button.dataset.step)<stepIndex?'prev':'jump'});});
